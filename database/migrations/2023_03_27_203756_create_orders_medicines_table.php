@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('orders_medicines', function (Blueprint $table) {
 
-            $table->unsignedInteger('order_id');
-            $table->unsignedInteger('medicine_id');
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('medicine_id');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('medicine_id')->references('id')->on('medicines');
             $table->integer('quantity');
