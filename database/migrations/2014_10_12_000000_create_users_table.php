@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('avatar_image');
             $table->string('email')->unique();
             $table->string('phone');
-
-            $table->integer('area_id');
+            $table->unsignedBigInteger('area_id');
+            $table->foreign('area_id')->references('area_id')->on('areas');
             $table->string('street_name');
             $table->integer('building_no');
             $table->integer('floor_number');

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar');
             $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')->references('id')->on('areas');
+            $table->foreign('area_id')->references('area_id')->on('areas');
             $table->integer('priority');
             $table->timestamps();
         });
