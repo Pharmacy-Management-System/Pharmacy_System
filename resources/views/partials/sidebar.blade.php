@@ -3,8 +3,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <img src="dist/img/PharmacyLogo.gif" alt="Pharmacy Logo" class="brand-image img-circle elevation-3" style="opacity: 0.9;">
+      <span class="brand-text font-weight-light">Pharmacy System</span>
     </a>
 
     <!-- Sidebar -->
@@ -25,7 +25,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+                <img src="dist/img/icons/Pharmacies-icon.png" class="nav-icon">
               <p>
                 Pharmacies
               </p>
@@ -34,7 +34,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+                <img src="dist/img/icons/Doctors-icon.png" class="nav-icon">
               <p>
                 Doctors
               </p>
@@ -43,7 +43,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <img src="dist/img/icons/Users-icon.png" class="nav-icon">
               <p>
                 Users
               </p>
@@ -52,7 +52,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <img src="dist/img/icons/Areas-icon.png" class="nav-icon">
               <p>
                 Areas
               </p>
@@ -61,7 +61,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <img src="dist/img/icons/User-Addresses-icon.png" class="nav-icon">
               <p>
                 User Addresses
               </p>
@@ -70,7 +70,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+                <img src="dist/img/icons/Medicines-icon.png" class="nav-icon">
               <p>
                 Medicines
               </p>
@@ -79,7 +79,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+                <img src="dist/img/icons/Orders-icon.png" class="nav-icon">
               <p>
                 Orders
               </p>
@@ -88,7 +88,7 @@
 
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+                <img src="dist/img/icons/Revenue-icon.png" class="nav-icon">
               <p>
                 Revenue
               </p>
