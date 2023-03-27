@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('avatar');
-            $table->integer('area_id');
+            $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');
             $table->integer('priority');
             $table->timestamps();
