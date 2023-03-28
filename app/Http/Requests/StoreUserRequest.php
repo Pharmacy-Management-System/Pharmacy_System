@@ -32,7 +32,7 @@ class StoreUserRequest extends FormRequest
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['required', 'image', 'mimes:jpeg,png', 'max:2048'], //
             'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
-            'area_id' => ['required', 'integer', 'exists:areas,area_id'], //
+            'area_id' => ['required', 'integer','unsigned', 'min:3', 'max:7' ,'exists:areas,area_id'], //
             'street_name' => ['required', 'string'], //
             'building_no' => ['required', 'numeric'],
             'floor_number' => ['required', 'numeric'],
@@ -83,7 +83,10 @@ class StoreUserRequest extends FormRequest
             'area_id' => [
                 'required' => 'The Area ID is Required',
                 'integer' => 'The Area ID must be Integer Number',
-                'exists' => 'The Area ID does not exist'
+                'exists' => 'The Area ID does not exist',
+                'unsigned' => 'The Area ID field must be a positive number.',
+                'min' => 'The Area ID field must be at least 3 digits long.',
+                'max' => 'The Area ID field must not exceed 7 digits.',
             ],
             'street_name' => [
                 'required' => 'The Street Name is Required',
