@@ -24,15 +24,20 @@ class StoreOrderMedicienRequest extends FormRequest
     public function rules()
     {
         return [
+            'medicine_name' => ['required'],
             'quantity'=> ['required', 'integer', 'min:1'],
         ];
     }
     public function messages()
     {
         return [
-            'quantity.required' => 'quantity is required',
-            'quantity.integer' => 'quantity must be integer',
-            'quantity.min' => 'quantity must be greater than 0',
+            'medicine_name.required' => 'medicine id is required',
+            'quantity'=>[
+                'required' => 'quantity is required',
+                'integer' => 'quantity must be integer',
+                'min' => 'quantity must be greater than 0',
+            ]
+
         ];
     }
 }
