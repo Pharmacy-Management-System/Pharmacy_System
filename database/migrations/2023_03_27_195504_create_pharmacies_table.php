@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->unsignedBigInteger('pharmacy_id')->primary();
-            $table->string('email')->unique();
-            $table->string('name');
-            $table->string('password');
             $table->string('avatar');
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('area_id')->on('areas');
             $table->integer('priority');
-            $table->timestamps();
+            $table->foreignId('user_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade')->on('users');
         });
     }
 
