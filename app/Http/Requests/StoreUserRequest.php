@@ -24,16 +24,16 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'min:3'], //
-            'email' => ['required', 'email', 'unique:users,email'], //
-            'password' => ['required', 'min:6'], //
-            'national_id' => ['required', 'integer', 'unique:users,national_id', 'size:14'], //
-            'gender' => ['required', 'in:Male,Female'], //
-            'date_of_birth' => ['required', 'date'], //
-            'avatar_image' => ['required', 'image', 'mimes:jpeg,png', 'max:2048'], //
-            'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
-            'area_id' => ['required', 'integer','unsigned', 'min:3', 'max:7' ,'exists:areas,area_id'], //
-            'street_name' => ['required', 'string'], //
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:6'], 
+            'national_id' => ['required', 'integer', 'unique:users,national_id', 'size:14'], 
+            'gender' => ['required', 'in:Male,Female'], 
+            'date_of_birth' => ['required', 'date'], 
+            'avatar_image' => ['required', 'image', 'mimes:jpeg,png', 'max:2048'], 
+            'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], 
+            'area_id' => ['required', 'integer','unsigned', 'min:3', 'max:7' ,'exists:areas,area_id'], 
+            'street_name' => ['required', 'string'], 
             'building_no' => ['required', 'numeric'],
             'floor_number' => ['required', 'numeric'],
             'flat_number' => ['required', 'numeric'],

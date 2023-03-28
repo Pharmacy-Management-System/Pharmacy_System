@@ -31,8 +31,8 @@ class User extends Authenticatable
         'building_no',
         'floor_number',
         'flat_number',
-        'is_main', //
-        'email_verified_at' //
+        'is_main',
+        'email_verified_at'
     ];
 
     /**
