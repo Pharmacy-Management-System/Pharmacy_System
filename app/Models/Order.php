@@ -16,6 +16,6 @@ class Order extends Model
         'is_insured',
         'status',
         'creator_type',
-        'quantity',
+        
     ];
 }
