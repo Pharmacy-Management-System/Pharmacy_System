@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->unsignedBigInteger('national_id')->primary();
-            $table->string('email')->unique();
-            $table->string('name');
-            $table->string('password');
             $table->string('avatar');
             $table->unsignedBigInteger('pharmacy_id');
             $table->foreign('pharmacy_id')->references('pharmacy_id')->on('pharmacies');
             $table->boolean('is_banned');
-            $table->timestamps();
+            $table->foreignId('user_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade')->on('users');
 
         });
     }
