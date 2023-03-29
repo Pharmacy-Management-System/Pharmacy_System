@@ -15,7 +15,7 @@ class Pharmacy extends Model
         'area_id',
         'priority'
     ];
-
+    
     public function area()
     {
         return $this->belongsTo(Area::class,'area_id');
@@ -31,4 +31,8 @@ class Pharmacy extends Model
        return $this->hasMany(Order::class,'pharmacy_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(related: User::class);
+    }
 }

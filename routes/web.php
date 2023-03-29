@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
-
+use App\Http\Controllers\DoctorsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,8 @@ use App\Http\Controllers\AreaController;
 
 //Area Routes
 
-Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
+Route::get('/areas', [AreaController::class, 'index'])->name('index');
+Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
 //Route::get('/areas/list', [AreaController::class, 'getAreas'])->name('areas.list');
 //Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 
