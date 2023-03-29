@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="dist/img/PharmacyLogo.png">
     <title>Pharmacy Managment System</title>
-
+    @vite('resources/sass/app.scss')
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -69,7 +69,7 @@
         @include('partials.footer')
     </div>
     <!-- ./wrapper -->
-
+    @vite('resources/js/app.js')
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
@@ -93,6 +93,7 @@
     <script src="dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="dist/js/pages/dashboard2.js"></script>
+    @stack('scripts')
 </body>
 
 </html>
