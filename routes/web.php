@@ -18,6 +18,13 @@ use App\Http\Controllers\AreaController;
 //Area Routes
 
 Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
+Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
+Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
+Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
+Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
+
+//Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
+
 //Route::get('/areas/list', [AreaController::class, 'getAreas'])->name('areas.list');
 //Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 
