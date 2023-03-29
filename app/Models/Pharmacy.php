@@ -11,15 +11,9 @@ class Pharmacy extends Model
 
     protected $fillable = [
         'pharmacy_id',
-        'email',
-        'name',
-        'password',
         'avatar',
         'area_id',
         'priority'
     ];
 
-    protected $hidden = [
-        'password'
-    ];
 }
