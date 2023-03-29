@@ -3,9 +3,8 @@
 @section('content')
 
 <section class="content">
-      <div class="container-fluid">
-        {{-- {{@dd( $dataTable->table())}} --}}
-        {{ $dataTable->table() }}
+      <div class="container-fluid0">
+        {{ $dataTable->table()}}     
       </div><!--/. container-fluid -->
 
       <div class="modal" id="modal12" tabindex="-1">
