@@ -22,12 +22,18 @@ class DoctorsDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-            return (new EloquentDataTable($query))
-            ->addColumn('action', function ($row) {
-                $actionBtn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editForm">Edit</button>';
-                return $actionBtn;
-            })
-            ->setRowId('national_id');
+        return (new EloquentDataTable($query))
+        ->addColumn('action', function ($row) {
+            $button = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal" ';
+            $button .= 'data-national-id="'.$row->national_id.'" ';
+            $button .= 'data-pharmacy-id="'.$row->pharmacy_id.'" ';
+            $button .= 'data-national-id="'.$row->national_id.'" ';
+            $button .= 'data-pharmacy-id="'.$row->pharmacy_id.'" ';
+            $button .= 'data-is-banned="'.($row->is_banned ? 'Yes' : 'No').'" ';
+            $button .= '>View</button>';
+            return $button;
+        })
+        ->setRowId('national_id');
     }
 
     /**
