@@ -16,8 +16,19 @@ class Pharmacy extends Model
         'priority'
     ];
 
-    public function user()
+    public function area()
     {
-        return $this->belongsTo(related: User::class);
+        return $this->belongsTo(Area::class,'area_id');
     }
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class,'pharmacy_id');
+    }
+
+    public function orders()
+    {
+       return $this->hasMany(Order::class,'pharmacy_id');
+    }
+
 }
