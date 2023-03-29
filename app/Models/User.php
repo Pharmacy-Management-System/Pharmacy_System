@@ -20,19 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'national_id',
-        'gender',
-        'date_of_birth',
-        'avatar_image',
-        'phone',
-        'area_id',
-        'street_name',
-        'building_no',
-        'floor_number',
-        'flat_number',
-        'is_main',
-        'email_verified_at'
+        'password'
     ];
 
     /**
@@ -45,12 +33,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+   public function pharmacy(){
+    return $this->hasOne(Pharmacy::class ,'pharmacy_id');
+   }
 }
