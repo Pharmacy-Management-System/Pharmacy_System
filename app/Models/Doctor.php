@@ -23,4 +23,8 @@ class Doctor extends Model
         'password'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(related: User::class);
+    }
 }
