@@ -14,23 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('national_id')->primary();
+            $table->id();
             $table->string('name');
-            $table->enum('gender', ['Male', 'Female']);
-            $table->string('password');
-            $table->date("date_of_birth");
-            $table->string('avatar_image');
             $table->string('email')->unique();
-            $table->string('phone');
-            $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')->references('area_id')->on('areas');
-            $table->string('street_name');
-            $table->integer('building_no');
-            $table->integer('floor_number');
-            $table->integer('flat_number');
-            $table->boolean('is_main');
-
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
