@@ -24,6 +24,7 @@ Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.de
 Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
 Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
 Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
+Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 
