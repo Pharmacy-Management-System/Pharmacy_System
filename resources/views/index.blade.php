@@ -3,7 +3,13 @@
 @section('content')
 
 <section class="content">
+<<<<<<< HEAD
     <div class="container-fluid">
+=======
+      <div class="container-fluid0">
+        {{ $dataTable->table()}}     
+      </div><!--/. container-fluid -->
+>>>>>>> 46aade38f77959de3611cb8ef7443cfbd8697923
 
         {{ $dataTable->table() }}
     </div><!--/. container-fluid -->
