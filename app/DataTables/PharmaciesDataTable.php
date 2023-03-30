@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,6 +24,15 @@ class PharmaciesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('Area',function(Pharmacy $pharmacy){
+                return $pharmacy->area->name;
+            })
+            ->addColumn('Owner Name',function(Pharmacy $pharmacy){
+                return $pharmacy->user->name;
+            })
+            ->addColumn('Owner Email',function(Pharmacy $pharmacy){
+                return $pharmacy->user->email;
+            })
             ->addColumn(
                 'action',
                 '
@@ -50,7 +60,7 @@ class PharmaciesDataTable extends DataTable
                     </div>
                 </div>'
             )
-            ->setRowId('id');
+            ->setRowId('pharmacy_id');
     }
 
     /**
@@ -97,8 +107,9 @@ class PharmaciesDataTable extends DataTable
         return [
             Column::make('avatar')->addClass('text-center')->title('Image'),
             Column::make('pharmacy_id')->addClass('text-center')->title('ID'),
-            Column::make('area_id')->addClass('text-center')->title('Area'),
-            Column::make('user_id')->addClass('text-center')->title('User'),
+            Column::make('Owner Name')->addClass('text-center'),
+            Column::make('Owner Email')->addClass('text-center'),
+            Column::make('Area')->addClass('text-center'),
             Column::make('priority')->addClass('text-center')->title('Priority'),
             Column::computed('action')
                 ->exportable(false)
