@@ -45,3 +45,7 @@ Route::delete('/areas/{id}', [PostController::class, 'destroy'])->name('areas.de
 Route::get('/', function () {
     return view('index');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
