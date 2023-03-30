@@ -28,7 +28,6 @@ class AreasDataTable extends DataTable
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$area_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                <button class="btn btn-primary rounded me-2" id="option_a2"> show </button>
                     <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("areas.destroy",$area_id)}}">
                         @csrf
                         @method("DELETE")
@@ -82,7 +81,7 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('area_id'),
+            Column::make('area_id')->title('Postal Code'),
             Column::make('name'),
             Column::make('address'),
             Column::computed('action')
