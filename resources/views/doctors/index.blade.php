@@ -64,20 +64,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">name</label>
-                            <input name="name" class="form-control" id="email" value="">
+                            <input name="name" class="form-control" id="name" value="">
                         </div>
                         <div class="mb-3">
                             <label for="nationalId" class="form-label">email</label>
                             <input name="email" class="form-control" id="email" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="pharName" class="form-label">Pharmacy Name</label>
-                            <select name="pharmacy_id" class="form-select" id="pharName">
-                                @foreach($pharmacies as $pharmacy)
-                                <option value="{{ $pharmacy->id }}">{{ $pharmacy->name }}</option>
-                                @endforeach
+                            <label for="pharmacy_id" class="form-label">Pharmacy Name</label>
+                            <select name="pharmacy_id" id="pharmacySelect" class="form-control">
+                                <!-- options go here -->
                             </select>
                         </div>
+
 
                         <div class="mb-3">
                             <label for="banned" class="form-label">Is banned?</label>
@@ -113,17 +112,7 @@
 
 @push('scripts')
 {{ $dataTable->scripts() }}
-
 <script>
-    function deletemodalShow(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        let deleteBtnModal = document.querySelector("#delete");
-        deleteBtnModal.onclick = function() {
-            event.target.closest("form").submit();
-        }
-    }
-
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -131,14 +120,27 @@
         $.ajax({
             url: "{{ route('doctors.show', ':id') }}".replace(':id', itemId),
             method: "GET",
+
             success: function(response) {
-                $('#nationalId').val(response.doctor[0].national_id)
-                $('#pharName').val(response.doctor[0].pharmacy_id)
-                $('#banned').val(response.doctor[0].is_banned)
-                $('#avatar').val(response.doctor[0].avatar)
-                $('#name').val(response.doctor[0].user.name)
-                $('#email').val(response.doctor[0].user.email)
+                $('#nationalId').val(response.doctor[0].national_id);
+                $('#banned').val(response.doctor[0].is_banned);
+                $('#Avatar').val(response.doctor[0].avatar);
+                $('#name').val(response.users.find(user => user.id === response.doctor[0].user_id).name);
+                $('#email').val(response.users.find(user => user.id === response.doctor[0].user_id).email);
+                var pharmacySelect = $('#pharmacySelect');
+                pharmacySelect.empty();
+                $.each(response.pharmacies, function(index, pharmacy) {
+                    var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
+                    var option = $('<option>').val(pharmacy.pharmacy_id).text(pharmacyName);
+                    if (pharmacy.pharmacy_id === response.doctor[0].pharmacy_id) {
+                        option.attr('selected', 'selected');
+                    }
+                    pharmacySelect.append(option);
+                });
+
+                pharmacySelect.val(response.doctor[0].pharmacy_id);
             }
+
         });
         var route = "{{ route('doctors.update', ':id') }}".replace(':id', itemId);
         document.getElementById("edit-form").action = route;

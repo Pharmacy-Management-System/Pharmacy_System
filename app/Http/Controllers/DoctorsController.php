@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
+use App\Models\User;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,13 +35,22 @@ class DoctorsController extends Controller
         }
     }
 
+
+
     public function show($national_id)
     {
         $doctor = Doctor::where('national_id', $national_id)->get();
         $pharmacies = Pharmacy::all();
-        return response()->json(['doctor' => $doctor, 'pharmacies'=> $pharmacies]);
-
+        $users = User::all();
+        return response()->json([
+            'doctor' => $doctor,
+            'pharmacies' => $pharmacies,
+            'users' => $users,
+        ]);
     }
+
+
+
     public function update(StoreDoctorRequest $request, $national_id)
     {
         if (is_numeric($national_id)) {
@@ -61,15 +71,5 @@ class DoctorsController extends Controller
         }
     }
 
-
-
-    public function edit($national_id)
-    {
-        if (is_numeric($national_id)) {
-            $doctor = Doctor::findOrFail($national_id);
-            $pharmacies = Pharmacy::all();
-            return view('doctors.index', ['doctor' => $doctor, 'pharmacies' => $pharmacies]);
-        }
-    }
 
 }

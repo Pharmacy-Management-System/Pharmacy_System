@@ -13,9 +13,6 @@ class Doctor extends Model
 
     protected $fillable = [
         'national_id',
-        'email',
-        'name',
-        'password',
         'avatar',
         'pharmacy_id',
         'is_banned'
