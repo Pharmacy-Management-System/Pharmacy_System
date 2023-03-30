@@ -69,7 +69,7 @@
                     $('#email').text(response.user.email)
                     $('#national-id').text(response.client.id)
                     $('#gender').text(response.client.gender)
-                    $('#phone').text(response.client.gender)
+                    $('#phone').text(response.client.phone)
                     $('#postal-code').text(response.client.area_id)
                     $('#area-name').text(response.area.name)
                     $('#area-address').text(response.area.address)

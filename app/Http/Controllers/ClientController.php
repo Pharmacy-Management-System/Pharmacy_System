@@ -22,7 +22,19 @@ class ClientController extends Controller
         $user = User::where('id', $client->user_id)->first();
         $area = Area::where('id', $client->area_id)->first();
         return response()->json(['client' => $client, 'user' => $user, 'area' => $area]);
-        // return view('clients.show', ['id' => $id]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        dd($id);
+        /*  if (is_numeric($id)) {
+            try {
+                Area::where('id', $id)->update($request->validated());
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return to_route('areas.index')->with('error', 'Cannot update a postal code for this areaa because of relation with other records ');
+            }
+            return to_route('areas.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
+        } */
     }
 
     public function destroy($national_id)

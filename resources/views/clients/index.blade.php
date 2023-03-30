@@ -19,6 +19,7 @@
         </div>
         @include('clients.delete')
         @include('clients.show')
+        @include('clients.edit')
     </section>
 
 @endsection
