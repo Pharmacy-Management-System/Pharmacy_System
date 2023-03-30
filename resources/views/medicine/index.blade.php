@@ -11,10 +11,6 @@
                 </ul>
             </div>
         @endif
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
-                data-bs-target="#create">Create New Medicine</button>
-        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -28,12 +24,17 @@
             </div>
         @endif
 
+         <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
+                data-bs-target="#create">Create New Medicine</button>
+        </div>
+
 
         <div class="container-fluid">
             {{ $dataTable->table() }}
         </div>
-        {{--
-        @include('areas.delete')--}}
+
+        @include('medicine.delete')
         @include('medicine.create')
         @include('medicine.edit')
     </section>
@@ -50,6 +51,7 @@
             $('#create_medQuntity').val("")
             $('#create_medPrice').val("")
         }
+        
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -71,12 +73,6 @@
             var route = "{{ route('medicines.update', ':id') }}".replace(':id', itemId);
             document.getElementById("edit-form").action = route;
         }
-        setTimeout(function() {
-            $('.alert-success').fadeOut();
-        }, {{ session('timeout') }});
-    </script>
-    {{-- <script>
-
 
         function deletemodalShow(event) {
             event.preventDefault();
@@ -86,8 +82,9 @@
                 event.target.closest("form").submit();
             }
         }
+        setTimeout(function() {
+            $('.alert-success').fadeOut();
+        }, {{ session('timeout') }});
+    </script>
 
-
-
-    </script> --}}
 @endpush

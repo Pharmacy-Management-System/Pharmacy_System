@@ -62,6 +62,7 @@ Route::get('/doctors/{id}', [DoctorsController::class, 'show'])->name('doctors.s
 
 // medicine routes
 Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
 Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
 Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
