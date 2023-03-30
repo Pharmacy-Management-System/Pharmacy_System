@@ -28,12 +28,11 @@ class ClientsDataTable extends DataTable
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$area_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$national_id}}" data-bs-toggle="modal" data-bs-target="#show-client">delete</button>
-
-                    <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$national_id)}}">
+                <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-client">show</button>
+                    <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-client" onclick="clientdeletemodalShow(event)" id="delete_{{$national_id}}" data-bs-toggle="modal" data-bs-target="#client-del-model">delete</button>
+                        <button type="button" class="btn btn-danger rounded delete-client" onclick="clientdeletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#client-del-model">delete</button>
                     </form>
                 </div>
                 '
@@ -90,7 +89,7 @@ class ClientsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('national_id'),
+            Column::computed('id', 'National ID'),
             Column::computed('name', 'Name'),
             Column::computed('email', 'Email'),
             Column::make('gender'),

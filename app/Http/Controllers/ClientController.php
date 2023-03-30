@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ClientsDataTable;
+use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,9 +18,10 @@ class ClientController extends Controller
 
     public function show($national_id)
     {
-        $client = Client::where('national_id', '=', $national_id)->first();
+        $client = Client::where('id', '=', $national_id)->first();
         $user = User::where('id', $client->user_id)->first();
-        return response()->json(['client' => $client, 'user' => $user]);
+        $area = Area::where('id', $client->area_id)->first();
+        return response()->json(['client' => $client, 'user' => $user, 'area' => $area]);
         // return view('clients.show', ['id' => $id]);
     }
 
@@ -27,7 +29,7 @@ class ClientController extends Controller
     {
         if (is_numeric($national_id)) {
             try {
-                $client = Client::where('national_id', '=', $national_id)->first();
+                $client = Client::where('id', '=', $national_id)->first();
                 $user = User::where('id', $client->user_id)->first();
                 Client::destroy($national_id);
                 User::destroy($user->id);

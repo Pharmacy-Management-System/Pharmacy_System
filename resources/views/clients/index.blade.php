@@ -25,4 +25,9 @@
 
 @push('scripts')
     {{ $dataTable->scripts() }}
+    <script>
+        setTimeout(function() {
+            $('.alert-success').fadeOut();
+        }, {{ session('timeout') }});
+    </script>
 @endpush

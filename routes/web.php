@@ -16,7 +16,6 @@ use App\Http\Controllers\ClientController;
 */
 
 //Area Routes
-
 Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
 Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
@@ -29,6 +28,7 @@ Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
 Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
+Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 

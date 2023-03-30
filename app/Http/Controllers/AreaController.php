@@ -42,15 +42,19 @@ class AreaController extends Controller
     }
     public function update(StoreAreaRequest $request, $id)
     {
-        if (is_numeric($area_id)) {
-            Area::where('area_id', $area_id)->update($request->validated());
-            return to_route('areas.index');
+        if (is_numeric($id)) {
+            try {
+                Area::where('id', $id)->update($request->validated());
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return to_route('areas.index')->with('error', 'Cannot update a postal code for this areaa because of relation with other records ');
+            }
+            return to_route('areas.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
         }
     }
     public function edit($id)
     {
-        if (is_numeric($area_id)) {
-            $area = Area::where('area_id', $area_id)->first();
+        if (is_numeric($id)) {
+            $area = Area::where('id', $id)->first();
             return view('areas.edit', ['area' => $area]);
         }
     }
