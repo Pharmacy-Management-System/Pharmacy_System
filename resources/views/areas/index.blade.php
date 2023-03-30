@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <section class="content">
         @if ($errors->any())
             <div class="alert alert-danger pb-0">
@@ -17,82 +16,36 @@
                 {{ session('success') }}
             </div>
         @endif
+        {{-- delete Error --}}
         {{-- when delete area related to other records --}}
         @if (session('error'))
             <div class="alert alert-danger p-2 mt-3 ">
                 {{ session('error') }}
             </div>
         @endif
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
+                data-bs-target="#create">Create New Area</button>
+        </div>
         <div class="container-fluid">
-            {{-- {{@dd( $dataTable->table())}} --}}
             {{ $dataTable->table() }}
         </div>
-        <!-- delete moadal -->
-        <div class="modal fade" id="del-model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-danger" id="staticBackdropLabel"><i
-                                class="bi bi-exclamation-triangle-fill text-danger me-2"></i>Waring</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure to delete this record?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button id="delete" type="button" class="btn btn-danger">Delete</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Area</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form method="POST" id="edit-form" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="areaId" class="form-label">Area ID</label>
-                                <input name="area_id" class="form-control" id="areaId" value="">
-                            </div>
-                            <div class="mb-3">
-                                <label for="areaName" class="form-label">Area Name</label>
-                                <input name="name" class="form-control" id="areaName" value="">
-                            </div>
-                            <div class="mb-3">
-                                <label for="areaAddress" class="form-label">Area Address</label>
-                                <input name="address" class="form-control" id="areaAddress" value="">
-                            </div>
-                        </div>
-                        <p id="error-msg"></p>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary text-white">Edit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
+        @include('areas.create')
+        @include('areas.delete')
+        @include('areas.edit')
     </section>
-
 @endsection
 
 @push('scripts')
     {{ $dataTable->scripts() }}
-
     <script>
-        var id
+        function createmodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#create_areaId').val("")
+            $('#create_areaName').val("")
+            $('#create_areaAddress').val("")
+        }
 
         function deletemodalShow(event) {
             event.preventDefault();
@@ -106,19 +59,25 @@
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
+            $('#edit_areaId').val("")
+            $('#edit_areaName').val("")
+            $('#edit_areaAddress').val("")
             var itemId = event.target.id;
             id = event.target.id;
             $.ajax({
                 url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
                 method: "GET",
                 success: function(response) {
-                    $('#areaId').val(response.area[0].area_id)
-                    $('#areaName').val(response.area[0].name)
-                    $('#areaAddress').val(response.area[0].address)
+                    $('#edit_areaId').val(response.area[0].id)
+                    $('#edit_areaName').val(response.area[0].name)
+                    $('#edit_areaAddress').val(response.area[0].address)
                 }
             });
             var route = "{{ route('areas.update', ':id') }}".replace(':id', itemId);
             document.getElementById("edit-form").action = route;
         }
+        setTimeout(function() {
+            $('.alert-success').fadeOut();
+        }, {{ session('timeout') }});
     </script>
 @endpush

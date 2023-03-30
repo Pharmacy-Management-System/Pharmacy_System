@@ -25,7 +25,7 @@ class StoreAreaRequest extends FormRequest
     {
         return [
             //
-            'area_id' => ['required', 'integer'],
+            'id' => ['required', 'integer'],
             'name' => ['required', 'string'],
             'address' => ['required', 'string'],
         ];
@@ -39,10 +39,10 @@ class StoreAreaRequest extends FormRequest
     public function messages()
     {
         return [
-            'area_id' => [
-                'required' => 'The Area ID field is required.',
-                'unique' => 'The Area ID field must be an integer.',
-                'integer' => 'The Area ID field must be an integer.',
+            'id' => [
+                'required' => 'Postal Code field is required.',
+                'unique' => 'Postal Code field must be an integer.',
+                'integer' => 'Postal Code field must be an integer.',
             ],
             'name' => [
                 'required' => 'The Name field is required.',
