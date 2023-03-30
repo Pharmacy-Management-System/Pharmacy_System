@@ -29,7 +29,7 @@ class MedicineController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -38,9 +38,10 @@ class MedicineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMedicineRequest $request)
     {
-        //
+        Medicine::create($request->validated());
+        return to_route('medicines.index')->with('success', 'Area added successfully!')->with('timeout', 5000);
     }
 
     /**

@@ -11,6 +11,10 @@
                 </ul>
             </div>
         @endif
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
+                data-bs-target="#create">Create New Medicine</button>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -24,15 +28,13 @@
             </div>
         @endif
 
-        {{-- <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
-                data-bs-target="#create">Create New Area</button>
-        </div> --}}
+
         <div class="container-fluid">
             {{ $dataTable->table() }}
         </div>
-        {{-- @include('areas.create')
+        {{--
         @include('areas.delete')--}}
+        @include('medicine.create')
         @include('medicine.edit')
     </section>
 @endsection
@@ -40,6 +42,14 @@
 @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
+        function createmodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#create_medName').val("")
+            $('#create_medType').val("")
+            $('#create_medQuntity').val("")
+            $('#create_medPrice').val("")
+        }
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -66,13 +76,7 @@
         }, {{ session('timeout') }});
     </script>
     {{-- <script>
-        function createmodalShow(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            $('#create_areaId').val("")
-            $('#create_areaName').val("")
-            $('#create_areaAddress').val("")
-        }
+
 
         function deletemodalShow(event) {
             event.preventDefault();
