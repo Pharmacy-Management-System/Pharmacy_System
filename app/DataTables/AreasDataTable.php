@@ -23,10 +23,19 @@ class AreasDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($row) {
-                $actionBtn = '<button data-toggle="modal" data-target="#modal12" class="edit btn btn-success btn-sm">Edit</button>';
-                return $actionBtn;
-            })
+            ->addColumn(
+                'action',
+                '
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$area_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
+                <button class="btn btn-primary rounded me-2" id="option_a2"> show </button>
+                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("areas.destroy",$area_id)}}">
+                        @csrf
+                        @method("DELETE")
+                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$area_id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                    </form>
+                </div>'
+            )
             ->setRowId('id');
     }
 
@@ -73,14 +82,14 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('area_id'),
+            Column::make('name'),
+            Column::make('address'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
-                ->addClass('text-center'),
-            Column::make('area_id'),
-            Column::make('name'),
-            Column::make('address')
+                ->addClass('text-center')
         ];
     }
 
