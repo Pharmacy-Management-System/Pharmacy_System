@@ -3,7 +3,9 @@
 @section('content')
 
 <section class="content">
-    <div class="container-fluid">
+      <div class="container-fluid0">
+        {{ $dataTable->table()}}
+      </div><!--/. container-fluid -->
 
         {{ $dataTable->table() }}
     </div><!--/. container-fluid -->

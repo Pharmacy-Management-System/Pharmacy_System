@@ -13,7 +13,7 @@ class StoreAreaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,9 +25,9 @@ class StoreAreaRequest extends FormRequest
     {
         return [
             //
-            'area_id' => ['required', 'integer', 'unsigned', 'min:3', 'max:7'],
-            'name' => ['required', 'string', 'min:5', 'max:10'],
-            'address' => ['required', 'string', 'min:7', 'max:15'],
+            'area_id' => ['required', 'integer'],
+            'name' => ['required', 'string'],
+            'address' => ['required', 'string'],
         ];
     }
 
@@ -43,21 +43,16 @@ class StoreAreaRequest extends FormRequest
                 'required' => 'The Area ID field is required.',
                 'unique' => 'The Area ID field must be an integer.',
                 'integer' => 'The Area ID field must be an integer.',
-                'unsigned' => 'The Area ID field must be a positive number.',
-                'min' => 'The Area ID field must be at least 3 digits long.',
-                'max' => 'The Area ID field must not exceed 7 digits.',
             ],
             'name' => [
                 'required' => 'The Name field is required.',
                 'string' => 'The Name field must be a string.',
-                'min' => 'The Name field must be at least 5 characters long.',
-                'max' => 'The Name field must not exceed 10 characters.',
+                
             ],
             'address' => [
                 'required' => 'The Address field is required.',
                 'string' => 'The Address field must be a string.',
-                'min' => 'The Address field must be at least 7 characters long.',
-                'max' => 'The Address field must not exceed 15 characters.',
+                
             ],
         ];
     }
