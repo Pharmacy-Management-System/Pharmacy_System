@@ -79,24 +79,22 @@ class MedicineController extends Controller
      */
     public function update(StoreMedicineRequest $request, $id)
     {
-        if (is_numeric($id)) {
-            try {
-                Medicine::where('id', $id)->update($request->validated());
-            } catch (\Illuminate\Database\QueryException $exception) {
-                return to_route('medicines.index')->with('error', 'Cannot update medicine!')->with('timeout', 5000);
-            }
-            return to_route('medicines.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
-        }
+if (is_numeric($id)) {
+    Medicine::where('id', $id)->update($request->validated());
+    return to_route('medicines.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
+}
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+if (is_numeric($id)) {
+    try {
+        Medicine::where('id', $id)->delete();
+    } catch (\Illuminate\Database\QueryException $exception) {
+        return to_route('medicines.index')->with('error', ' you can not delete this medicine because is in order ');
+    }
+    return to_route('medicines.index');
+}
     }
 }
