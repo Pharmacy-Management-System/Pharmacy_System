@@ -14,15 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pharmacies', function (Blueprint $table) {
-            $table->unsignedBigInteger('pharmacy_id')->primary();
-            $table->string('avatar');
+            $table->unsignedBigInteger('id')->primary();
+            $table->string('avatar_image');
             $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')->references('area_id')->on('areas');
+            $table->foreign('area_id')->references('id')->on('areas');
             $table->integer('priority');
-            $table->foreignId('user_id')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes('deleted_at')->nullable();
         });
     }
 

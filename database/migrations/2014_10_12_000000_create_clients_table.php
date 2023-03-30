@@ -14,23 +14,22 @@ return new class extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->unsignedBigInteger('national_id')->primary();
+            $table->unsignedBigInteger('id')->primary();
             $table->enum('gender', ['Male', 'Female']);
             $table->date("date_of_birth");
             $table->string('avatar_image');
             $table->string('phone');
             $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')->references('area_id')->on('areas');
+            $table->foreign('area_id')->references('id')->on('areas');
             $table->string('street_name');
             $table->integer('building_no');
             $table->integer('floor_number');
             $table->integer('flat_number');
             $table->boolean('is_main');
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

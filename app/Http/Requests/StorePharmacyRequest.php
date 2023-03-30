@@ -24,8 +24,8 @@ class StorePharmacyRequest extends FormRequest
     public function rules()
     {
         return [
-            'pharmacy_id'=> ['required','size:14','unique:pharmacies,pharmacy_id,'.$this->pharmacy],
-            'avatar' => ['mimes:jpg,jpeg'],
+            'id'=> ['required','size:14','unique:pharmacies,pharmacy_id,'.$this->pharmacy],
+            'avatar_image' => ['mimes:jpg,jpeg'],
             'area_id' => ['required|exists:areas,area_id'],
             'priority' => ['required','integer']
         ];
@@ -34,12 +34,12 @@ class StorePharmacyRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'pharmacy_id' => [
+            'id' => [
                 'required' => 'The Pharmacy ID is Required',
                 'unique' => 'The Pharmacy ID must be Unique',
                 'size' => 'The Pharmacy ID must Contain 14 Number'
             ],
-            'avatar' => [
+            'avatar_image' => [
                 'mimes' => 'An Image must be jpg or jpeg Only'
             ],
             'priority' => [

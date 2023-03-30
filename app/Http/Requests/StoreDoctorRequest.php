@@ -24,11 +24,11 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'national_id'=> ['required','size:14','unique:doctors,national_id,'.$this->doctor],
+            'id'=> ['required','size:14','unique:doctors,national_id,'.$this->doctor],
             'email'=> ['required','email','unique:doctors,email,'.$this->doctor],
             'name' => ['required'],
             'password' => ['required','min:6'],
-            'avatar' => ['mimes:jpg,jpeg'],
+            'avatar_image' => ['mimes:jpg,jpeg'],
             'pharmacy_id' => ['required|exists:pharmacies,pharmacy_id'],
             'is_banned' => ['required']
         ];
@@ -37,7 +37,7 @@ class StoreDoctorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'national_id' => [
+            'id' => [
                 'required' => 'The National ID is Required',
                 'unique' => 'The National ID must be Unique',
                 'size' => 'The National ID must Contain 14 Number'
@@ -54,7 +54,7 @@ class StoreDoctorRequest extends FormRequest
                 'required' => 'The Password is Required',
                 'min' => 'The Password must be larger than 6 Characters'
             ],
-            'avatar' => [
+            'avatar_image' => [
                 'mimes' => 'An Image must be jpg or jpeg Only'
             ]
         ];

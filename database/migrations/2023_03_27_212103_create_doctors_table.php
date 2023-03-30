@@ -14,16 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->unsignedBigInteger('national_id')->primary();
-            $table->string('avatar');
+            $table->unsignedBigInteger('id')->primary();
+            $table->string('avatar_image');
             $table->unsignedBigInteger('pharmacy_id');
-            $table->foreign('pharmacy_id')->references('pharmacy_id')->on('pharmacies');
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
             $table->boolean('is_banned');
-            $table->foreignId('user_id')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade')->on('users');
-
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

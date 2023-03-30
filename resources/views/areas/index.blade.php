@@ -67,7 +67,7 @@
                 url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
                 method: "GET",
                 success: function(response) {
-                    $('#edit_areaId').val(response.area[0].area_id)
+                    $('#edit_areaId').val(response.area[0].id)
                     $('#edit_areaName').val(response.area[0].name)
                     $('#edit_areaAddress').val(response.area[0].address)
                 }

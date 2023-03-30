@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('total_order');
             $table->integer('total_revenue');
             $table->unsignedBigInteger('pharmacy_id')->nullable();
-            $table->foreign('pharmacy_id')->references('pharmacy_id')->on('pharmacies');
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
             $table->timestamps();
         });
     }

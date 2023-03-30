@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="areaId" class="form-label">Postal Code</label>
-                        <input name="area_id" class="form-control" id="create_areaId" value="" required>
+                        <input name="id" class="form-control" id="create_areaId" value="" required>
                     </div>
                     <div class="mb-3">
                         <label for="areaName" class="form-label">Area Name</label>
