@@ -15,7 +15,11 @@ class Pharmacy extends Model
         'area_id',
         'priority'
     ];
-    
+
+    protected $casts = [
+        'pharmacy_id' => 'integer',
+    ];
+
     public function area()
     {
         return $this->belongsTo(Area::class,'area_id');

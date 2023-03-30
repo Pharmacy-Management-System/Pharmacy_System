@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\DoctorsController;
 
 /*
@@ -15,20 +16,26 @@ use App\Http\Controllers\DoctorsController;
 |
 */
 
-//Area Routes
-
-Route::get('/areas', [AreaController::class, 'index'])->name('index');
-Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
-//Route::get('/areas/list', [AreaController::class, 'getAreas'])->name('areas.list');
-//Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
-
-/* Route::get('/areas/create', [PostController::class, 'create'])->name('areas.create');
-Route::get('/areas/{id}/edit', [PostController::class, 'edit'])->name('areas.edit');
-Route::post('/areas', [PostController::class, 'store'])->name('areas.store');
-Route::post('/areas/{id}', [PostController::class, 'update'])->name('areas.update');
-Route::delete('/areas/{id}', [PostController::class, 'destroy'])->name('areas.destroy'); */
-
-
+//Home Route
 Route::get('/', function () {
     return view('index');
 });
+
+//Area Routes
+Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
+Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
+Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
+Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
+Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
+
+//Pharmacy Routes
+Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
+Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
+Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
+Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+
+
+
+//Doctor Routes
+Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');

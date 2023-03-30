@@ -19,12 +19,13 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-danger" id="staticBackdropLabel"><i
-                                class="bi bi-exclamation-triangle-fill text-danger me-2"></i>Waring</h5>
+                        <h5 class="modal-title text-light" id="staticBackdropLabel"><i
+                                class="bi bi-exclamation-triangle-fill text-danger me-2"></i>Warning</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Are you sure to delete this record?
+                        <h5>Are You Sure to Delete this Record?</h5>
+                        <p class="fw-light">NOTE THAT: There is May be Many Records depend on this Record.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
