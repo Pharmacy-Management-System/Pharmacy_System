@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <section class="content">
         {{-- when delete area related to other records --}}
         @if (session('error'))
@@ -14,7 +13,7 @@
             {{ $dataTable->table() }}
         </div>
         <!-- delete moadal -->
-        <div class="modal fade" id="del-model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        {{-- <div class="modal fade" id="del-model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -33,8 +32,9 @@
 
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        </div> --}}
+        @include('areas.delete')
+        {{-- <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -75,15 +75,14 @@
                     </ul>
                 </div>
             @endif
-        </div>
+        </div> --}}
+        @include('areas.edit')
 
     </section>
-
 @endsection
 
 @push('scripts')
     {{ $dataTable->scripts() }}
-
     <script>
         function deletemodalShow(event) {
             event.preventDefault();
@@ -96,6 +95,9 @@
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
+            $('#areaId').val("")
+            $('#areaName').val("")
+            $('#areaAddress').val("")
             var itemId = event.target.id;
             $.ajax({
                 url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
