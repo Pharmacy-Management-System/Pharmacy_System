@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
-
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +22,12 @@ Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.de
 Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
 Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
 Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
+
+
+//Clients Routes
+Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 

@@ -37,15 +37,16 @@ class AreaController extends Controller
 
     public function update(StoreAreaRequest $request, $area_id)
     {
+
         if (is_numeric($area_id)) {
             Area::where('area_id', $area_id)->update($request->validated());
-            return to_route('areas.index');
-        }        
+            return to_route('areas.index')->with('success', 'Area updated successfully!');
+        }
     }
     public function edit($area_id)
     {
         if (is_numeric($area_id)) {
-            $area=Area::where('area_id', $area_id)->first();
+            $area = Area::where('area_id', $area_id)->first();
             return view('areas.edit', ['area' => $area]);
         }
     }

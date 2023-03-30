@@ -33,7 +33,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-   public function pharmacy(){
-    return $this->hasOne(Pharmacy::class ,'pharmacy_id');
-   }
+    public function pharmacy()
+    {
+        return $this->hasOne(Pharmacy::class, 'pharmacy_id');
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
 }

@@ -3,6 +3,20 @@
 @section('content')
 
     <section class="content">
+        @if ($errors->any())
+            <div class="alert alert-danger pb-0">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         {{-- when delete area related to other records --}}
         @if (session('error'))
             <div class="alert alert-danger p-2 mt-3 ">
@@ -59,6 +73,7 @@
                                 <input name="address" class="form-control" id="areaAddress" value="">
                             </div>
                         </div>
+                        <p id="error-msg"></p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary text-white">Edit</button>
@@ -66,16 +81,8 @@
                     </form>
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger pb-0 ">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
         </div>
+
 
     </section>
 
@@ -85,6 +92,8 @@
     {{ $dataTable->scripts() }}
 
     <script>
+        var id
+
         function deletemodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -93,10 +102,12 @@
                 event.target.closest("form").submit();
             }
         }
+
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
             var itemId = event.target.id;
+            id = event.target.id;
             $.ajax({
                 url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
                 method: "GET",

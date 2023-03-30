@@ -31,7 +31,7 @@ class StoreAreaRequest extends FormRequest
         ];
     }
 
-     /**
+    /**
      * Get the validation error messages that apply to the request.
      *
      * @return array
@@ -47,12 +47,12 @@ class StoreAreaRequest extends FormRequest
             'name' => [
                 'required' => 'The Name field is required.',
                 'string' => 'The Name field must be a string.',
-                
+
             ],
             'address' => [
                 'required' => 'The Address field is required.',
                 'string' => 'The Address field must be a string.',
-                
+
             ],
         ];
     }
