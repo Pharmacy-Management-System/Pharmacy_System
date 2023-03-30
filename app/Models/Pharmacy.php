@@ -17,7 +17,7 @@ class Pharmacy extends Model
     ];
 
     protected $casts = [
-        'pharmacy_id' => 'integer',
+        'id' => 'integer',
     ];
 
     public function area()

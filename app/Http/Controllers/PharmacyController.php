@@ -19,7 +19,7 @@ class PharmacyController extends Controller
     {
         if (is_numeric($pharmacy)) {
             try {
-                Pharmacy::where('pharmacy_id', $pharmacy)->delete();
+                Pharmacy::where('id', $pharmacy)->delete();
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('pharmacies.index')->with('error', 'Delete related records first');
             }
@@ -44,7 +44,7 @@ class PharmacyController extends Controller
     public function edit($pharmacy)
     {
         if (is_numeric($pharmacy)) {
-            $pharmacy = Pharmacy::where('pharmacy_id', $pharmacy)->first();
+            $pharmacy = Pharmacy::where('id', $pharmacy)->first();
             return view('pharmacies.edit', ['pharmacy' => $pharmacy]);
         }
     }

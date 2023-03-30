@@ -56,7 +56,7 @@
             url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
             method: "GET",
             success: function(response) {
-                $('#pharmacyId').val(response.pharmacy[0].pharmacy_id)
+                $('#pharmacyId').val(response.pharmacy[0].id)
                 $('#pharmacyName').val(response.pharmacy[0].name)
                 $('#pharmacyAddress').val(response.pharmacy[0].address)
             }

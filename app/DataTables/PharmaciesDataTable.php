@@ -39,20 +39,20 @@ class PharmaciesDataTable extends DataTable
                 <div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
                     <div class="d-flex flex-row gap-2">
                         <div>
-                            <button type="button" class="btn btn-success rounded" onclick="showEditModal(event)" id="{{$pharmacy_id}}" data-bs-toggle="modal" data-bs-target="#editPharmacyModal">
+                            <button type="button" class="btn btn-success rounded" onclick="showEditModal(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#editPharmacyModal">
                                 Edit
                             </button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-primary rounded" onclick="showPharmacyModal(event)" id="show-{{$pharmacy_id}}" data-bs-toggle="modal" data-bs-target="#showPharmacyModal">
+                            <button type="button" class="btn btn-primary rounded" onclick="showPharmacyModal(event)" id="show-{{$id}}" data-bs-toggle="modal" data-bs-target="#showPharmacyModal">
                                 Show
                             </button>
                         </div>
                         <div>
-                            <form method="post" class="delete_item" action="{{Route("pharmacies.destroy",$pharmacy_id)}}">
+                            <form method="post" class="delete_item" action="{{Route("pharmacies.destroy",$id)}}">
                                 @csrf
                                 @method("DELETE")
-                                <button type="button" class="btn btn-danger rounded delete-pharmacy" onclick="showDeleteModal(event)" id="delete_{{$pharmacy_id}}" data-bs-toggle="modal" data-bs-target="#deletePharmacyModal">
+                                <button type="button" class="btn btn-danger rounded delete-pharmacy" onclick="showDeleteModal(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#deletePharmacyModal">
                                     Delete
                                 </button>
                             </form>
@@ -105,8 +105,8 @@ class PharmaciesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('avatar')->addClass('text-center')->title('Image'),
-            Column::make('pharmacy_id')->addClass('text-center')->title('ID'),
+            Column::make('avatar_image')->addClass('text-center')->title('Image'),
+            Column::make('id')->addClass('text-center')->title('ID'),
             Column::make('Owner Name')->addClass('text-center'),
             Column::make('Owner Email')->addClass('text-center'),
             Column::make('Area')->addClass('text-center'),
