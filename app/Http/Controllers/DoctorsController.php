@@ -92,6 +92,4 @@ class DoctorsController extends Controller
             return redirect()->route('doctors.index');
         }
     }
-
-
 }
