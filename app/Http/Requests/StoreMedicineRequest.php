@@ -24,20 +24,15 @@ class StoreMedicineRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','unique:medicines,id'],
             'name' => ['required','string'],
             'type' => ['required','string'],
             'quantity' => ['required','integer','min:1'],
-            'price' => ['required','double']
+            'price' => ['required','regex:/^\d+(\.\d{1,2})?$/']
         ];
     }
     public function messages(): array
     {
         return [
-            'id' => [
-                'required' => 'Medicine ID is Required',
-                'unique' => 'Medicine ID must be Unique',
-            ],
             'name' => [
                 'required' => 'Name is Required'
             ],
