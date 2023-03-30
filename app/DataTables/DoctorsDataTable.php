@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Doctor;
+use App\Models\Pharmacy;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -23,16 +25,19 @@ class DoctorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('action', function ($row) {
-            $button = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal" ';
-            $button .= 'data-national-id="'.$row->national_id.'" ';
-            $button .= 'data-pharmacy-id="'.$row->pharmacy_id.'" ';
-            $button .= 'data-national-id="'.$row->national_id.'" ';
-            $button .= 'data-pharmacy-id="'.$row->pharmacy_id.'" ';
-            $button .= 'data-is-banned="'.($row->is_banned ? 'Yes' : 'No').'" ';
-            $button .= '>View</button>';
-            return $button;
-        })
+        ->addColumn(
+            'action',
+            '
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$national_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
+            <button class="btn btn-primary rounded me-2" id="option_a2"> show </button>
+                <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$national_id)}}">
+                    @csrf
+                    @method("DELETE")
+                    <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$national_id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                </form>
+            </div>'
+        )
         ->setRowId('national_id');
     }
 
@@ -44,7 +49,7 @@ class DoctorsDataTable extends DataTable
      */
     public function query(Doctor $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('pharmacy.user');
     }
 
     /**
@@ -77,18 +82,22 @@ class DoctorsDataTable extends DataTable
      * @return array
      */
     public function getColumns(): array
-    {
-        return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('national_id'),
-            Column::make('pharmacy_id'),
-            Column::make('is_banned'),
-        ];
-    }
+{
+    return [
+        Column::make('national_id'),
+        Column::make('pharmacy.user.name')->label('Assigned Pharmacy'),
+        Column::make('doctor.user.email')->label('email'),
+        Column::make('is_banned'),
+        Column::make('avatar'),
+        Column::computed('action')
+              ->exportable(false)
+              ->printable(false)
+              ->width(60)
+              ->addClass('text-center'),
+    ];
+}
+
+
 
     /**
      * Get filename for export.

@@ -23,6 +23,16 @@ Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
 Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
 Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
 
+
+
+
+
+Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
+Route::delete('/doctors/{national_id}', [DoctorsController::class, 'destroy'])->name('doctors.destroy');
+Route::get('/doctors/{national_id}', [DoctorsController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{national_id}/edit', [DoctorsController::class, 'edit'])->name('doctors.edit');
+Route::put('/doctors/{national_id}', [DoctorsController::class, 'update'])->name('doctors.update');
+
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 
 //Route::get('/areas/list', [AreaController::class, 'getAreas'])->name('areas.list');

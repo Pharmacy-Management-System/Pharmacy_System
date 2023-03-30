@@ -9,6 +9,8 @@ class Doctor extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'national_id';
+
     protected $fillable = [
         'national_id',
         'email',
@@ -22,6 +24,10 @@ class Doctor extends Model
     protected $hidden = [
         'password'
     ];
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class, 'pharmacy_id', 'pharmacy_id');
+    }
 
     public function user()
     {

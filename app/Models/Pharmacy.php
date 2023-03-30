@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pharmacy extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'pharmacy_id';
     protected $fillable = [
         'pharmacy_id',
         'avatar',
@@ -29,6 +29,10 @@ class Pharmacy extends Model
     public function orders()
     {
        return $this->hasMany(Order::class,'pharmacy_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(related: User::class);
     }
 
 }

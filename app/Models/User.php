@@ -38,6 +38,6 @@ class User extends Authenticatable
    }
 
    public function doctor(){
-    return $this->hasOne(Doctor::class ,'pharmacy_id');
+    return $this->hasOne(Doctor::class ,'national_id');
    }
 }
