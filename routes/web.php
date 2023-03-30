@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ClientController;
-
+use App\Http\Controllers\MedicineController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
