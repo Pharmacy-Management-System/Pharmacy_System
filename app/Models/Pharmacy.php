@@ -10,7 +10,7 @@ class Pharmacy extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pharmacy_id',
+        'id',
         'avatar',
         'area_id',
         'priority'
@@ -32,12 +32,12 @@ class Pharmacy extends Model
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class,'pharmacy_id');
+        return $this->hasMany(Doctor::class,'id');
     }
 
     public function orders()
     {
-       return $this->hasMany(Order::class,'pharmacy_id');
+       return $this->hasMany(Order::class,'id');
     }
 
 }

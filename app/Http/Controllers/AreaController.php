@@ -17,11 +17,11 @@ class AreaController extends Controller
         return $dataTable->render('areas.index');
     }
 
-    public function destroy($area_id)
+    public function destroy($id)
     {
-        if (is_numeric($area_id)) {
+        if (is_numeric($id)) {
             try {
-                Area::where('area_id', $area_id)->delete();
+                Area::where('id', $id)->delete();
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('areas.index')->with('error', 'Delete related records first');
             }
@@ -29,23 +29,32 @@ class AreaController extends Controller
         }
     }
 
-    public function show($area_id)
+    public function show($id)
     {
-        $area = Area::where('area_id', $area_id)->get();
+        $area = Area::where('id', $id)->get();
         return response()->json(['area' => $area]);
     }
 
-    public function update(StoreAreaRequest $request, $area_id)
+    public function store(StoreAreaRequest $request)
     {
-        if (is_numeric($area_id)) {
-            Area::where('area_id', $area_id)->update($request->validated());
-            return to_route('areas.index');
-        }        
+        Area::create($request->validated());
+        return to_route('areas.index')->with('success', 'Area added successfully!')->with('timeout', 5000);
     }
-    public function edit($area_id)
+    public function update(StoreAreaRequest $request, $id)
     {
-        if (is_numeric($area_id)) {
-            $area=Area::where('area_id', $area_id)->first();
+        if (is_numeric($id)) {
+            try {
+                Area::where('id', $id)->update($request->validated());
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return to_route('areas.index')->with('error', 'Cannot update a postal code for this areaa because of relation with other records ');
+            }
+            return to_route('areas.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
+        }
+    }
+    public function edit($id)
+    {
+        if (is_numeric($id)) {
+            $area = Area::where('id', $id)->first();
             return view('areas.edit', ['area' => $area]);
         }
     }

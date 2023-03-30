@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('areas', function (Blueprint $table) {
-            $table->unsignedBigInteger('area_id')->primary();
+            $table->unsignedBigInteger('id')->primary();
             $table->string('name');
             $table->string('address');
             $table->timestamps();
