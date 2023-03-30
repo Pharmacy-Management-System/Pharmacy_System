@@ -16,4 +16,8 @@ class Pharmacy extends Model
         'priority'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(related: User::class);
+    }
 }

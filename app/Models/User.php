@@ -36,4 +36,8 @@ class User extends Authenticatable
    public function pharmacy(){
     return $this->hasOne(Pharmacy::class ,'pharmacy_id');
    }
+
+   public function doctor(){
+    return $this->hasOne(Doctor::class ,'pharmacy_id');
+   }
 }
