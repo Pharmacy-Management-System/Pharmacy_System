@@ -27,7 +27,6 @@ class StoreDoctorRequest extends FormRequest
             'national_id'=> ['required','size:14', Rule::unique('doctors', 'national_id')->ignore($this->doctor, 'national_id')->where(function ($query) {
                 $query->where('national_id', '!=', $this->input('national_id'));
             })],
-
             'pharmacy_id' => ['required','exists:pharmacies,pharmacy_id'],
             'is_banned' => ['required']
         ];

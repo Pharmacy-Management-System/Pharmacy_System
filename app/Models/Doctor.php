@@ -12,6 +12,7 @@ class Doctor extends Model
     protected $primaryKey = 'national_id';
 
     protected $fillable = [
+        'user_id',
         'national_id',
         'avatar',
         'pharmacy_id',

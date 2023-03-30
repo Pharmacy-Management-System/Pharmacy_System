@@ -21,6 +21,28 @@ class DoctorsController extends Controller
         return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies,'doctors'=>$doctors]);
     }
 
+    public function store(StoreDoctorRequest $request)
+    {
+        // Create a new user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        // Create a new doctor record
+        $doctor = Doctor::create([
+            'user_id' => $user->id,
+            'national_id' => $request->national_id,
+            'pharmacy_id' => $request->pharmacy_id,
+            'is_banned' => $request->is_banned,
+            'avatar' => $request->avatar,
+        ]);
+
+        return redirect()->route('doctors.index',['pharmacies'=> Pharmacy::all(), 'users'=>User::all()])->with('success', 'Doctor has been created!');
+    }
+
+
 
 
     public function destroy($national_id)

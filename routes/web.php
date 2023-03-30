@@ -32,6 +32,8 @@ Route::delete('/doctors/{national_id}', [DoctorsController::class, 'destroy'])->
 Route::get('/doctors/{national_id}', [DoctorsController::class, 'show'])->name('doctors.show');
 Route::get('/doctors/{national_id}/edit', [DoctorsController::class, 'edit'])->name('doctors.edit');
 Route::put('/doctors/{national_id}', [DoctorsController::class, 'update'])->name('doctors.update');
+Route::post('/doctors', [DoctorsController::class, 'store'])->name('doctors.store');
+
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 
