@@ -77,6 +77,10 @@
                             <input name="email" class="form-control" id="email" value="">
                         </div>
                         <div class="mb-3">
+                            <label for="password" class="form-label">password</label>
+                            <input name="password" class="form-control" id="password" value="">
+                        </div>
+                        <div class="mb-3">
                             <label for="pharmacy_id" class="form-label">Pharmacy Name</label>
                             <select name="pharmacy_id" id="pharmacySelect" class="form-control">
                                 <!-- options go here -->
@@ -173,6 +177,7 @@
             method: "GET",
 
             success: function(response) {
+                console.log(response.users);
                 $('#nationalId').val(response.doctor[0].national_id);
                 $('#banned').val(response.doctor[0].is_banned);
                 $('#Avatar').val(response.doctor[0].avatar);
