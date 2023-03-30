@@ -63,13 +63,22 @@
                             <input name="national_id" class="form-control" id="nationalId" value="">
                         </div>
                         <div class="mb-3">
+                            <label for="name" class="form-label">name</label>
+                            <input name="name" class="form-control" id="email" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nationalId" class="form-label">email</label>
+                            <input name="email" class="form-control" id="email" value="">
+                        </div>
+                        <div class="mb-3">
                             <label for="pharName" class="form-label">Pharmacy Name</label>
                             <select name="pharmacy_id" class="form-select" id="pharName">
-                                @foreach ($pharmacies as $pharmacy)
+                                @foreach($pharmacies as $pharmacy)
                                 <option value="{{ $pharmacy->id }}">{{ $pharmacy->name }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="banned" class="form-label">Is banned?</label>
                             <input name="is_banned" class="form-control" id="banned" value="">
@@ -127,6 +136,8 @@
                 $('#pharName').val(response.doctor[0].pharmacy_id)
                 $('#banned').val(response.doctor[0].is_banned)
                 $('#avatar').val(response.doctor[0].avatar)
+                $('#name').val(response.doctor[0].user.name)
+                $('#email').val(response.doctor[0].user.email)
             }
         });
         var route = "{{ route('doctors.update', ':id') }}".replace(':id', itemId);

@@ -16,7 +16,8 @@ class DoctorsController extends Controller
     public function index(DoctorsDataTable $dataTable)
     {
         $pharmacies = Pharmacy::all();
-        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies]);
+        $doctors = Doctor::all();
+        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies,'doctors'=>$doctors]);
     }
 
 
@@ -36,12 +37,21 @@ class DoctorsController extends Controller
     public function show($national_id)
     {
         $doctor = Doctor::where('national_id', $national_id)->get();
-        return response()->json(['doctor' => $doctor]);
+        $pharmacies = Pharmacy::all();
+        return response()->json(['doctor' => $doctor, 'pharmacies'=> $pharmacies]);
+
     }
     public function update(StoreDoctorRequest $request, $national_id)
     {
         if (is_numeric($national_id)) {
-            Doctor::where('national_id', $national_id)->update([
+            $doctor = Doctor::where('national_id', $national_id)->firstOrFail();
+            $user = $doctor->user;
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+            ]);
+
+            $doctor->update([
             'national_id' => $request->national_id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
@@ -56,8 +66,10 @@ class DoctorsController extends Controller
     public function edit($national_id)
     {
         if (is_numeric($national_id)) {
-            $doctor = Doctor::where('national_id', $national_id)->first();
-            return view('doctors.edit', ['doctor' => $doctor]);
+            $doctor = Doctor::findOrFail($national_id);
+            $pharmacies = Pharmacy::all();
+            return view('doctors.index', ['doctor' => $doctor, 'pharmacies' => $pharmacies]);
         }
     }
+
 }

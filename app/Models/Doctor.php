@@ -33,4 +33,5 @@ class Doctor extends Model
     {
         return $this->belongsTo(related: User::class);
     }
+
 }
