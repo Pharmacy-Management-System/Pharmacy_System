@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DoctorsController;
+use App\Http\Controllers\MedicineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,21 @@ Route::get('/', function () {
 });
 Route::get('/doctors/{id}', [DoctorsController::class, 'show'])->name('doctors.show');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// medicine routes
+Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
+Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');

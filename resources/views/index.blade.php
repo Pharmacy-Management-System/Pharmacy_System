@@ -8,7 +8,7 @@
       </div><!--/. container-fluid -->
 
         {{ $dataTable->table() }}
-    </div><!--/. container-fluid -->
+   !--/. container-fluid -->
 
     <div class="modal" tabindex="-1">
         <div class="modal-dialog">
