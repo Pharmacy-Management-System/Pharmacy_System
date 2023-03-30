@@ -46,6 +46,7 @@
             </div>
         </div>
     </div>
+    <!-- edit moadal -->
     <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -95,17 +96,7 @@
                 </form>
             </div>
         </div>
-        @if ($errors->any())
-        <div class="alert alert-danger pb-0 ">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
     </div>
-
 </section>
 
 @endsection
