@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\DoctorsController;
-use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +16,19 @@ use App\Http\Controllers\MedicineController;
 */
 
 //Area Routes
-
-Route::get('/areas', [AreaController::class, 'index'])->name('index');
-Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
 Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
 Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
 Route::get('/areas/{id}', [AreaController::class, 'show'])->name('areas.show');
 Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
 Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
 Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
+
+
+//Clients Routes
+Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
+Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
+Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
 

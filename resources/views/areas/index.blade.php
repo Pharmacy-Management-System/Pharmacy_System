@@ -63,6 +63,7 @@
             $('#edit_areaName').val("")
             $('#edit_areaAddress').val("")
             var itemId = event.target.id;
+            id = event.target.id;
             $.ajax({
                 url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
                 method: "GET",

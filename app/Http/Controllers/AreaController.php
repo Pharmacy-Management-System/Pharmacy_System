@@ -49,12 +49,12 @@ class AreaController extends Controller
                 return to_route('areas.index')->with('error', 'Cannot update a postal code for this areaa because of relation with other records ');
             }
             return to_route('areas.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
-        }        
+        }
     }
     public function edit($id)
     {
         if (is_numeric($id)) {
-            $area=Area::where('id', $id)->first();
+            $area = Area::where('id', $id)->first();
             return view('areas.edit', ['area' => $area]);
         }
     }

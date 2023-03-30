@@ -16,6 +16,11 @@ class Area extends Model
         'address',
     ];
 
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
+    }
+
     protected $casts = [
         'area_id' => 'integer',
     ];
