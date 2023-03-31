@@ -16,9 +16,18 @@ class Pharmacy extends Model
         'priority'
     ];
 
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
     public function area()
     {
-        return $this->belongsTo(Area::class,'area_id');
+        return $this->belongsTo(Area::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function doctors()
@@ -29,9 +38,5 @@ class Pharmacy extends Model
     public function orders()
     {
        return $this->hasMany(Order::class,'id');
-    }
-    public function user()
-    {
-        return $this->belongsTo(related: User::class);
     }
 }
