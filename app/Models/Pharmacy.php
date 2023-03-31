@@ -39,5 +39,4 @@ class Pharmacy extends Model
     {
        return $this->hasMany(Order::class,'id');
     }
-
 }

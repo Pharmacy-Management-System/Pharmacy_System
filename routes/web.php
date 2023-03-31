@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PharmacyController;
-use App\Http\Controllers\DoctorsController;
 use App\Http\Controllers\ClientController;
-
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicineController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +43,18 @@ Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name(
 Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
 Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
 
-
-
 //Doctor Routes
-Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
+Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
+
+// medicine routes
+Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
+Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');

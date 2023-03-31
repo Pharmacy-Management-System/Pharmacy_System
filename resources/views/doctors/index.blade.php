@@ -3,33 +3,58 @@
 @section('content')
 
 <section class="content">
-    <div class="container-fluid">
-
-        {{ $dataTable->table() }}
-    </div><!--/. container-fluid -->
-
-    <div class="modal fade" id="editForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
+    {{-- when delete doctor related to other records --}}
+    @if (session('error'))
+    <div class="alert alert-danger p-2 mt-3 ">
+        {{ session('error') }}
     </div>
+    @endif
+    @if ($errors->any())
+    <div class="alert alert-danger pb-0">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+    <div class="container-fluid">
+    <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal" data-bs-target="#create">Add New Doctor</button>
+    </div>
+        {{-- {{@dd( $dataTable->table())}} --}}
+        {{ $dataTable->table() }}
+    </div>
+
+
+    <!-- delete moadal -->
+    @include('doctors.delete')
+
+    <!-- Create Modal -->
+    @include('doctors.create')
+
+    <!-- edit moadal -->
+    @include('doctors.edit')
+    <!------Show modal----->
+    @include('doctors.show')
 
 </section>
 
 @endsection
 
+
 @push('scripts')
 {{ $dataTable->scripts() }}
+<script>
+setTimeout(function() {
+            $('.alert-success').fadeOut();
+        }, {{ session('timeout') }});
+</script>
 @endpush
+
+
