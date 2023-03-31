@@ -11,17 +11,35 @@
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body">
+
                     <div class="mb-3">
-                        <label for="pharmacyId" class="form-label">Pharmacy ID</label>
-                        <input name="pharmacy_id" class="form-control" id="pharmacyId" value="">
+                        <label for="pharmacyId" class="form-label">ID</label>
+                        <input name="id" class="form-control" id="pharmacyId" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="pharmacyName" class="form-label">Pharmacy Name</label>
-                        <input name="name" class="form-control" id="pharmacyName" value="">
+                        <label for="name" class="form-label">Owner Name</label>
+                        <input name="name" class="form-control" id="name" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="pharmacyAddress" class="form-label">Pharmacy Address</label>
-                        <input name="address" class="form-control" id="pharmacyAddress" value="">
+                        <label for="email" class="form-label">Owner Email</label>
+                        <input name="email" class="form-control" id="email" value="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="area_id" class="form-label">Area Name</label>
+                        <select name="area_id" id="areaSelect" class="form-control">
+
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="priority" class="form-label">Priority</label>
+                        <input name="priority" class="form-control" id="priority" value="">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="avatar" class="form-label">Image</label>
+                        <input name="avatar" class="form-control" id="avatar" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -31,13 +49,4 @@
             </form>
         </div>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger pb-0 ">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 </div>

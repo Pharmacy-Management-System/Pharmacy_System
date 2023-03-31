@@ -56,9 +56,22 @@
             url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
             method: "GET",
             success: function(response) {
-                $('#pharmacyId').val(response.pharmacy[0].id)
-                $('#pharmacyName').val(response.pharmacy[0].name)
-                $('#pharmacyAddress').val(response.pharmacy[0].address)
+                console.log(response)
+                $('#pharmacyId').val(response.pharmacy.id);
+                $('#priority').val(response.pharmacy.priority);
+                $('#avatar').val(response.pharmacy.avatar_image);
+                $('#name').val(response.user.name);
+                $('#email').val(response.user.email);
+                var areaSelect = $('#areaSelect');
+                areaSelect.empty();
+                $.each(response.areas, function(index, area) {
+                    var option = $('<option>').val(area.id).text(area.name);
+                    if (area.id === response.pharmacy.area_id) {
+                        option.attr('selected', 'selected');
+                    }
+                    areaSelect.append(option);
+                });
+                areaSelect.val(response.pharmacy.area_id);
             }
         });
         var route = "{{ route('pharmacies.update', ':id') }}".replace(':id', pharmacyId);

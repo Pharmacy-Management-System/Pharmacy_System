@@ -24,9 +24,9 @@ class StorePharmacyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','size:14','unique:pharmacies,pharmacy_id,'.$this->pharmacy],
+            'id'=> ['required','size:14','unique:pharmacies,id,'.$this->pharmacy],
             'avatar_image' => ['mimes:jpg,jpeg'],
-            'area_id' => ['required|exists:areas,area_id'],
+            'area_id' => ['required','exists:areas,id'],
             'priority' => ['required','integer']
         ];
     }
