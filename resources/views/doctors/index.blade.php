@@ -168,6 +168,15 @@
 @push('scripts')
 {{ $dataTable->scripts() }}
 <script>
+    function deletemodalShow(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let deleteBtnModal = document.querySelector("#delete");
+        deleteBtnModal.onclick = function() {
+            event.target.closest("form").submit();
+        }
+    }
+
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
