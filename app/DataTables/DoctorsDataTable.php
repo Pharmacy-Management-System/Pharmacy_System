@@ -96,7 +96,7 @@ class DoctorsDataTable extends DataTable
             //Column::make('user.email')->title('Email'),
             Column::make('pharmacy.user.name')->title('Assigned Pharmacy'),
             Column::make('is_banned'),
-            Column::make('avatar'),
+            Column::make('avatar_image'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

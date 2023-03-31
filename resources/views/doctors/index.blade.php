@@ -95,7 +95,7 @@
 
                         <div class="mb-3">
                             <label for="Avatar" class="form-label">Avatar</label>
-                            <input name="avatar" class="form-control" id="Avatar" value="">
+                            <input name="avatar_image" class="form-control" id="Avatar" value="">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -149,7 +149,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="avatar" class="form-label">Avatar</label>
-                            <input name="avatar" class="form-control" id="avatar" value="">
+                            <input name="avatar_image" class="form-control" id="avatar" value="">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -221,7 +221,7 @@
             success: function(response) {
                 $('#nationalId').val(response.doctor.id);
                 $('#banned').val(response.doctor.is_banned);
-                $('#Avatar').val(response.doctor.avatar);
+                $('#Avatar').val(response.doctor.avatar_image);
                 $('#name').val(response.users.find(user => user.id === response.doctor.user_id).name);
                 $('#email').val(response.users.find(user => user.id === response.doctor.user_id).email);
                 var pharmacySelect = $('#pharmacySelect');

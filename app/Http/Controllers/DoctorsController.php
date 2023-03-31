@@ -36,7 +36,7 @@ class DoctorsController extends Controller
             'id' => $request->id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
-            'avatar' => $request->avatar,
+            'avatar_image' => $request->avatar_image,
         ]);
 
         return redirect()->route('doctors.index',['pharmacies'=> Pharmacy::all(), 'users'=>User::all()])->with('success', 'Doctor has been created!');
@@ -89,7 +89,7 @@ class DoctorsController extends Controller
             'id' => $request->id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
-            'avatar' => $request->avatar,
+            'avatar_image' => $request->avatar_image,
             ]);
             return redirect()->route('doctors.index');
         }
