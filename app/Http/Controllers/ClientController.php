@@ -43,49 +43,47 @@ class ClientController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-
-        // dd($request->all());
-        // create user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
-        //  handle image 
-        if ($request->hasFile('avatar_image')) {
-            $avatar = $request->file('avatar_image');
-            $avatar_name = $avatar->getClientOriginalName();
-            $avatar->storeAs('public/clients_Images', $avatar_name);
-        } else {
-            $avatar_name = 'default.jpg';
+        try {
+            // create user
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
+            //  handle image 
+            if ($request->hasFile('avatar_image')) {
+                $avatar = $request->file('avatar_image');
+                $avatar_name = $avatar->getClientOriginalName();
+                $avatar->storeAs('public/clients_Images', $avatar_name);
+            } else {
+                $avatar_name = 'default.jpg';
+            }
+            // handle checkbox
+            $isChecked = 0;
+            if ($request->has('is_main')) {
+                $isChecked = 1;
+            }
+            // craete client 
+            Client::create([
+                'id' => $request->id,
+                'user_id' => $user->id,
+                'avatar_image' => $avatar_name,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
+                'phone' => $request->phone,
+                'area_id' => $request->area_id,
+                'street_name' => $request->street_name,
+                'building_no' => $request->building_no,
+                'floor_number'  => $request->floor_number,
+                'flat_number' => $request->flat_number,
+                'is_main' => $isChecked
+            ]);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return to_route('clients.index')->with('error', 'Error in Creating Client.')->with('timeout', 5000);;
         }
-
-        // handle checkbox
-        $isChecked = 0;
-        if ($request->has('is_main')) {
-            $isChecked = 1;
-        }
-
-        // craete client 
-        Client::create([
-            'user_id' => $user->id,
-            'id' => $request->id,
-            'avatar_image' => $avatar_name,
-            'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth,
-            'phone' => $request->phone,
-            'area_id' => $request->area_id,
-            'street_name' => $request->street_name,
-            'building_no' => $request->building_no,
-            'floor_number'  => $request->floor_number,
-            'flat_number' => $request->flat_number,
-            'is_main' => $isChecked
-        ]);
-
-        return redirect()->route('clients.index')->with('success', 'Client has been created successfully!');
+        return to_route('clients.index')->with('success', 'Client has been created successfully!')->with('timeout', 5000);;
     }
 
     public function destroy($national_id)

@@ -10,7 +10,7 @@
                 <div class="modal-body row g-3">
                     <div class="col-md-12 ">
                         <label for="avatar" class="form-label">Upload Image </label>
-                        <input name="image" class="form-control" type="file" id="avatar" accept=".jpg,.png">
+                        <input name="avatar_image" class="form-control" type="file" id="avatar" accept=".jpg,.png">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-name" class="form-label">Name</label>
@@ -45,7 +45,6 @@
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                    
                     <div class="col-md-6 ">
                         <label for="postal" class="form-label">Postal Code</label>
                         <select name="area_id" id="postal" class="form-select " aria-label="Default select example">

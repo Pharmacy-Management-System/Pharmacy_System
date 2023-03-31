@@ -6,16 +6,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            {{-- {{ Form::open(['id' => 'myForm']) }}
-            {{ Form::hidden('id', null, ['id' => 'myId']) }} --}}
-            <form method="POST" id="edit-form" enctype="multipart/form-data">
-                @method('PUT')
-                @csrf
-
+        
+            <form action="" id="edit-form" method="POST">
+                    @csrf
+                
                 <div class="modal-body row g-3">
                     <div class="col-md-12 ">
                         <label for="avatar" class="form-label">Upload Image </label>
-                        <input name="image" class="form-control" type="file" id="avatar" accept=".jpg,.png">
+                        <input name="avatar_image" class="form-control" type="file" id="avatar" accept=".jpg,.png">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-name" class="form-label">Name</label>
@@ -30,6 +28,10 @@
                         <input name="id" class="form-control" id="client-id" value="">
                     </div>
                     <div class="col-md-6 ">
+                        <label for="client-birthdate" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" name="date_of_birth" id="client-birthdate" min="1860-01-01" max="2023-01-01" value=""/>
+                    </div>
+                    <div class="col-md-6 ">
                         <label for="client-gender" class="form-label">Gender</label>
                         <select name="gender" id="client-gender" class="form-select "
                             aria-label="Default select example">
@@ -39,12 +41,17 @@
                         </select>
                     </div>
                     <div class="col-md-6 ">
-                        <label for="client-phone" class="form-label">Phone Number</label>
-                        <input name="phone" class="form-control" id="client-phone" value="">
+                        <label for="postal" class="form-label">Postal Code</label>
+                        <select name="area_id" id="postal" class="form-select " aria-label="Default select example">
+                            <option selected>Select Area</option>
+                            @foreach($areas as $area)
+                            <option value="{{ $area->id }}">{{ $area->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-6 ">
-                        <label for="postal" class="form-label">Postal Code</label>
-                        <input name="area_id" class="form-control" id="postal" value="">
+                        <label for="client-phone" class="form-label">Phone Number</label>
+                        <input name="phone" class="form-control" id="client-phone" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="street" class="form-label">Street Name</label>
@@ -75,8 +82,6 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary text-white">Edit</button>
                 </div>
-                {{-- {{ Form::close() }}
-            {{ Form::close() }} --}}
             </form>
 
         </div>
@@ -106,13 +111,9 @@
                 $('#flat').val(response.client.flat_number)
                 $('#main').prop('checked', response.client.is_main);
                 $('#main').val('checked', response.client.is_main);
+                $('#client-birthdate').val(response.client.date_of_birth)
             }
         });
-        /* document.getElementById('myId').addEventListener('change', function() {
-            var route = "{{ route('clients.update', ':id') }}".replace(':id', itemId);
-            document.getElementById('edit-form').action = route;
-            document.getElementById('myForm').method = "POST"
-        }); */
 
         var route = "{{ route('clients.update', ':id') }}".replace(':id', itemId);
         document.getElementById('edit-form').action = route;
