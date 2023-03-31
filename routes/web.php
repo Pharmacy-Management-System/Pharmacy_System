@@ -6,6 +6,8 @@ use App\Http\Controllers\PharmacyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,4 +62,20 @@ Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('
 Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
 Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
 Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+
+
+//orders routes
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
