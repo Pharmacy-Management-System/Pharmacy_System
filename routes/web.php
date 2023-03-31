@@ -28,10 +28,10 @@ Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edi
 
 
 Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
-Route::delete('/doctors/{national_id}', [DoctorsController::class, 'destroy'])->name('doctors.destroy');
-Route::get('/doctors/{national_id}', [DoctorsController::class, 'show'])->name('doctors.show');
-Route::get('/doctors/{national_id}/edit', [DoctorsController::class, 'edit'])->name('doctors.edit');
-Route::put('/doctors/{national_id}', [DoctorsController::class, 'update'])->name('doctors.update');
+Route::delete('/doctors/{id}', [DoctorsController::class, 'destroy'])->name('doctors.destroy');
+Route::get('/doctors/{id}', [DoctorsController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{id}/edit', [DoctorsController::class, 'edit'])->name('doctors.edit');
+Route::put('/doctors/{id}', [DoctorsController::class, 'update'])->name('doctors.update');
 Route::post('/doctors', [DoctorsController::class, 'store'])->name('doctors.store');
 
 

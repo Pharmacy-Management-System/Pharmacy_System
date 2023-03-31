@@ -66,7 +66,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nationalId" class="form-label">National ID</label>
-                            <input name="national_id" class="form-control" id="nationalId" value="">
+                            <input name="id" class="form-control" id="nationalId" value="">
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">name</label>
@@ -120,7 +120,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nationalId" class="form-label">National ID</label>
-                            <input name="national_id" class="form-control" id="nationalId" value="">
+                            <input name="id" class="form-control" id="nationalId" value="">
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">name</label>
@@ -139,7 +139,7 @@
                             <select name="pharmacy_id" id="pharmacySelect" class="form-control">
                                 <option value="" disabled selected hidden></option>
                                 @foreach($pharmacies as $pharmacy)
-                                <option value="{{ $pharmacy->pharmacy_id }}">{{ $pharmacy->User->name }}</option>
+                                <option value="{{ $pharmacy->id }}">{{ $pharmacy->User->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -178,7 +178,7 @@
 
             success: function(response) {
                 console.log(response.users);
-                $('#nationalId').val(response.doctor[0].national_id);
+                $('#nationalId').val(response.doctor[0].id);
                 $('#banned').val(response.doctor[0].is_banned);
                 $('#Avatar').val(response.doctor[0].avatar);
                 $('#name').val(response.users.find(user => user.id === response.doctor[0].user_id).name);
@@ -187,8 +187,8 @@
                 pharmacySelect.empty();
                 $.each(response.pharmacies, function(index, pharmacy) {
                     var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
-                    var option = $('<option>').val(pharmacy.pharmacy_id).text(pharmacyName);
-                    if (pharmacy.pharmacy_id === response.doctor[0].pharmacy_id) {
+                    var option = $('<option>').val(pharmacy.id).text(pharmacyName);
+                    if (pharmacy.id === response.doctor[0].pharmacy_id) {
                         option.attr('selected', 'selected');
                     }
                     pharmacySelect.append(option);

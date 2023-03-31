@@ -33,7 +33,7 @@ class DoctorsController extends Controller
         // Create a new doctor record
         $doctor = Doctor::create([
             'user_id' => $user->id,
-            'national_id' => $request->national_id,
+            'id' => $request->id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
             'avatar' => $request->avatar,
@@ -45,11 +45,11 @@ class DoctorsController extends Controller
 
 
 
-    public function destroy($national_id)
+    public function destroy($id)
     {
-        if (is_numeric($national_id)) {
+        if (is_numeric($id)) {
             try {
-                Doctor::where('national_id', $national_id)->delete();
+                Doctor::where('id', $id)->delete();
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('doctors.index')->with('error', 'Delete related records first');
             }
@@ -59,9 +59,9 @@ class DoctorsController extends Controller
 
 
 
-    public function show($national_id)
+    public function show($id)
     {
-        $doctor = Doctor::where('national_id', $national_id)->get();
+        $doctor = Doctor::where('id', $id)->get();
         $pharmacies = Pharmacy::all();
         $users = User::all();
         return response()->json([
@@ -73,10 +73,10 @@ class DoctorsController extends Controller
 
 
 
-    public function update(StoreDoctorRequest $request, $national_id)
+    public function update(StoreDoctorRequest $request, $id)
     {
-        if (is_numeric($national_id)) {
-            $doctor = Doctor::where('national_id', $national_id)->firstOrFail();
+        if (is_numeric($id)) {
+            $doctor = Doctor::where('id', $id)->firstOrFail();
             $user = $doctor->user;
             $user->update([
                 'name' => $request->name,
@@ -84,7 +84,7 @@ class DoctorsController extends Controller
             ]);
 
             $doctor->update([
-            'national_id' => $request->national_id,
+            'id' => $request->id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
             'avatar' => $request->avatar,

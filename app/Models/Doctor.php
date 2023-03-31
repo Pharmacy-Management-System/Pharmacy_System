@@ -9,11 +9,11 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'national_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id',
         'user_id',
-        'national_id',
         'avatar',
         'pharmacy_id',
         'is_banned'
@@ -24,7 +24,7 @@ class Doctor extends Model
     ];
     public function pharmacy()
     {
-        return $this->belongsTo(Pharmacy::class, 'pharmacy_id', 'pharmacy_id');
+        return $this->belongsTo(Pharmacy::class);
     }
 
     public function user()

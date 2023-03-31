@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
-            //$table->unsignedBigInteger("doctor_id")->nullable();
             $table->unsignedBigInteger("pharmacy_id");
             $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation','Canceled','Confirmed','Delivered']);
             $table->boolean("is_insured");
@@ -24,8 +23,7 @@ return new class extends Migration
             $table->string('delivering_address');
             $table->double('price');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('pharmacy_id')->references('pharmacy_id')->on('pharmacies'); //refers to pharmacy that has the order
-            //$table->foreign('doctor_id')->references('national_id')->on('doctors');
+            $table->foreign('pharmacy_id')->references('id')->on('pharmacies'); //refers to pharmacy that has the order
 
 
             $table->timestamps();

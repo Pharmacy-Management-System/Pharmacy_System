@@ -29,16 +29,16 @@ class DoctorsDataTable extends DataTable
                 'action',
                 '
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$national_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
+            <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
             <button class="btn btn-primary rounded me-2" id="option_a2"> show </button>
-                <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$national_id)}}">
+                <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
                     @csrf
                     @method("DELETE")
-                    <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$national_id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                    <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
                 </form>
             </div>'
             )
-            ->setRowId('national_id');
+            ->setRowId('id');
     }
 
     /**
@@ -47,10 +47,13 @@ class DoctorsDataTable extends DataTable
      * @param \App\Models\Doctor $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
+
+
     public function query(Doctor $model): QueryBuilder
     {
-        return $model->newQuery()->with(['user', 'pharmacy.user']);
+        return $model->newQuery()->select('doctors.*')->with(['user', 'pharmacy.user']);
     }
+
 
 
     /**
@@ -75,7 +78,7 @@ class DoctorsDataTable extends DataTable
                 Button::make('reset'),
                 Button::make('reload')
             ]);
-        }
+    }
 
     /**
      * Get the dataTable columns definition.
@@ -85,11 +88,10 @@ class DoctorsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('national_id'),
+            Column::make('id')->title('National ID'),
             Column::make('user.name')->title('Name'),
             Column::make('user.email')->title('Email'),
             Column::make('pharmacy.user.name')->title('Assigned Pharmacy'),
-
             Column::make('is_banned'),
             Column::make('avatar'),
             Column::computed('action')

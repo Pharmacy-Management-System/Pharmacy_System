@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pharmacy extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'pharmacy_id';
     protected $fillable = [
-        'id',
+        'pharmacy_id',
         'avatar',
         'area_id',
         'priority'
@@ -23,14 +23,13 @@ class Pharmacy extends Model
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class,'id');
+        return $this->hasMany(Doctor::class);
     }
 
     public function orders()
     {
-       return $this->hasMany(Order::class,'id');
+       return $this->hasMany(Order::class,'pharmacy_id');
     }
-
     public function user()
     {
         return $this->belongsTo(related: User::class);
