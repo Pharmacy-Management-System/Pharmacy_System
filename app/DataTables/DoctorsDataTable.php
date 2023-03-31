@@ -88,9 +88,12 @@ class DoctorsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('National ID'),
-            Column::make('user.name')->title('Name'),
-            Column::make('user.email')->title('Email'),
+            Column::computed('id', 'National ID'),
+            //Column::make('id')->title('National ID'),
+            Column::computed('user.name', 'Name'),
+            //Column::make('user.name')->title('Name'),
+            Column::computed('user.email', 'Email'),
+            //Column::make('user.email')->title('Email'),
             Column::make('pharmacy.user.name')->title('Assigned Pharmacy'),
             Column::make('is_banned'),
             Column::make('avatar'),
