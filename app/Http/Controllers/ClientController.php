@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ClientsDataTable;
+use App\Http\Requests\StoreClientRequest;
 use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
@@ -12,8 +13,7 @@ class ClientController extends Controller
 {
     public function index(ClientsDataTable $dataTable)
     {
-        //dd($dataTable);
-        return $dataTable->render('clients.index');
+        return $dataTable->render('clients.index', ['areas' => Area::all()]);
     }
 
     public function show($national_id)
@@ -24,17 +24,68 @@ class ClientController extends Controller
         return response()->json(['client' => $client, 'user' => $user, 'area' => $area]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $national_id)
     {
-        dd($id);
-        /*  if (is_numeric($id)) {
-            try {
-                Area::where('id', $id)->update($request->validated());
-            } catch (\Illuminate\Database\QueryException $exception) {
-                return to_route('areas.index')->with('error', 'Cannot update a postal code for this areaa because of relation with other records ');
-            }
-            return to_route('areas.index')->with('success', 'Area updated successfully!')->with('timeout', 5000);
-        } */
+        //  find client
+        /*  $client = Client::where('id', '=', $national_id)->first();
+        // find user related to client and update
+        $userData = [];
+        $userData['name'] = $request->name;
+        $userData['email'] = $request->email;
+        User::where('id', $client->user_id)->update($userData);
+        // update client data
+        $clientData = []; */
+        dd($request->image);
+        if ($request->image == null) {
+            dd('iamge is null');
+        } else {
+            dd('iamge is okay');
+        }
+    }
+
+    public function store(Request $request)
+    {
+
+        // dd($request->all());
+        // create user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        //  handle image 
+        if ($request->hasFile('avatar_image')) {
+            $avatar = $request->file('avatar_image');
+            $avatar_name = $avatar->getClientOriginalName();
+            $avatar->storeAs('public/clients_Images', $avatar_name);
+        } else {
+            $avatar_name = 'default.jpg';
+        }
+
+        // handle checkbox
+        $isChecked = 0;
+        if ($request->has('is_main')) {
+            $isChecked = 1;
+        }
+
+        // craete client 
+        Client::create([
+            'user_id' => $user->id,
+            'id' => $request->id,
+            'avatar_image' => $avatar_name,
+            'gender' => $request->gender,
+            'date_of_birth' => $request->date_of_birth,
+            'phone' => $request->phone,
+            'area_id' => $request->area_id,
+            'street_name' => $request->street_name,
+            'building_no' => $request->building_no,
+            'floor_number'  => $request->floor_number,
+            'flat_number' => $request->flat_number,
+            'is_main' => $isChecked
+        ]);
+
+        return redirect()->route('clients.index')->with('success', 'Client has been created successfully!');
     }
 
     public function destroy($national_id)

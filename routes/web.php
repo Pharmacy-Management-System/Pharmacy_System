@@ -30,6 +30,7 @@ Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clie
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
 Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
 Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
+Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
 
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');
