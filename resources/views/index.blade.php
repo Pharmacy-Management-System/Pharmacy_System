@@ -34,3 +34,5 @@
 {{-- @push('scripts')
 {{ $dataTable->scripts() }}
 @endpush --}}
+@endsection
+
