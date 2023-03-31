@@ -38,6 +38,15 @@ class DoctorsDataTable extends DataTable
                 </form>
             </div>'
             )
+            ->addColumn('name', function (Doctor $doctor) {
+                return $doctor->user->name;
+            })
+            ->addColumn('email', function (Doctor $doctor) {
+                return $doctor->user->email;
+            })
+            ->addColumn('pharmacy', function (Doctor $doctor) {
+                return $doctor->pharmacy->user->name;
+            })
             ->setRowId('id');
     }
 
@@ -51,7 +60,7 @@ class DoctorsDataTable extends DataTable
 
     public function query(Doctor $model): QueryBuilder
     {
-        return $model->newQuery()->select('doctors.*')->with(['user', 'pharmacy.user']);
+        return $model->newQuery();
     }
 
 
@@ -86,11 +95,11 @@ class DoctorsDataTable extends DataTable
         return [
             Column::computed('id', 'National ID'),
             //Column::make('id')->title('National ID'),
-            Column::computed('user.name', 'Name'),
+            Column::computed('name', 'Name'),
             //Column::make('user.name')->title('Name'),
-            Column::computed('user.email', 'Email'),
+            Column::computed('email', 'Email'),
             //Column::make('user.email')->title('Email'),
-            Column::make('pharmacy.user.name')->title('Assigned Pharmacy'),
+            Column::make('pharmacy','Assigned Pharmacy'),
             Column::make('is_banned'),
             Column::make('avatar_image'),
             Column::computed('action')

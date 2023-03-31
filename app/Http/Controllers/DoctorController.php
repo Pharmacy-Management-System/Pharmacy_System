@@ -48,11 +48,8 @@ class DoctorController extends Controller
             'avatar_image' => $avatar_name,
         ]);
 
-        return redirect()->route('doctors.index', ['pharmacies' => Pharmacy::all(), 'users' => User::all()])->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
+        return redirect()->route('doctors.index')->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
     }
-
-
-
 
 
     public function destroy($id)
