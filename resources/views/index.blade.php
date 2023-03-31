@@ -3,12 +3,12 @@
 @section('content')
 
 <section class="content">
-      <div class="container-fluid0">
+      {{-- <div class="container-fluid0">
         {{ $dataTable->table()}}
-      </div><!--/. container-fluid -->
+      </div>
 
-        {{ $dataTable->table() }}
-   !--/. container-fluid -->
+        {{ $dataTable->table() }} --}}
+
 
     <div class="modal" tabindex="-1">
         <div class="modal-dialog">
@@ -31,6 +31,6 @@
 
 @endsection
 
-@push('scripts')
+{{-- @push('scripts')
 {{ $dataTable->scripts() }}
-@endpush
+@endpush --}}

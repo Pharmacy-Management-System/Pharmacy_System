@@ -66,7 +66,7 @@
           </li>
 
           <li class="nav-item sidebar-list">
-            <a href="#" class="nav-link">
+            <a href="{{route('orders.index')}}" class="nav-link">
                 <img src="dist/img/icons/Orders-icon.png" class="nav-icon">
               <p>
                 Orders

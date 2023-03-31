@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\OrderController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,3 +73,14 @@ Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+
+
+//orders routes
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
