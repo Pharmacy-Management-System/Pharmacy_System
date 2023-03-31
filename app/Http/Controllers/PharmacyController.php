@@ -63,6 +63,7 @@ class PharmacyController extends Controller
             'id' => $request->id,
             'area_id' => $request->area_id,
             'avatar_image' => $request->avatar,
+            'priority' => $request->priority,
             ]);
             return redirect()->route('pharmacies.index');
         }

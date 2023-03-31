@@ -11,6 +11,17 @@
         </div>
     @endif
 
+    @if ($errors->any())
+    <div class="alert alert-danger pb-0 alert-dismissible">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+    </div>
+    @endif
+
     @if(session('success'))
         <div id ="alert-message" class="alert alert-success my-4 mb-0 alert-dismissible">
             {{ session('success') }}
@@ -76,6 +87,10 @@
         });
         var route = "{{ route('pharmacies.update', ':id') }}".replace(':id', pharmacyId);
         document.getElementById("edit-pharmacy-form").action = route;
+    }
+
+    function showModal(event) {
+
     }
 </script>
 @endpush

@@ -25,12 +25,13 @@
                         <input name="email" class="form-control" id="email" value="">
                     </div>
                     <div class="mb-3">
-                        <label for="area_id" class="form-label">Area Name</label>
-                        <select name="area_id" id="areaSelect" class="form-control">
-
-                        </select>
+                        <label for="password" class="form-label">Password</label>
+                        <input name="password" class="form-control" id="password" value="">
                     </div>
-
+                    <div class="mb-3">
+                        <label for="area_id" class="form-label">Area Name</label>
+                        <select name="area_id" id="areaSelect" class="form-control"></select>
+                    </div>
 
                     <div class="mb-3">
                         <label for="priority" class="form-label">Priority</label>
