@@ -67,3 +67,7 @@ Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medici
 Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
 Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
