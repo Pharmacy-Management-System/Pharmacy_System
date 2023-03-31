@@ -18,7 +18,7 @@ class DoctorController extends Controller
     {
         $pharmacies = Pharmacy::all();
         $doctors = Doctor::all();
-        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies,'doctors'=>$doctors]);
+        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
     }
 
     public function store(StoreDoctorRequest $request)
@@ -30,17 +30,27 @@ class DoctorController extends Controller
             'password' => $request->password,
         ]);
 
+        // Handle file upload
+        if ($request->hasFile('avatar_image')) {
+            $avatar = $request->file('avatar_image');
+            $avatar_name = $avatar->getClientOriginalName();
+            $avatar->storeAs('public/doctors_Images', $avatar_name);
+        } else {
+            $avatar_name = 'default.jpg';
+        }
+
         // Create a new doctor record
         $doctor = Doctor::create([
             'user_id' => $user->id,
             'id' => $request->id,
             'pharmacy_id' => $request->pharmacy_id,
             'is_banned' => $request->is_banned,
-            'avatar_image' => $request->avatar_image,
+            'avatar_image' => $avatar_name,
         ]);
 
-        return redirect()->route('doctors.index',['pharmacies'=> Pharmacy::all(), 'users'=>User::all()])->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
+        return redirect()->route('doctors.index', ['pharmacies' => Pharmacy::all(), 'users' => User::all()])->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
     }
+
 
 
 
@@ -80,13 +90,21 @@ class DoctorController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
+            if ($request->hasFile('avatar_image')) {
+                $avatar = $request->file('avatar_image');
+                $avatar_name = $avatar->getClientOriginalName();
+                $avatar->storeAs('public/doctors_Images', $avatar_name);
+            } else {
+                $avatar_name = $doctor->avatar_image;
+            }
 
             $doctor->update([
-            'id' => $request->id,
-            'pharmacy_id' => $request->pharmacy_id,
-            'is_banned' => $request->is_banned,
-            'avatar_image' => $request->avatar_image,
+                'id' => $request->id,
+                'pharmacy_id' => $request->pharmacy_id,
+                'is_banned' => $request->is_banned,
+                'avatar_image' => $avatar_name,
             ]);
+
             return redirect()->route('doctors.index')->with('success', 'Doctor has been updated successfully!')->with('timeout', 5000);
         }
     }

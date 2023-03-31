@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Area;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AreasDataTable extends DataTable
+class ClientsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -27,24 +27,32 @@ class AreasDataTable extends DataTable
                 'action',
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
+                <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$area_id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
+                <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-client">show</button>
+                    <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                        <button type="button" class="btn btn-danger rounded delete-client" onclick="clientdeletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#client-del-model">delete</button>
                     </form>
-                </div>'
+                </div>
+                '
             )
+            ->addColumn('name', function (Client $client) {
+                return $client->user->name;
+            })
+            ->addColumn('email', function (Client $client) {
+                return $client->user->email;
+            })
             ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Area $model
+     * @param \App\Models\Client $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Area $model): QueryBuilder
+    public function query(Client $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -57,7 +65,7 @@ class AreasDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('areas-table')
+            ->setTableId('clients-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -81,14 +89,16 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('Postal Code'),
-            Column::make('name'),
-            Column::make('address'),
+            Column::computed('id', 'National ID'),
+            Column::computed('name', 'Name'),
+            Column::computed('email', 'Email'),
+            Column::make('gender'),
+            Column::make('phone'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
-                ->addClass('text-center')
+                ->addClass('text-center'),
         ];
     }
 
@@ -99,6 +109,6 @@ class AreasDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Areas_' . date('YmdHis');
+        return 'Clients_' . date('YmdHis');
     }
 }

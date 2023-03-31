@@ -24,14 +24,14 @@
     </div>
     @endif
     <div class="container-fluid">
+    <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal" data-bs-target="#create">Add New Doctor</button>
+    </div>
         {{-- {{@dd( $dataTable->table())}} --}}
         {{ $dataTable->table() }}
     </div>
-    <div class="container">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create">
-            Create
-        </button>
-    </div>
+
+
     <!-- delete moadal -->
     @include('doctors.delete')
 
@@ -47,6 +47,7 @@
 
 @endsection
 
+
 @push('scripts')
 {{ $dataTable->scripts() }}
 <script>
@@ -55,3 +56,5 @@ setTimeout(function() {
         }, {{ session('timeout') }});
 </script>
 @endpush
+
+

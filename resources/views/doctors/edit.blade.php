@@ -42,7 +42,7 @@
 
                         <div class="mb-3">
                             <label for="avatarEdit" class="form-label">Avatar</label>
-                            <input name="avatar_image" class="form-control" id="avatarEdit" value="">
+                            <input type="file" name="avatar_image" class="form-control" id="avatarEdit" value="">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -67,7 +67,6 @@
                     console.log(response)
                     $('#nationalIdEdit').val(response.doctor.id);
                     $('#bannedEdit').val(response.doctor.is_banned);
-                    $('#avatarEdit').val(response.doctor.avatar_image);
                     $('#nameEdit').val(response.users.find(user => user.id === response.doctor.user_id).name);
                     $('#emailEdit').val(response.users.find(user => user.id === response.doctor.user_id).email);
                     var pharmacySelect = $('#pharmacyEdit');
@@ -82,6 +81,10 @@
                     });
 
                     pharmacySelect.val(response.doctor.pharmacy_id);
+                    $('#avatarEdit').val(response.doctor.avatar_image);
+                    $('#avatarEdit').trigger('change');
+
+
                 }
 
             });

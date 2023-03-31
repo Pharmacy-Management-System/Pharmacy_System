@@ -11,28 +11,32 @@
                 </ul>
             </div>
         @endif
+
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-        {{-- delete Error --}}
-        {{-- when delete area related to other records --}}
+
         @if (session('error'))
             <div class="alert alert-danger p-2 mt-3 ">
                 {{ session('error') }}
             </div>
         @endif
-        <div class="d-flex justify-content-end">
+
+         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
-                data-bs-target="#create">Create New Area</button>
+                data-bs-target="#create">Create New Medicine</button>
         </div>
+
+
         <div class="container-fluid">
             {{ $dataTable->table() }}
         </div>
-        @include('areas.create')
-        @include('areas.delete')
-        @include('areas.edit')
+
+        @include('medicine.delete')
+        @include('medicine.create')
+        @include('medicine.edit')
     </section>
 @endsection
 
@@ -42,9 +46,32 @@
         function createmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
-            $('#create_areaId').val("")
-            $('#create_areaName').val("")
-            $('#create_areaAddress').val("")
+            $('#create_medName').val("")
+            $('#create_medType').val("")
+            $('#create_medQuntity').val("")
+            $('#create_medPrice').val("")
+        }
+        
+        function editmodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#edit_medName').val("")
+            $('#edit_medType').val("")
+            $('#edit_medQuntity').val("")
+            $('#edit_medPrice').val("")
+            var itemId = event.target.id;
+            $.ajax({
+                url: "{{ route('medicines.show', ':id') }}".replace(':id', itemId),
+                method: "GET",
+                success: function(response) {
+                    $('#edit_medName').val(response.medicine[0].name)
+                    $('#edit_medType').val(response.medicine[0].type)
+                    $('#edit_medQuntity').val(response.medicine[0].quantity)
+                    $('#edit_medPrice').val(response.medicine[0].price)
+                }
+            });
+            var route = "{{ route('medicines.update', ':id') }}".replace(':id', itemId);
+            document.getElementById("edit-form").action = route;
         }
 
         function deletemodalShow(event) {
@@ -55,29 +82,9 @@
                 event.target.closest("form").submit();
             }
         }
-
-        function editmodalShow(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            $('#edit_areaId').val("")
-            $('#edit_areaName').val("")
-            $('#edit_areaAddress').val("")
-            var itemId = event.target.id;
-            id = event.target.id;
-            $.ajax({
-                url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
-                method: "GET",
-                success: function(response) {
-                    $('#edit_areaId').val(response.area[0].id)
-                    $('#edit_areaName').val(response.area[0].name)
-                    $('#edit_areaAddress').val(response.area[0].address)
-                }
-            });
-            var route = "{{ route('areas.update', ':id') }}".replace(':id', itemId);
-            document.getElementById("edit-form").action = route;
-        }
         setTimeout(function() {
             $('.alert-success').fadeOut();
         }, {{ session('timeout') }});
     </script>
+
 @endpush

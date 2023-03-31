@@ -30,10 +30,8 @@ class Pharmacy extends Model
     {
        return $this->hasMany(Order::class,'id');
     }
-
     public function user()
     {
         return $this->belongsTo(related: User::class);
     }
-
 }

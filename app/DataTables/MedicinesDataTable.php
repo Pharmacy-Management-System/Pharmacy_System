@@ -2,17 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Models\Area;
+use App\Models\Medicine;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AreasDataTable extends DataTable
+class MedicinesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -27,24 +25,19 @@ class AreasDataTable extends DataTable
                 'action',
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
+                <button type="button" class="btn btn-success rounded me-2"  onclick="editmodalShow(event)" id="{{$id}}"  data-bs-toggle="modal" data-bs-target="#edit_med">edit</button>
+                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("medicines.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del_med">delete</button>
                     </form>
                 </div>'
             )
             ->setRowId('id');
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Area $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(Area $model): QueryBuilder
+
+    public function query(Medicine $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -57,10 +50,9 @@ class AreasDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('areas-table')
+            ->setTableId('medicine-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -81,9 +73,11 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('Postal Code'),
-            Column::make('name'),
-            Column::make('address'),
+            Column::make('id'),
+            Column::make('name')->title('medicine name'),
+            Column::make('type'),
+            Column::computed('quantity'),
+            Column::computed('price'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -99,6 +93,6 @@ class AreasDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Areas_' . date('YmdHis');
+        return 'Medicines_' . date('YmdHis');
     }
 }

@@ -40,8 +40,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="avatar" class="form-label">Avatar</label>
-                            <input name="avatar_image" class="form-control" id="avatar" value="">
+                            <input name="avatar_image" type="file" class="form-control" id="avatar">
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -51,7 +52,3 @@
             </div>
         </div>
     </div>
-
-<script>
-
-</script>

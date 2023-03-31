@@ -30,7 +30,7 @@
           </li>
 
           <li class="nav-item sidebar-list">
-            <a href="#" class="nav-link">
+            <a href="{{route('doctors.index')}}" class="nav-link">
                 <img src="dist/img/icons/Doctors-icon.png" class="nav-icon">
               <p>
                 Doctors
@@ -48,7 +48,7 @@
           </li>
 
           <li class="nav-item sidebar-list">
-            <a href="#" class="nav-link">
+            <a href="{{route('areas.index')}}" class="nav-link">
               <img src="dist/img/icons/Areas-icon.png" class="nav-icon">
               <p>
                 Areas
@@ -66,7 +66,7 @@
           </li>
 
           <li class="nav-item sidebar-list">
-            <a href="#" class="nav-link">
+            <a href="{{route('medicines.index')}}" class="nav-link">
                 <img src="dist/img/icons/Medicines-icon.png" class="nav-icon">
               <p>
                 Medicines

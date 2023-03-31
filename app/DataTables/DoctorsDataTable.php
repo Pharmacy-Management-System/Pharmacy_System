@@ -80,11 +80,7 @@ class DoctorsDataTable extends DataTable
             ]);
     }
 
-    /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
+
     public function getColumns(): array
     {
         return [
