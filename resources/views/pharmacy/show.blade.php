@@ -1,18 +1,73 @@
-
-<div class="modal fade" id="showPharmacyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!--Pharmacy Info Modal-->
+<div class="modal fade" id="showPharmacyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-light" id="staticBackdropLabel">Phamacy</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Pharmacy Info</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <h5>Pharmacy ID</h5>
-                <p class="fw-light"></p>
-            </div>
+            <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                <div class="flex-column justify-content-center align-items-center mb-3">
+                    <img id="pharmacyAvatar" class="animation__wobble img-circle elevation-2" src="" alt="Pharmacy-Avatar" height="100"
+                        width="100">
+                </div>
+                <ul class="nav nav-pills nav-sidebar flex-column gap-1" data-widget="treeview" role="menu" data-accordion="false" style="font-family: nunito;">
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/ID-icon.png" class="nav-icon">
+                        <span>
+                            <strong>ID: </strong><span id="pharmacyID"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/Name-icon.png" class="nav-icon">
+                        <span>
+                            <strong>Name: </strong><span id="pharmacyName"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/Email-icon.png" class="nav-icon">
+                        <span>
+                            <strong>Email: </strong><span id="pharmacyEmail"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/Area-icon.png" class="nav-icon">
+                        <span>
+                            <strong>Area: </strong><span id="pharmacyArea"></span>
+                        </span>
+                    </li>
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/Priority-icon.png" class="nav-icon">
+                        <span>
+                            <strong>Priority: </strong><span id="pharmacyPriority"></span>
+                        </span>
+                    </li>
+                </ul>
+            </div>   
             <div class="modal-footer">
-                <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Exit</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<!--Script-->
+<script>
+    function showPharmacyModal(event) {
+        var pharmacyId = event.target.id;
+            $.ajax({
+                url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
+                method: "GET",
+                success: function(response) {
+                    $('#pharmacyAvatar').attr("src","dist/img/pharmacy/"+response.pharmacy.avatar_image);
+                    $('#pharmacyID').text(response.pharmacy.id);
+                    $('#pharmacyName').text(response.user.name);
+                    $('#pharmacyEmail').text(response.user.email);
+                    $('#pharmacyPriority').text(response.pharmacy.priority)
+                    $('#pharmacyArea').text(response.areas.find(area=>area.id === response.pharmacy.area_id).name)
+                }
+            });
+    }
+</script>
+
+

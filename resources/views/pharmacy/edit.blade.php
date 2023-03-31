@@ -1,4 +1,4 @@
-
+<!--Edit Pharmacy Modal-->
 <div class="modal fade" id="editPharmacyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -51,3 +51,36 @@
         </div>
     </div>
 </div>
+
+<!--Script-->
+<script>
+    function showEditModal(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var pharmacyId = event.target.id;
+        $.ajax({
+            url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
+            method: "GET",
+            success: function(response) {
+                console.log(response)
+                $('#pharmacyId').val(response.pharmacy.id);
+                $('#priority').val(response.pharmacy.priority);
+                $('#avatar').val(response.pharmacy.avatar_image);
+                $('#name').val(response.user.name);
+                $('#email').val(response.user.email);
+                var areaSelect = $('#areaSelect');
+                areaSelect.empty();
+                $.each(response.areas, function(index, area) {
+                    var option = $('<option>').val(area.id).text(area.name);
+                    if (area.id === response.pharmacy.area_id) {
+                        option.attr('selected', 'selected');
+                    }
+                    areaSelect.append(option);
+                });
+                areaSelect.val(response.pharmacy.area_id);
+            }
+        });
+        var route = "{{ route('pharmacies.update', ':id') }}".replace(':id', pharmacyId);
+        document.getElementById("edit-pharmacy-form").action = route;
+    }
+</script>

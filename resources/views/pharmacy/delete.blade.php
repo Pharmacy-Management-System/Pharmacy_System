@@ -1,4 +1,4 @@
-
+<!--Delete Pharmacy Modal-->
 <div class="modal fade" id="deletePharmacyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -15,7 +15,18 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button id="deletePharmacy" type="button" class="btn btn-danger">Delete</button>
             </div>
-
         </div>
     </div>
 </div>
+
+<!--Script-->
+<script>
+    function showDeleteModal(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let deleteBtnModal = document.querySelector("#deletePharmacy");
+        deleteBtnModal.onclick = function() {
+            event.target.closest("form").submit();
+        }
+    }
+</script>

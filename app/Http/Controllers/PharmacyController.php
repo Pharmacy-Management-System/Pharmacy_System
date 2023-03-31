@@ -25,7 +25,7 @@ class PharmacyController extends Controller
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('pharmacies.index')->with('error', 'Delete related records first');
             }
-            return to_route('pharmacies.index')->with('success', 'Pharmacy Deleted Successfully!');
+            return to_route('pharmacies.index')->with('success', 'Pharmacy has been Deleted Successfully!')->with('timeout', 5000);
         }
     }
 
@@ -39,14 +39,6 @@ class PharmacyController extends Controller
             'areas' => $areas,
             'user' => $user
         ]);
-    }
-
-    public function edit($pharmacy)
-    {
-        if (is_numeric($pharmacy)) {
-            $pharmacy = Pharmacy::where('id', $pharmacy)->first();
-            return view('pharmacies.edit', ['pharmacy' => $pharmacy]);
-        }
     }
 
     public function update(StorePharmacyRequest $request, $pharmacy)
@@ -65,7 +57,7 @@ class PharmacyController extends Controller
             'avatar_image' => $request->avatar,
             'priority' => $request->priority,
             ]);
-            return redirect()->route('pharmacies.index');
+            return redirect()->route('pharmacies.index')->with('success', 'Pharmacy has been Updated Successfully!')->with('timeout', 5000);
         }
     }
 }

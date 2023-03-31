@@ -44,7 +44,7 @@ class PharmaciesDataTable extends DataTable
                             </button>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-primary rounded" onclick="showPharmacyModal(event)" id="show-{{$id}}" data-bs-toggle="modal" data-bs-target="#showPharmacyModal">
+                            <button type="button" class="btn btn-primary rounded" onclick="showPharmacyModal(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#showPharmacyModal">
                                 Show
                             </button>
                         </div>
