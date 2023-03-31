@@ -161,6 +161,39 @@
         </div>
     </div>
 
+<!-----------Show modal------------>
+<div class="modal fade" id="show-doctor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Doctor Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p><strong>Name:</strong> <span id="doctorName"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Email:</strong> <span id="doctorEmail"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>National ID:</strong> <span id="national-id"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Assigned Pharmacy:</strong> <span id="pharmacy"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Is Banned:</strong> <span id="is-banned"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+
 </section>
 
 @endsection
@@ -186,29 +219,48 @@
             method: "GET",
 
             success: function(response) {
-                console.log(response.users);
-                $('#nationalId').val(response.doctor[0].id);
-                $('#banned').val(response.doctor[0].is_banned);
-                $('#Avatar').val(response.doctor[0].avatar);
-                $('#name').val(response.users.find(user => user.id === response.doctor[0].user_id).name);
-                $('#email').val(response.users.find(user => user.id === response.doctor[0].user_id).email);
+                $('#nationalId').val(response.doctor.id);
+                $('#banned').val(response.doctor.is_banned);
+                $('#Avatar').val(response.doctor.avatar);
+                $('#name').val(response.users.find(user => user.id === response.doctor.user_id).name);
+                $('#email').val(response.users.find(user => user.id === response.doctor.user_id).email);
                 var pharmacySelect = $('#pharmacySelect');
                 pharmacySelect.empty();
                 $.each(response.pharmacies, function(index, pharmacy) {
                     var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
                     var option = $('<option>').val(pharmacy.id).text(pharmacyName);
-                    if (pharmacy.id === response.doctor[0].pharmacy_id) {
+                    if (pharmacy.id === response.doctor.pharmacy_id) {
                         option.attr('selected', 'selected');
                     }
                     pharmacySelect.append(option);
                 });
 
-                pharmacySelect.val(response.doctor[0].pharmacy_id);
+                pharmacySelect.val(response.doctor.pharmacy_id);
             }
 
         });
         var route = "{{ route('doctors.update', ':id') }}".replace(':id', itemId);
         document.getElementById("edit-form").action = route;
+    }
+
+
+    function doctorshowmodalShow(event){
+            var itemId = event.target.id;
+            $('span').text("");
+            $.ajax({
+                url: "{{ route('doctors.show', ':id') }}".replace(':id', itemId),
+                method: "GET",
+                success: function(response) {
+                    console.log(response.users.find(user => user.id === response.doctor.user_id).name);
+                    $('#doctorName').text(response.users.find(user => user.id === response.doctor.user_id).name);
+                    $('#doctorEmail').text(response.users.find(user => user.id === response.doctor.user_id).email);
+                    $('#national-id').text(response.doctor.id)
+                    $('#is-banned').text(response.doctor.is_banned)
+                    var pharmacy = response.pharmacies.find(pharmacy=>pharmacy.id === response.doctor.pharmacy_id);
+                    var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
+                    $('#pharmacy').text(pharmacyName)
+                }
+            });
     }
 </script>
 @endpush

@@ -58,18 +58,20 @@ class DoctorsController extends Controller
     }
 
 
-
     public function show($id)
     {
-        $doctor = Doctor::where('id', $id)->get();
+        $doctor = Doctor::where('id', $id)->first();
         $pharmacies = Pharmacy::all();
-        $users = User::all();
+        $userIds = array_merge([$doctor->user_id], $pharmacies->pluck('user_id')->toArray());
+        $users = User::whereIn('id', $userIds)->get();
         return response()->json([
             'doctor' => $doctor,
             'pharmacies' => $pharmacies,
             'users' => $users,
         ]);
     }
+
+
 
 
 

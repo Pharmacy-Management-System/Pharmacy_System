@@ -30,8 +30,8 @@ class DoctorsDataTable extends DataTable
                 '
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-            <button class="btn btn-primary rounded me-2" id="option_a2"> show </button>
-                <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
+            <button type="button" class="btn btn-primary rounded me-2" onclick="doctorshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-doctor">show</button>
+            <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
                     @csrf
                     @method("DELETE")
                     <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
