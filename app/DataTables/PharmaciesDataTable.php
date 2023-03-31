@@ -105,7 +105,7 @@ class PharmaciesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('avatar_image')->addClass('text-center')->title('Image'),
+            Column::make('avatar_image')->addClass('text-center')->title('Avatar'),
             Column::make('id')->addClass('text-center')->title('ID'),
             Column::make('Owner Name')->addClass('text-center'),
             Column::make('Owner Email')->addClass('text-center'),

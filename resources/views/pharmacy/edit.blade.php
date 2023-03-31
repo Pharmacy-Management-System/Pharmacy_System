@@ -11,7 +11,6 @@
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body">
-
                     <div class="mb-3">
                         <label for="pharmacyId" class="form-label">ID</label>
                         <input name="id" class="form-control" id="pharmacyId" value="">

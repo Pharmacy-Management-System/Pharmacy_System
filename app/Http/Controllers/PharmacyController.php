@@ -17,6 +17,34 @@ class PharmacyController extends Controller
         return $dataTable->render('pharmacy.index');
     }
 
+    public function store(StorePharmacyRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
+
+        if ($request->hasFile('avatar_image')) {
+            $avatar = $request->file('avatar_image');
+            $avatar_name = $avatar->getClientOriginalName();
+            $avatar->storeAs('public/pharmacies_Images', $avatar_name);
+        } else {
+            $avatar_name = 'default-avatar.jpg';
+        }
+
+        $doctor = Pharmacy::create([
+            'user_id' => $user->id,
+            'id' => $request->id,
+            'area_id' => $request->area_id,
+            'priority' => $request->priority,
+            'avatar_image' => $avatar_name,
+        ]);
+
+        return redirect()->route('Pharmacies.index')->with('success', 'Pharmacy has been Created Successfully!')->with('timeout', 5000);
+    }
+
+
     public function destroy($pharmacy)
     {
         if (is_numeric($pharmacy)) {

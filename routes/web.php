@@ -42,6 +42,7 @@ Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])-
 Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
 Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
 Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
 
 //Doctor Routes
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
