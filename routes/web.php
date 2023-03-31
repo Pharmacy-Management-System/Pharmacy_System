@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\DoctorsController;
+use App\Http\Controllers\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +27,12 @@ Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edi
 
 
 
-Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctors.index');
-Route::delete('/doctors/{id}', [DoctorsController::class, 'destroy'])->name('doctors.destroy');
-Route::get('/doctors/{id}', [DoctorsController::class, 'show'])->name('doctors.show');
-Route::get('/doctors/{id}/edit', [DoctorsController::class, 'edit'])->name('doctors.edit');
-Route::put('/doctors/{id}', [DoctorsController::class, 'update'])->name('doctors.update');
-Route::post('/doctors', [DoctorsController::class, 'store'])->name('doctors.store');
+Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
 
 
 //Route::put('/areas/{id}', [AreaController::class, 'update'])->name('areas.update');

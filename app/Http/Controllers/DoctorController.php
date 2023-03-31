@@ -12,7 +12,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 
-class DoctorsController extends Controller
+class DoctorController extends Controller
 {
     public function index(DoctorsDataTable $dataTable)
     {
@@ -39,7 +39,7 @@ class DoctorsController extends Controller
             'avatar_image' => $request->avatar_image,
         ]);
 
-        return redirect()->route('doctors.index',['pharmacies'=> Pharmacy::all(), 'users'=>User::all()])->with('success', 'Doctor has been created!');
+        return redirect()->route('doctors.index',['pharmacies'=> Pharmacy::all(), 'users'=>User::all()])->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
     }
 
 
@@ -53,10 +53,9 @@ class DoctorsController extends Controller
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('doctors.index')->with('error', 'Delete related records first');
             }
-            return to_route('doctors.index');
+            return to_route('doctors.index')->with('success', 'Doctor has been deleted successfully!')->with('timeout', 5000);
         }
     }
-
 
     public function show($id)
     {
@@ -70,9 +69,6 @@ class DoctorsController extends Controller
             'users' => $users,
         ]);
     }
-
-
-
 
 
     public function update(StoreDoctorRequest $request, $id)
@@ -91,7 +87,7 @@ class DoctorsController extends Controller
             'is_banned' => $request->is_banned,
             'avatar_image' => $request->avatar_image,
             ]);
-            return redirect()->route('doctors.index');
+            return redirect()->route('doctors.index')->with('success', 'Doctor has been updated successfully!')->with('timeout', 5000);
         }
     }
 }
