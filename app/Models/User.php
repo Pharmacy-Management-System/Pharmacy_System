@@ -35,12 +35,12 @@ class User extends Authenticatable
     ];
 
    public function pharmacy(){
-    return $this->hasOne(Pharmacy::class ,'id');
+    return $this->hasOne(Pharmacy::class);
    }
 
    public function doctor()
    {
-       return $this->hasOne(Doctor::class ,'id');
+       return $this->hasOne(Doctor::class);
    }
 
    public function client()
