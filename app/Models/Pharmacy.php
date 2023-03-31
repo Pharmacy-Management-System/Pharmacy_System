@@ -35,8 +35,13 @@ class Pharmacy extends Model
         return $this->hasMany(Doctor::class,'id');
     }
 
+
+
     public function orders()
     {
-       return $this->hasMany(Order::class,'id');
+       return $this->hasMany(Order::class,'pharmacy_id');
+    }
+    public function owner(){
+        return $this->belongsTo(User::class,'user_id');
     }
 }
