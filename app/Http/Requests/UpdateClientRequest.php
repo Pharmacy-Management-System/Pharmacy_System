@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,12 +28,7 @@ class UpdateClientRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3'], //
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user, 'email')->where(function ($query) {
-                $query->where('email', '!=', $this->input('email'));
-            })], //
-            'id' => ['required', 'size:14', Rule::unique('clients', 'id')->ignore($this->doctor, 'id')->where(function ($query) {
-                $query->where('id', '!=', $this->input('id'));
-            })], //
+            'email' => ['required', 'email',  Rule::unique('users', 'email')->ignore($this->user_id)], //
             'gender' => ['required', 'in:Male,Female'], //
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //

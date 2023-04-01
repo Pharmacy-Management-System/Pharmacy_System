@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClientRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreClientRequest extends FormRequest
             'name' => ['required', 'min:3'], //
             'email' => ['required', 'email', 'unique:users,email'], //
             'password' => ['required', 'min:6'], //
-            'id' => ['required', 'unique:users,id', 'size:14'], //
+            'id' => ['required', Rule::unique('clients')->ignore($this->client), 'size:14'], //
             'gender' => ['required', 'in:Male,Female'], //
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
