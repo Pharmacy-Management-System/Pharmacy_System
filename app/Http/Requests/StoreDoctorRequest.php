@@ -28,7 +28,7 @@ class StoreDoctorRequest extends FormRequest
             'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->doctor)],
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
             'name' => ['required', 'min:3'],
-            'email' => ['required', 'email',  Rule::unique('users', 'email')->ignore($this->user_id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
             'password' => ['required', 'min:6'],
             'avatar_image' => ['mimes:jpg,jpeg'],
         ];

@@ -2,32 +2,37 @@
 
 @section('content')
 
-<section class="content">
-    {{-- when delete doctor related to other records --}}
+<section class="content container">
+
     @if (session('error'))
-    <div class="alert alert-danger p-2 mt-3 ">
-        {{ session('error') }}
-    </div>
+        <div id ="alert-message" class="alert alert-danger my-4 alert-dismissible">
+            {{ session('error') }}
+            <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+        </div>
     @endif
+
     @if ($errors->any())
-    <div class="alert alert-danger pb-0">
+    <div class="alert alert-danger pb-0 alert-dismissible">
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
             @endforeach
         </ul>
+        <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
     </div>
     @endif
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+
+    @if(session('success'))
+        <div id ="alert-message" class="alert alert-success mb-4 mb-0 alert-dismissible">
+            {{ session('success') }}
+            <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+        </div>
     @endif
+
     <div class="container-fluid">
-    <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal" data-bs-target="#create">Add New Doctor</button>
-    </div>
-        {{-- {{@dd( $dataTable->table())}} --}}
+        </div>
         {{ $dataTable->table() }}
     </div>
 
