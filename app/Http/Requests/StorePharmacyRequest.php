@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePharmacyRequest extends FormRequest
 {
@@ -24,9 +25,17 @@ class StorePharmacyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','size:14','unique:pharmacies,pharmacy_id,'.$this->pharmacy],
+            'id'=> ['required','size:14','unique:pharmacies,id,'.$this->pharmacy],
+            'name' => ['required', 'min:3'],
+            'email' => [Rule::unique('users', 'email')
+                        ->ignore($this->user, 'email')
+                        ->where(function ($query) {
+                        $query->where('email', '!=', $this->input('email'));
+                     }),'required'
+            ],
+            'password' => ['required', 'min:6'],
             'avatar_image' => ['mimes:jpg,jpeg'],
-            'area_id' => ['required|exists:areas,area_id'],
+            'area_id' => ['required','exists:areas,id'],
             'priority' => ['required','integer']
         ];
     }
@@ -38,6 +47,19 @@ class StorePharmacyRequest extends FormRequest
                 'required' => 'The Pharmacy ID is Required',
                 'unique' => 'The Pharmacy ID must be Unique',
                 'size' => 'The Pharmacy ID must Contain 14 Number'
+            ],
+            'name' => [
+                'required' => 'The Name is Required',
+                'min' => 'The Name must be larger than 3 Characters'
+            ],
+            'email' => [
+                'required' => 'The Email is Required',
+                'unique' => 'The Email must be Unique',
+                'email' => 'The Email must be a valid Email'
+            ],
+            'password' => [
+                'required' => 'The Password is Required',
+                'min' => 'The Password must be larger than 6 Characters'
             ],
             'avatar_image' => [
                 'mimes' => 'An Image must be jpg or jpeg Only'

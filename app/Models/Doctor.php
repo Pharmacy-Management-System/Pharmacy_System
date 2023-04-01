@@ -9,12 +9,12 @@ class Doctor extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'id',
-        'email',
-        'name',
-        'password',
-        'avatar',
+        'user_id',
+        'avatar_image',
         'pharmacy_id',
         'is_banned'
     ];
@@ -22,9 +22,22 @@ class Doctor extends Model
     protected $hidden = [
         'password'
     ];
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class);
+    }
 
     public function user()
     {
-        return $this->belongsTo(related: User::class);
+        return $this->belongsTo( User::class);
     }
+
+
+
+
+
+    public function order(){
+        return $this->hasMany(Order::class,'doctor_id');
+    }
+
 }
