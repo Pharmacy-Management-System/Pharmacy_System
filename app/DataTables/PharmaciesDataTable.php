@@ -3,7 +3,9 @@
 namespace App\DataTables;
 
 use App\Models\Pharmacy;
+use Attribute;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use League\CommonMark\Extension\Attributes\Node\Attributes;
 use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -33,11 +35,11 @@ class PharmaciesDataTable extends DataTable
             ->addColumn('Owner Email',function(Pharmacy $pharmacy){
                 return $pharmacy->user->email;
             })
-            // ->addColumn('avatar',function(Pharmacy $pharmacy){
-            //     return '<img src="{{ asset(\"storage/pharmacies_Images/$pharmacy->avatar_image\") }}">';
-            // })
+            ->addColumn('avatar',function(Pharmacy $pharmacy){
+                return '<img src="'. asset("storage/pharmacies_Images/".$pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+            })
             ->addColumn(
-                'action',
+                'actions',
                 '
                 <div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
                     <div class="d-flex flex-row gap-2">
@@ -60,16 +62,19 @@ class PharmaciesDataTable extends DataTable
                                 </button>
                             </form>
                         </div>
-                        <div>
-                            <form method="GET" class="restore_item" action="{{Route("pharmacies.restore",$id)}}">
-                                <button type="submit" class="btn btn-success rounded" onclick="restoreDeletedPharmacy(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#restorePharmacyModal">
-                                    Restore
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>'
             )
+            ->addColumn('restore',
+                    '<div>
+                        <form method="GET" class="restore_item" action="{{Route("pharmacies.restore",$id)}}">
+                            <button type="submit" class="btn btn-success rounded" onclick="restoreDeletedPharmacy(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#restorePharmacyModal">
+                                Restore
+                            </button>
+                        </form>
+                    </div>'
+            )
+            ->rawColumns(['avatar', 'actions','restore'])
             ->setRowId('pharmacy_id');
     }
 
@@ -112,22 +117,43 @@ class PharmaciesDataTable extends DataTable
      *
      * @return array
      */
-    public function getColumns(): array
+    public function getColumns()
     {
-        return [
-            Column::make('avatar_image')->addClass('text-center')->title('Avatar'),
-            Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
-            Column::make('id')->addClass('text-center')->title('ID'),
-            Column::computed('Owner Name')->addClass('text-center'),
-            Column::computed('Owner Email')->addClass('text-center'),
-            Column::computed('Area')->addClass('text-center'),
-            Column::make('priority')->addClass('text-center')->title('Priority'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
-        ];
+        $pharmacies = Pharmacy::withTrashed()->get();
+        foreach ($pharmacies as $pharmacy) {
+            if (($pharmacy->getAttributes())['deleted_at']) {
+                return [
+                    Column::computed('avatar')->addClass('text-center')->title('Avatar'),
+                    Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
+                    Column::make('id')->addClass('text-center')->title('ID'),
+                    Column::computed('Owner Name')->addClass('text-center'),
+                    Column::computed('Owner Email')->addClass('text-center'),
+                    Column::computed('Area')->addClass('text-center'),
+                    Column::make('priority')->addClass('text-center')->title('Priority'),
+                    Column::computed('restore')->title('Actions')
+                        ->exportable(false)
+                        ->printable(false)
+                        ->width(60)
+                        ->addClass('text-center'),
+                ];
+            } else {
+                return [
+                    Column::computed('avatar')->addClass('text-center')->title('Avatar'),
+                    Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
+                    Column::make('id')->addClass('text-center')->title('ID'),
+                    Column::computed('Owner Name')->addClass('text-center'),
+                    Column::computed('Owner Email')->addClass('text-center'),
+                    Column::computed('Area')->addClass('text-center'),
+                    Column::make('priority')->addClass('text-center')->title('Priority'),
+                    Column::computed('actions')
+                        ->exportable(false)
+                        ->printable(false)
+                        ->width(60)
+                        ->addClass('text-center'),
+                ];
+            }
+        }
+
     }
 
     /**
