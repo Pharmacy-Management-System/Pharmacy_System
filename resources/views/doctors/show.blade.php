@@ -44,7 +44,7 @@
                 $('#doctorName').text(response.users.find(user => user.id === response.doctor.user_id).name);
                 $('#doctorEmail').text(response.users.find(user => user.id === response.doctor.user_id).email);
                 $('#national-id').text(response.doctor.id)
-                $('#is-banned').text(response.doctor.is_banned)
+                $('#is-banned').text(response.doctor.is_banned ? 'yes' : 'no')
                 var pharmacy = response.pharmacies.find(pharmacy => pharmacy.id === response.doctor.pharmacy_id);
                 var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
                 $('#pharmacy').text(pharmacyName)
