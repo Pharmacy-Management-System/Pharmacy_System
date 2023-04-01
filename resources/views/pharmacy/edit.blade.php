@@ -63,7 +63,6 @@
             url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
             method: "GET",
             success: function(response) {
-                console.log(response)
                 $('#pharmacyId').val(response.pharmacy.id);
                 $('#priority').val(response.pharmacy.priority);
                 $('#pharmacy-edit-userid').val(response.user.id);
@@ -79,8 +78,6 @@
                     areaSelect.append(option);
                 });
                 areaSelect.val(response.pharmacy.area_id);
-                $('#avatar').val(response.pharmacy.avatar_image);
-                $('#avatar').trigger('change');
             }
         });
         var route = "{{ route('pharmacies.update', ':id') }}".replace(':id', pharmacyId);

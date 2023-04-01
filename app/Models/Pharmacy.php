@@ -15,7 +15,7 @@ class Pharmacy extends Model
         'user_id',
         'avatar_image',
         'area_id',
-        'priority'
+        'priority',
     ];
 
     protected $hidden = [
