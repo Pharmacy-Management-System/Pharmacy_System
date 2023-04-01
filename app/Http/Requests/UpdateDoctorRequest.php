@@ -27,7 +27,6 @@ class UpdateDoctorRequest extends FormRequest
         return [
             'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->id)],
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
-            'is_banned' => ['required'],
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email',  Rule::unique('users', 'email')->ignore($this->user_id)],
             'password' => ['required', 'min:6'],
