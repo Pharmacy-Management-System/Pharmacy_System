@@ -40,7 +40,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
-                        <input name="avatar" type="file" class="form-control" id="avatar" value="">
+                        <input name="avatar_image" type="file" class="form-control" id="avatar" value="">
                     </div>
                     <input name="user_id" class="form-control client-input" id="pharmacy-edit-userid" value="" hidden>
                 </div>

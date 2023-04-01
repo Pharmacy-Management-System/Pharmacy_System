@@ -79,19 +79,31 @@ class PharmacyController extends Controller
     public function update(UpdatePharmacyRequest $request, $pharmacy)
     {
         if (is_numeric($pharmacy)) {
-            $pharmacy = Pharmacy::where('id', $pharmacy)->firstOrFail();
-            $user = $pharmacy->user;
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-            ]);
+            try {
+                $pharmacy = Pharmacy::where('id', $pharmacy)->firstOrFail();
+                $user = $pharmacy->user;
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
 
-            $pharmacy->update([
-            'id' => $request->id,
-            'area_id' => $request->area_id,
-            'avatar_image' => $request->avatar,
-            'priority' => $request->priority,
-            ]);
+                if ($request->hasFile('avatar_image')) {
+                    $avatar = $request->file('avatar_image');
+                    $avatar_name = $avatar->getClientOriginalName();
+                    $avatar->storeAs('public/pharmacies_Images', $avatar_name);
+                } else {
+                    $avatar_name = $pharmacy->avatar_image;
+                }
+
+                $pharmacy->update([
+                'id' => $request->id,
+                'area_id' => $request->area_id,
+                'avatar_image' => $avatar_name,
+                'priority' => $request->priority,
+                ]);
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return redirect()->route('pharmacies.index')->with('error', 'Error in Updating Doctor!')->with('timeout', 5000);
+            }
             return redirect()->route('pharmacies.index')->with('success', 'Pharmacy has been Updated Successfully!')->with('timeout', 5000);
         }
     }
