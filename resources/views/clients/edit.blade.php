@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-id" class="form-label">Natioanl ID</label>
-                        <input name="id" class="form-control client-input" id="client-id" value="">
+                        <input name="id" class="form-control client-input" id="client-id" value="" readonly>
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-birthdate" class="form-label">Date of Birth</label>
@@ -75,6 +75,7 @@
                         </label>
                     </div>
                 </div>
+                <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary text-white">Edit</button>
@@ -109,6 +110,7 @@
                 $('#main').prop('checked', response.client.is_main);
                 $('#main').val('checked', response.client.is_main);
                 $('#client-birthdate').val(response.client.date_of_birth)
+                $('#userid').val(response.user.id)
             }
         });
 
