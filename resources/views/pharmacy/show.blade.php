@@ -59,7 +59,7 @@
                 url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
                 method: "GET",
                 success: function(response) {
-                    $('#pharmacyAvatar').attr("src","dist/img/pharmacy/"+response.pharmacy.avatar_image);
+                    $('#pharmacyAvatar').attr("src","{{ asset('storage/pharmacies_Images/image') }}".replace('image', response.pharmacy.avatar_image));
                     $('#pharmacyID').text(response.pharmacy.id);
                     $('#pharmacyName').text(response.user.name);
                     $('#pharmacyEmail').text(response.user.email);

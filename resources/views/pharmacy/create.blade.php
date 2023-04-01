@@ -1,65 +1,57 @@
 <!-- Create Pharmacy Modal -->
 <div class="modal fade" id="createPharmacyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create New Pharmacy</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{ route('pharmacies.store') }}" id="create-pharmacy-form" enctype="multipart/form-data">
+            <form  method="POST" action="{{ route('pharmacies.store') }}" id="create-pharmacy-form" enctype="multipart/form-data">
                 @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="createPharmacyId" class="form-label">ID</label>
-                        <input name="id" class="form-control" id="createPharmacyId" value="">
+                <div class="modal-body row gy-2 gx-3 align-items-center">
+                    <div class="col-md-6 mb-2">
+                        <label for="createPharmacyId" class="form-label visually-hidden">ID</label>
+                        <input name="id" class="form-control" id="createPharmacyId" placeholder="Pharmacy Owner ID" value="">
                     </div>
-                    <div class="mb-3">
-                        <label for="createPharmacyName" class="form-label">Owner Name</label>
-                        <input name="name" class="form-control" id="createPharmacyName" value="">
+                    <div class="col-md-6 mb-2">
+                        <label for="createPharmacyName" class="form-label visually-hidden">Owner Name</label>
+                        <input name="name" type="text" class="form-control" id="createPharmacyName" placeholder="Pharmacy Owner Name" value="">
                     </div>
-                    <div class="mb-3">
-                        <label for="createPharmacyEmail" class="form-label">Owner Email</label>
-                        <input name="email" class="form-control" id="createPharmacyEmail" value="">
+                    <div class="col-md-6 mb-2">
+                        <label for="createPharmacyEmail" class="form-label visually-hidden">Owner Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-icon">@</span>
+                            <input name="email" type="email" class="form-control" id="createPharmacyEmail" aria-describedby="email-icon" placeholder="Pharmacy Owner Email" value="">
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="createPharmacyPassword" class="form-label">Password</label>
-                        <input name="password" class="form-control" type="password" id="createPharmacyPassword" value="">
+                    <div class="col-md-6 mb-2">
+                        <label for="createPharmacyPassword" class="form-label visually-hidden">Password</label>
+                        <input name="password" class="form-control" type="password" id="createPharmacyPassword" placeholder="Password" value="">
                     </div>
-                    <div class="mb-3">
-                        <label for="createPharmacyPriority" class="form-label">Priority</label>
-                        <input name="priority" class="form-control" id="createPharmacyPriority" value="">
+                    <div class="col-12 mb-2">
+                        <label for="createPharmacyPriority" class="form-label visually-hidden">Priority</label>
+                        <input name="priority" class="form-control" id="createPharmacyPriority" placeholder="Priority" value="">
                     </div>
-                    <div class="mb-3">
-                        <label for="createPharmacyArea" class="form-label">Area</label>
+                    <div class="col-12 mb-2">
+                        <label for="createPharmacyArea" class="form-label visually-hidden">Area</label>
                         <select name="area_id" id="createPharmacyArea" class="form-control">
-                            <option value="" disabled selected hidden></option>
+                            <option value="" disabled selected hidden>Choose Area...</option>
                             @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->User->name }}</option>
+                                <option value="{{ $area->id }}">{{ $area->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="avatar" class="form-label">Avatar</label>
-                        <input name="avatar_image" type="file" class="form-control" id="avatar">
+                    <div class="col-12 mb-2">
+                        <label for="createPharmacyAvatar" class="form-label visually-hidden">Avatar</label>
+                        <input name="avatar_image" type="file" class="form-control" id="createPharmacyAvatar" placeholder="Avatar Image">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Create</button>
+                    <button type="submit" class="btn btn-success text-white">Create</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-{{-- <script>
-    function showCreateModal(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            $('#createPharmacyID').val("");
-            $('#createPharmacyName').val("");
-            $('#createPharmacyEmail').val("");
-            $('#createPharmacyArea').val("");
-            $('#createPharmacyPriority').val("");
-        }
-</script> --}}

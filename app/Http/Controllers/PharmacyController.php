@@ -14,7 +14,9 @@ class PharmacyController extends Controller
 {
     public function index(PharmaciesDataTable $dataTable)
     {
-        return $dataTable->render('pharmacy.index');
+        $pharmacies = Pharmacy::all();
+        $areas = Area::all();
+        return $dataTable->render('pharmacy.index', ['pharmacies' => $pharmacies, 'areas' => $areas]);
     }
 
     public function store(StorePharmacyRequest $request)
@@ -33,13 +35,13 @@ class PharmacyController extends Controller
             $avatar_name = 'default-avatar.jpg';
         }
 
-        $doctor = Pharmacy::create([
+        Pharmacy::create([
             'user_id' => $user->id,
             'id' => $request->id,
             'area_id' => $request->area_id,
             'priority' => $request->priority,
-            'avatar_image' => $avatar_name,
-        ]);
+            'avatar_image' => $avatar_name
+        ])->save();
 
         return redirect()->route('Pharmacies.index')->with('success', 'Pharmacy has been Created Successfully!')->with('timeout', 5000);
     }
