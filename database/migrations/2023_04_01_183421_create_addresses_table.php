@@ -21,9 +21,9 @@ return new class extends Migration
             $table->integer('flat_number');
             $table->boolean('is_main');
             $table->unsignedBigInteger("area_id");
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("client_id");
             $table->foreign('area_id')->references('id')->on('areas');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }
