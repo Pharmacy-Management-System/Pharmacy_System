@@ -62,7 +62,7 @@ class PharmaciesDataTable extends DataTable
                         </div>
                         <div>
                             <form method="GET" class="restore_item" action="{{Route("pharmacies.restore",$id)}}">
-                                <button type="button" class="btn btn-success rounded delete-pharmacy" onclick="restore(event)" id="{{$id}}">
+                                <button type="submit" class="btn btn-success rounded" onclick="restoreDeletedPharmacy(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#restorePharmacyModal">
                                     Restore
                                 </button>
                             </form>
@@ -81,7 +81,7 @@ class PharmaciesDataTable extends DataTable
      */
     public function query(Pharmacy $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->withTrashed();
     }
 
     /**
@@ -117,15 +117,15 @@ class PharmaciesDataTable extends DataTable
         return [
             Column::make('avatar_image')->addClass('text-center')->title('Avatar'),
             Column::make('id')->addClass('text-center')->title('ID'),
-            Column::make('Owner Name')->addClass('text-center'),
-            Column::make('Owner Email')->addClass('text-center'),
-            Column::make('Area')->addClass('text-center'),
+            Column::computed('Owner Name')->addClass('text-center'),
+            Column::computed('Owner Email')->addClass('text-center'),
+            Column::computed('Area')->addClass('text-center'),
             Column::make('priority')->addClass('text-center')->title('Priority'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
-                ->addClass('text-center')
+                ->addClass('text-center'),
         ];
     }
 

@@ -16,7 +16,7 @@ class PharmacyController extends Controller
     {
         $pharmacies = Pharmacy::withTrashed()->get();
         $areas = Area::all();
-        return $dataTable->render('pharmacy.index', ['pharmacies' => DataTables::of($pharmacies), 'areas' => $areas]);
+        return $dataTable->render('pharmacy.index', ['pharmacies' => DataTables::of($pharmacies)->make(true), 'areas' => $areas]);
     }
 
     public function store(StorePharmacyRequest $request)
@@ -41,7 +41,7 @@ class PharmacyController extends Controller
             'avatar_image' => $avatar_name
         ])->save();
 
-        return redirect()->route('Pharmacies.index')->with('success', 'Pharmacy has been Created Successfully!')->with('timeout', 5000);
+        return redirect()->route('pharmacies.index')->with('success', 'Pharmacy has been Created Successfully!')->with('timeout', 5000);
     }
 
 
@@ -59,8 +59,8 @@ class PharmacyController extends Controller
 
     public function restore($pharmacy)
     {
-        Pharmacy::withTrashed()->find($pharmacy)->restore();
-        return redirect()->back()->with('success', 'Pharmacy has been Restored Successfully!');;
+        Pharmacy::withTrashed()->findOrFail($pharmacy)->restore();
+        return redirect()->back()->with('success', 'Pharmacy has been Restored Successfully!')->with('timeout', 5000);
     }
 
     public function show($pharmacy)
