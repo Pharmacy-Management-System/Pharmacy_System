@@ -23,7 +23,7 @@
                         <label for="email" class="form-label">Owner Email</label>
                         <div class="input-group">
                             <span class="input-group-text" id="email-icon">@</span>
-                            <input name="email" class="form-control" id="email" aria-describedby="email-icon" value=""> 
+                            <input name="email" class="form-control" id="email" aria-describedby="email-icon" value="">
                         </div>
                     </div>
                     <div class="col-md-6 mb-2">
@@ -34,16 +34,15 @@
                         <label for="area_id" class="form-label">Area Name</label>
                         <select name="area_id" id="areaSelect" class="form-control"></select>
                     </div>
-
                     <div class="col-md-6 mb-2">
                         <label for="priority" class="form-label">Priority</label>
                         <input name="priority" class="form-control" id="priority" value="">
                     </div>
-
                     <div class="col-md-12 mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
                         <input name="avatar" type="file" class="form-control" id="avatar" value="">
                     </div>
+                    <input name="user_id" class="form-control client-input" id="pharmacy-edit-userid" value="" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -67,6 +66,7 @@
                 console.log(response)
                 $('#pharmacyId').val(response.pharmacy.id);
                 $('#priority').val(response.pharmacy.priority);
+                $('#pharmacy-edit-userid').val(response.user.id);
                 $('#name').val(response.user.name);
                 $('#email').val(response.user.email);
                 var areaSelect = $('#areaSelect');
@@ -79,7 +79,8 @@
                     areaSelect.append(option);
                 });
                 areaSelect.val(response.pharmacy.area_id);
-                // $('#avatar').val(response.pharmacy.avatar_image);
+                $('#avatar').val(response.pharmacy.avatar_image);
+                $('#avatar').trigger('change');
             }
         });
         var route = "{{ route('pharmacies.update', ':id') }}".replace(':id', pharmacyId);

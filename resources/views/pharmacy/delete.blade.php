@@ -51,12 +51,4 @@
             event.target.closest("form").submit();
         }
     }
-    function restoreDeletedPharmacy(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            let restoreBtnModal = document.querySelector("#restore");
-            restoreBtnModal.onclick = function() {
-                event.target.closest("form").submit();
-            }
-        }
 </script>
