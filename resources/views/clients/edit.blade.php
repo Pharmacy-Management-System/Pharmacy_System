@@ -5,31 +5,29 @@
                 <h5 class="modal-title" id="exampleModalLabel">Edit Client</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-        
-            <form action="" id="edit-form" method="POST">
-                    @csrf
-                
+            <form method="POST" id="edit-form" enctype="multipart/form-data">
+                @csrf
+                @method('put')
                 <div class="modal-body row g-3">
                     <div class="col-md-12 ">
                         <label for="avatar" class="form-label">Upload Image </label>
-                        <input name="avatar_image" class="form-control" type="file" id="avatar" accept=".jpg,.png">
+                        <input name="avatar_image" class="form-control client-input" type="file" id="avatar" accept=".jpg,.png">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-name" class="form-label">Name</label>
-                        <input name="name" class="form-control" id="client-name" value="">
+                        <input name="name" class="form-control client-input" id="client-name" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-email" class="form-label">Email</label>
-                        <input name="email" class="form-control" id="client-email" value="">
+                        <input name="email" class="form-control client-input" id="client-email" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-id" class="form-label">Natioanl ID</label>
-                        <input name="id" class="form-control" id="client-id" value="">
+                        <input name="id" class="form-control client-input" id="client-id" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-birthdate" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" name="date_of_birth" id="client-birthdate" min="1860-01-01" max="2023-01-01" value=""/>
+                        <input type="date" class="form-control client-input" name="date_of_birth" id="client-birthdate" min="1860-01-01" max="2023-01-01" value=""/>
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-gender" class="form-label">Gender</label>
@@ -42,7 +40,7 @@
                     </div>
                     <div class="col-md-6 ">
                         <label for="postal" class="form-label">Postal Code</label>
-                        <select name="area_id" id="postal" class="form-select " aria-label="Default select example">
+                        <select name="area_id" id="postal" class="form-select" aria-label="Default select example">
                             <option selected>Select Area</option>
                             @foreach($areas as $area)
                             <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -51,38 +49,38 @@
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-phone" class="form-label">Phone Number</label>
-                        <input name="phone" class="form-control" id="client-phone" value="">
+                        <input name="phone" class="form-control client-input" id="client-phone" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="street" class="form-label">Street Name</label>
-                        <input name="street_name" class="form-control" id="street" value="">
+                        <input name="street_name" class="form-control client-input" id="street" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="building" class="form-label">Building Number</label>
-                        <input name="building_no" class="form-control" id="building" value="">
+                        <input name="building_no" class="form-control client-input" id="building" value="">
                     </div>
                     <div class="col-md-6">
                         <label for="floor" class="form-label">Floor Number</label>
-                        <input name="floor_number" class="form-control" id="floor" value="">
+                        <input name="floor_number" class="form-control client-input" id="floor" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="flat" class="form-label">Flat Number</label>
-                        <input name="flat_number" class="form-control" id="flat" value="">
+                        <input name="flat_number" class="form-control client-input" id="flat" value="">
                     </div>
                     <div class="col-md-6  ms-4">
-                        <input class="form-check-input" name="is_main" type="checkbox" id="main"
+                        <input class="form-check-input client-input" name="is_main" type="checkbox" id="main"
                             value="">
                         <label class="form-check-label" for="gridCheck">
                             Main Street
                         </label>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary text-white">Edit</button>
                 </div>
             </form>
+
 
         </div>
     </div>
@@ -92,12 +90,11 @@
 <script>
     function clienteditmodalShow(event) {
         var itemId = event.target.id;
-        $('input').val("")
+        $('.client-input').val("")
         $.ajax({
             url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
             method: "GET",
             success: function(response) {
-                console.log(response.client.area_id)
                 //$('#image').text(response.client.image)
                 $('#client-name').val(response.user.name)
                 $('#client-email').val(response.user.email)

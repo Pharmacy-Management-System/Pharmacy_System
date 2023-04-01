@@ -46,6 +46,8 @@
             event.stopPropagation();
             $('input').val("")
         }
-        
+        setTimeout(function() {
+            $('.alert-success').fadeOut();
+        }, {{ session('timeout') }});
     </script>
 @endpush

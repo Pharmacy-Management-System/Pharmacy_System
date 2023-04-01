@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
+use  Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +37,9 @@ Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
 Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
 Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
 Route::get('/clients/{id}', [ClientController::class, 'show'])->name('clients.show');
-Route::post('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
+Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.update');
 Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
-
 
 //Pharmacy Routes
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');

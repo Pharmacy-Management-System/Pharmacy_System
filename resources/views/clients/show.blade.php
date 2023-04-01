@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Area</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Clint Info</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
@@ -50,7 +50,7 @@
                         <p><strong>Floor Number:</strong> <span id="floor-number"></span></p>
                     </div>
                     <div class="mb-3">
-                        <p><strong>Is Main:</strong> <span id="is-main"></span></p>
+                        <p><strong>Main Street:</strong> <span id="is-main"></span></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -83,7 +83,12 @@
                     $('#building-number').text(response.client.building_no)
                     $('#flat-number').text(response.client.flat_number)
                     $('#floor-number').text(response.client.floor_number)
-                    $('#is-main').text(response.client.is_main)
+                    if(response.client.is_main == 0){
+                        $('#is-main').text("No")
+                    }else{
+                        $('#is-main').text("yes")
+                    }
+                    
                 }
             }); 
     }
