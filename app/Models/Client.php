@@ -10,7 +10,8 @@ class Client extends Model
     use HasFactory;
 
     protected $fillable = [
-        'national_id',
+        'id',
+        'user_id',
         'gender',
         'date_of_birth',
         'avatar_image',
@@ -32,4 +33,10 @@ class Client extends Model
     {
         return $this->belongsTo(Area::class);
     }
+
+
+    // public function orders()
+    // {
+    //     return $this->hasMany(Order::class);
+    // }
 }
