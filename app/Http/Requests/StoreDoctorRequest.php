@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreDoctorRequest extends FormRequest
 {
@@ -24,13 +25,12 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','size:14','unique:doctors,national_id,'.$this->doctor],
-            'email'=> ['required','email','unique:doctors,email,'.$this->doctor],
-            'name' => ['required'],
-            'password' => ['required','min:6'],
+            'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->doctor)],
+            'pharmacy_id' => ['required', 'exists:pharmacies,id'],
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
+            'password' => ['required', 'min:6'],
             'avatar_image' => ['mimes:jpg,jpeg'],
-            'pharmacy_id' => ['required|exists:pharmacies,pharmacy_id'],
-            'is_banned' => ['required']
         ];
     }
 
@@ -39,16 +39,17 @@ class StoreDoctorRequest extends FormRequest
         return [
             'id' => [
                 'required' => 'The National ID is Required',
-                'unique' => 'The National ID must be Unique',
+                'unique' => 'The National ID is already exists',
                 'size' => 'The National ID must Contain 14 Number'
             ],
+            'name' => [
+                'required' => 'The Name is Required',
+                'min' => 'The Name must be larger than 3 Characters'
+            ],
             'email' => [
-                'required' => 'The Email is Required',
+                'required' => 'The Email is already exists',
                 'unique' => 'The Email must be Unique',
                 'email' => 'The Email must be a valid Email'
-            ],
-            'name' => [
-                'required' => 'The Name is Required'
             ],
             'password' => [
                 'required' => 'The Password is Required',
@@ -56,7 +57,7 @@ class StoreDoctorRequest extends FormRequest
             ],
             'avatar_image' => [
                 'mimes' => 'An Image must be jpg or jpeg Only'
-            ]
+            ],
         ];
     }
 }

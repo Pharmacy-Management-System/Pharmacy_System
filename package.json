@@ -8,6 +8,7 @@
         "@popperjs/core": "^2.11.6",
         "axios": "^1.1.2",
         "bootstrap": "^5.2.3",
+        "laravel-datatables-vite": "^0.5.2",
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
@@ -15,7 +16,6 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "laravel-datatables-vite": "^0.5.2",
         "sass": "^1.60.0"
     }
 }

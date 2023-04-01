@@ -3,32 +3,53 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Pharmacy extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $fillable = [
         'id',
-        'avatar',
+        'user_id',
+        'avatar_image',
         'area_id',
         'priority'
     ];
 
+    protected $hidden = [
+        'password'
+    ];
+
+    protected $casts = [
+        'id' => 'integer',
+        'created_at' => 'date:Y-m-d',
+        'updated_at' => 'date:Y-m-d',
+        'deleted_at' => 'date:Y-m-d'
+    ];
+
     public function area()
     {
-        return $this->belongsTo(Area::class,'area_id');
+        return $this->belongsTo(Area::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function doctors()
     {
-        return $this->hasMany(Doctor::class,'id');
+        return $this->hasMany(Doctor::class);
     }
+
 
     public function orders()
     {
-       return $this->hasMany(Order::class,'id');
+       return $this->hasMany(Order::class,'pharmacy_id');
     }
-
+    public function owner(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
