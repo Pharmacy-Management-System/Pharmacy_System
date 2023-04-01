@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PharmaciesDataTable;
 use App\Http\Requests\StorePharmacyRequest;
+use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Pharmacy;
 use App\Models\Area;
 use App\Models\User;
@@ -75,7 +76,7 @@ class PharmacyController extends Controller
         ]);
     }
 
-    public function update(StorePharmacyRequest $request, $pharmacy)
+    public function update(UpdatePharmacyRequest $request, $pharmacy)
     {
         if (is_numeric($pharmacy)) {
             $pharmacy = Pharmacy::where('id', $pharmacy)->firstOrFail();
