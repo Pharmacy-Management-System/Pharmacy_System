@@ -36,8 +36,8 @@ class OrdersDataTable extends DataTable
                     </form>
                 </div>'
             )
-            ->addColumn('Pharmacy Owner', function (Order $order) {
-                return $order->pharmacy->owner->name;
+            ->addColumn('Pharmacy', function (Order $order) {
+                return $order->pharmacy->pharmacy_name;
             })
             ->addColumn('name', function (Order $order) {
                 return $order->user->name;
@@ -71,6 +71,7 @@ class OrdersDataTable extends DataTable
             ->addColumn('is_insured', function (Order $order) {
                 return $order->is_insured ? 'yes' : 'no';
             })
+
             ->setRowId('id');
     }
 
@@ -113,7 +114,7 @@ class OrdersDataTable extends DataTable
             Column::make('status'),
             Column::computed('is_insured')->title('insured'),
             Column::make('creator_type')->title('creator'),
-            Column::computed('Pharmacy Owner'),
+            Column::computed('Pharmacy'),
             Column::computed('doctor_id')->title('doctor'),
             Column::make('delivering_address'),
             Column::computed('medicine'),

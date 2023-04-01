@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
+use App\Models\Medicine;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use App\DataTables\OrdersDataTable;
 
@@ -14,7 +17,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-        return $dataTable->render('order.index');
+        return $dataTable->render('order.index',['pharmacies'=>Pharmacy::all(),'doctors'=>Doctor::all(),'medicines'=>Medicine::all()]);
     }
 
     /**
@@ -35,7 +38,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return to_route('order.index');
     }
 
     /**
@@ -80,6 +83,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 }

@@ -80,4 +80,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //orders routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
-Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
