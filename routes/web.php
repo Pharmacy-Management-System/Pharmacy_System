@@ -43,6 +43,7 @@ Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name(
 Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
 Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
 Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
+Route::get('/pharmacies/restore/{pharmacy}', [PharmacyController::class, 'restore'])->name('pharmacies.restore');
 
 //Doctor Routes
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');

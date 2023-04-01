@@ -14,9 +14,9 @@ class PharmacyController extends Controller
 {
     public function index(PharmaciesDataTable $dataTable)
     {
-        $pharmacies = Pharmacy::all();
+        $pharmacies = Pharmacy::withTrashed()->get();
         $areas = Area::all();
-        return $dataTable->render('pharmacy.index', ['pharmacies' => $pharmacies, 'areas' => $areas]);
+        return $dataTable->render('pharmacy.index', ['pharmacies' => DataTables::of($pharmacies), 'areas' => $areas]);
     }
 
     public function store(StorePharmacyRequest $request)
@@ -51,10 +51,16 @@ class PharmacyController extends Controller
             try {
                 Pharmacy::where('id', $pharmacy)->delete();
             } catch (\Illuminate\Database\QueryException $exception) {
-                return to_route('pharmacies.index')->with('error', 'Delete related records first');
+                return redirect()->back()->with('error', 'Delete related records first');
             }
-            return to_route('pharmacies.index')->with('success', 'Pharmacy has been Deleted Successfully!')->with('timeout', 5000);
+            return redirect()->back()->with('success', 'Pharmacy has been Deleted Successfully!')->with('timeout', 5000);
         }
+    }
+
+    public function restore($pharmacy)
+    {
+        Pharmacy::withTrashed()->find($pharmacy)->restore();
+        return redirect()->back()->with('success', 'Pharmacy has been Restored Successfully!');;
     }
 
     public function show($pharmacy)

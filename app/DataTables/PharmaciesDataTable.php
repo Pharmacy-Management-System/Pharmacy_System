@@ -33,6 +33,9 @@ class PharmaciesDataTable extends DataTable
             ->addColumn('Owner Email',function(Pharmacy $pharmacy){
                 return $pharmacy->user->email;
             })
+            // ->addColumn('avatar',function(Pharmacy $pharmacy){
+            //     return '<img src="{{ asset(\"storage/pharmacies_Images/$pharmacy->avatar_image\") }}">';
+            // })
             ->addColumn(
                 'action',
                 '
@@ -54,6 +57,13 @@ class PharmaciesDataTable extends DataTable
                                 @method("DELETE")
                                 <button type="button" class="btn btn-danger rounded delete-pharmacy" onclick="showDeleteModal(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#deletePharmacyModal">
                                     Delete
+                                </button>
+                            </form>
+                        </div>
+                        <div>
+                            <form method="GET" class="restore_item" action="{{Route("pharmacies.restore",$id)}}">
+                                <button type="button" class="btn btn-success rounded delete-pharmacy" onclick="restore(event)" id="{{$id}}">
+                                    Restore
                                 </button>
                             </form>
                         </div>
