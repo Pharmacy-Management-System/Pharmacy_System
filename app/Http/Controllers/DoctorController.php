@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\DoctorsDataTable;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreDoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
@@ -78,7 +79,7 @@ class DoctorController extends Controller
     }
 
 
-    public function update(StoreDoctorRequest $request, $id)
+    public function update(UpdateDoctorRequest $request, $id)
     {
         if (is_numeric($id)) {
             $doctor = Doctor::where('id', $id)->firstOrFail();

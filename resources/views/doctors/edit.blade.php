@@ -13,7 +13,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nationalIdEdit" class="form-label">National ID</label>
-                            <input name="id" class="form-control" id="nationalIdEdit" value="">
+                            <input name="id" class="form-control" id="nationalIdEdit" value="" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="nameEdit" class="form-label">name</label>
@@ -45,6 +45,7 @@
                             <input type="file" name="avatar_image" class="form-control" id="avatarEdit" value="">
                         </div>
                     </div>
+                    <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary text-white">Edit</button>
@@ -67,6 +68,7 @@
                     console.log(response)
                     $('#nationalIdEdit').val(response.doctor.id);
                     $('#bannedEdit').val(response.doctor.is_banned);
+                    $('#userid').val(response.users.find(user => user.id === response.doctor.user_id).id);
                     $('#nameEdit').val(response.users.find(user => user.id === response.doctor.user_id).name);
                     $('#emailEdit').val(response.users.find(user => user.id === response.doctor.user_id).email);
                     var pharmacySelect = $('#pharmacyEdit');
