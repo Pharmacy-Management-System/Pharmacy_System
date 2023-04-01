@@ -21,12 +21,6 @@ class PharmacyController extends Controller
 
     public function store(StorePharmacyRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
-
         if ($request->hasFile('avatar_image')) {
             $avatar = $request->file('avatar_image');
             $avatar_name = $avatar->getClientOriginalName();
@@ -34,7 +28,11 @@ class PharmacyController extends Controller
         } else {
             $avatar_name = 'default-avatar.jpg';
         }
-
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
         Pharmacy::create([
             'user_id' => $user->id,
             'id' => $request->id,
