@@ -116,6 +116,7 @@ class PharmaciesDataTable extends DataTable
     {
         return [
             Column::make('avatar_image')->addClass('text-center')->title('Avatar'),
+            Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
             Column::make('id')->addClass('text-center')->title('ID'),
             Column::computed('Owner Name')->addClass('text-center'),
             Column::computed('Owner Email')->addClass('text-center'),

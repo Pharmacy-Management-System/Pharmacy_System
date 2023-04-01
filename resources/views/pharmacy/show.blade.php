@@ -11,23 +11,29 @@
                     <img id="pharmacyAvatar" class="animation__wobble img-circle elevation-2" src="" alt="Pharmacy-Avatar" height="100"
                         width="100">
                 </div>
-                <ul class="nav nav-pills nav-sidebar flex-column gap-1" data-widget="treeview" role="menu" data-accordion="false" style="font-family: nunito;">
+                <ul class="nav nav-pills nav-sidebar flex-column justify-content-center align-items-center gap-1" data-widget="treeview" role="menu" data-accordion="false" style="font-family: nunito;">
+                    <li class="nav-item sidebar-list">
+                        <img src="dist/img/icons/Pharmacy-Name-icon.png" class="nav-icon">
+                        <span>
+                            <strong>Pharmacy Name: </strong><span id="pharmacyName"></span>
+                        </span>
+                    </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/ID-icon.png" class="nav-icon">
                         <span>
-                            <strong>ID: </strong><span id="pharmacyID"></span>
+                            <strong>Owner ID: </strong><span id="pharmacyID"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Name-icon.png" class="nav-icon">
                         <span>
-                            <strong>Name: </strong><span id="pharmacyName"></span>
+                            <strong>Owner Name: </strong><span id="pharmacyOwnerName"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Email-icon.png" class="nav-icon">
                         <span>
-                            <strong>Email: </strong><span id="pharmacyEmail"></span>
+                            <strong>Owner Email: </strong><span id="pharmacyOwnerEmail"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
@@ -43,7 +49,7 @@
                         </span>
                     </li>
                 </ul>
-            </div>   
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -61,8 +67,9 @@
                 success: function(response) {
                     $('#pharmacyAvatar').attr("src","{{ asset('storage/pharmacies_Images/image') }}".replace('image', response.pharmacy.avatar_image));
                     $('#pharmacyID').text(response.pharmacy.id);
-                    $('#pharmacyName').text(response.user.name);
-                    $('#pharmacyEmail').text(response.user.email);
+                    $('#pharmacyName').text(response.pharmacy.pharmacy_name);
+                    $('#pharmacyOwnerName').text(response.user.name);
+                    $('#pharmacyOwnerEmail').text(response.user.email);
                     $('#pharmacyPriority').text(response.pharmacy.priority)
                     $('#pharmacyArea').text(response.areas.find(area=>area.id === response.pharmacy.area_id).name)
                 }

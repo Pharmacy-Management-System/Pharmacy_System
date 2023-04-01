@@ -11,6 +11,10 @@
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body row gy-2 gx-3 align-items-center">
+                    <div class="col-md-12 mb-2">
+                        <label for="PharmacyName" class="form-label">Pharmacy Name</label>
+                        <input name="pharmacy_name" type="text" class="form-control" id="PharmacyName" value="">
+                    </div>
                     <div class="col-md-6 mb-2">
                         <label for="pharmacyId" class="form-label">Owner ID</label>
                         <input name="id" class="form-control" id="pharmacyId" value="">
@@ -63,6 +67,7 @@
             url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
             method: "GET",
             success: function(response) {
+                $('#PharmacyName').val(response.pharmacy.pharmacy_name);
                 $('#pharmacyId').val(response.pharmacy.id);
                 $('#priority').val(response.pharmacy.priority);
                 $('#pharmacy-edit-userid').val(response.user.id);

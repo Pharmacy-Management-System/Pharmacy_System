@@ -26,6 +26,7 @@ class UpdatePharmacyRequest extends FormRequest
     {
         return [
             'id'=> ['required','size:14', Rule::unique('pharmacies', 'id')->ignore($this->id)],
+            'pharmacy_name' => ['required', 'min:3'],
             'name' => ['required', 'min:3'],
             'email' => [Rule::unique('users', 'email')->ignore($this->user_id),'required'],
             'password' => ['required', 'min:6'],
@@ -42,6 +43,10 @@ class UpdatePharmacyRequest extends FormRequest
                 'required' => 'The Pharmacy ID is Required',
                 'unique' => 'The Pharmacy ID must be Unique',
                 'size' => 'The Pharmacy ID must Contain 14 Number'
+            ],
+            'pharmacy_name' => [
+                'required' => 'The Pharmacy Name is Required',
+                'min' => 'The Pharmacy Name must be larger than 3 Characters'
             ],
             'name' => [
                 'required' => 'The Name is Required',

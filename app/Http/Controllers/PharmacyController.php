@@ -38,6 +38,7 @@ class PharmacyController extends Controller
         Pharmacy::create([
             'user_id' => $user->id,
             'id' => $request->id,
+            'pharmacy_name'=> $request->pharmacy_name,
             'area_id' => $request->area_id,
             'priority' => $request->priority,
             'avatar_image' => $avatar_name
@@ -101,6 +102,7 @@ class PharmacyController extends Controller
 
                 $pharmacy->update([
                 'id' => $request->id,
+                'pharmacy_name'=> $request->pharmacy_name,
                 'area_id' => $request->area_id,
                 'avatar_image' => $avatar_name,
                 'priority' => $request->priority,
