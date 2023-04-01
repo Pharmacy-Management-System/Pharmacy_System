@@ -2,12 +2,13 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Area</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Clint Info</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <p><strong>Image:</strong> <img id="image" src="" alt=""></p>
+                        <p><strong>Image:</strong></p>
+                        <img id="image" src="" alt="">
                     </div>
                     <div class="mb-3">
                         <p><strong>Name:</strong> <span id="name"></span></p>
@@ -23,6 +24,9 @@
                     </div>
                     <div class="mb-3">
                         <p><strong>Phone:</strong> <span id="phone"></span></p>
+                    </div>
+                    <div class="mb-3">
+                        <p><strong>Date of Birth:</strong> <span id="date-of-birth"></span></p>
                     </div>
                     <div class="mb-3">
                         <p><strong>Postal Code:</strong> <span id="postal-code"></span></p>
@@ -46,7 +50,7 @@
                         <p><strong>Floor Number:</strong> <span id="floor-number"></span></p>
                     </div>
                     <div class="mb-3">
-                        <p><strong>Is Main:</strong> <span id="is-main"></span></p>
+                        <p><strong>Main Street:</strong> <span id="is-main"></span></p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -64,12 +68,14 @@
                 url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
                 method: "GET",
                 success: function(response) {
-                    //$('#image').text(response.client.image)
+                    var imagePath = "{{ asset('storage/clients_Images/:image_name') }}".replace(':image_name', response.client.avatar_image);
+                    $('#image').attr('src', imagePath);
                     $('#name').text(response.user.name)
                     $('#email').text(response.user.email)
                     $('#national-id').text(response.client.id)
                     $('#gender').text(response.client.gender)
-                    $('#phone').text(response.client.gender)
+                    $('#phone').text(response.client.phone)
+                    $('#date-of-birth').text(response.client.date_of_birth)
                     $('#postal-code').text(response.client.area_id)
                     $('#area-name').text(response.area.name)
                     $('#area-address').text(response.area.address)
@@ -77,7 +83,12 @@
                     $('#building-number').text(response.client.building_no)
                     $('#flat-number').text(response.client.flat_number)
                     $('#floor-number').text(response.client.floor_number)
-                    $('#is-main').text(response.client.is_main)
+                    if(response.client.is_main == 0){
+                        $('#is-main').text("No")
+                    }else{
+                        $('#is-main').text("yes")
+                    }
+                    
                 }
             }); 
     }

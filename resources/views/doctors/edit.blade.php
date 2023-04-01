@@ -13,7 +13,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nationalIdEdit" class="form-label">National ID</label>
-                            <input name="id" class="form-control" id="nationalIdEdit" value="">
+                            <input name="id" class="form-control" id="nationalIdEdit" value="" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="nameEdit" class="form-label">name</label>
@@ -35,9 +35,9 @@
                         </div>
 
 
-                        <div class="mb-3">
-                            <label for="bannedEdit" class="form-label">Is banned?</label>
-                            <input name="is_banned" class="form-control" id="bannedEdit" value="">
+                        <div class="mb-3 form-check">
+                            <input name="is_banned" class="form-check-input" id="bannedEdit" type="checkbox" value="">
+                            <label for="bannedEdit" class="form-check-label">Is banned?</label>
                         </div>
 
                         <div class="mb-3">
@@ -45,6 +45,7 @@
                             <input type="file" name="avatar_image" class="form-control" id="avatarEdit" value="">
                         </div>
                     </div>
+                    <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary text-white">Edit</button>
@@ -66,7 +67,8 @@
                 success: function(response) {
                     console.log(response)
                     $('#nationalIdEdit').val(response.doctor.id);
-                    $('#bannedEdit').val(response.doctor.is_banned);
+                    $('#bannedEdit').prop('checked', response.doctor.is_banned == 1);
+                    $('#userid').val(response.users.find(user => user.id === response.doctor.user_id).id);
                     $('#nameEdit').val(response.users.find(user => user.id === response.doctor.user_id).name);
                     $('#emailEdit').val(response.users.find(user => user.id === response.doctor.user_id).email);
                     var pharmacySelect = $('#pharmacyEdit');
@@ -79,12 +81,9 @@
                         }
                         pharmacySelect.append(option);
                     });
-
                     pharmacySelect.val(response.doctor.pharmacy_id);
                     $('#avatarEdit').val(response.doctor.avatar_image);
                     $('#avatarEdit').trigger('change');
-
-
                 }
 
             });

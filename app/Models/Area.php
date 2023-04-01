@@ -22,7 +22,7 @@ class Area extends Model
     }
 
     protected $casts = [
-        'area_id' => 'integer',
+        'id' => 'integer',
     ];
 
     public function pharmacies(){

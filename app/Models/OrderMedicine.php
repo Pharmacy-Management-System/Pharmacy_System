@@ -12,4 +12,5 @@ class OrderMedicine extends Model
         'quantity',
         'medicine_id'
     ];
+ 
 }
