@@ -66,11 +66,11 @@ class OrdersDataTable extends DataTable
                 foreach ($order->medicines as $medicine) {
                     $totalPrice += ($medicine->price)*($medicine->pivot->quantity) ;
                 }
-
                 return  $totalPrice;
             })
-
-
+            ->addColumn('is_insured', function (Order $order) {
+                return $order->is_insured ? 'yes' : 'no';
+            })
             ->setRowId('id');
     }
 
@@ -111,7 +111,7 @@ class OrdersDataTable extends DataTable
             Column::make('id'),
             Column::computed('name')->title('client name'),
             Column::make('status'),
-            Column::make('is_insured')->title('insured'),
+            Column::computed('is_insured')->title('insured'),
             Column::make('creator_type')->title('creator'),
             Column::computed('Pharmacy Owner'),
             Column::computed('doctor_id')->title('doctor'),
