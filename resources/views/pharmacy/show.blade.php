@@ -14,37 +14,37 @@
                 <ul class="nav nav-pills nav-sidebar flex-column justify-content-center align-items-center gap-1" data-widget="treeview" role="menu" data-accordion="false" style="font-family: nunito;">
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Pharmacy-Name-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Pharmacy Name: </strong><span id="pharmacyName"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/ID-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Owner ID: </strong><span id="pharmacyID"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Name-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Owner Name: </strong><span id="pharmacyOwnerName"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Email-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Owner Email: </strong><span id="pharmacyOwnerEmail"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Area-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Area: </strong><span id="pharmacyArea"></span>
                         </span>
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Priority-icon.png" class="nav-icon">
-                        <span>
+                        <span class="border-container">
                             <strong>Priority: </strong><span id="pharmacyPriority"></span>
                         </span>
                     </li>
