@@ -25,18 +25,10 @@ class StoreDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->doctor, 'id')->where(function ($query) {
-                $query->where('id', '!=', $this->input('id'));
-            })],
+            'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->doctor)],
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
-            'is_banned' => ['required'],
             'name' => ['required', 'min:3'],
-            'email' => [
-                Rule::unique('users', 'email')->ignore($this->user, 'email')->where(function ($query) {
-                    $query->where('email', '!=', $this->input('email'));
-                }),
-                'required','email'
-            ],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
             'password' => ['required', 'min:6'],
             'avatar_image' => ['mimes:jpg,jpeg'],
         ];
@@ -47,7 +39,7 @@ class StoreDoctorRequest extends FormRequest
         return [
             'id' => [
                 'required' => 'The National ID is Required',
-                'unique' => 'The National ID must be Unique',
+                'unique' => 'The National ID is already exists',
                 'size' => 'The National ID must Contain 14 Number'
             ],
             'name' => [
@@ -55,7 +47,7 @@ class StoreDoctorRequest extends FormRequest
                 'min' => 'The Name must be larger than 3 Characters'
             ],
             'email' => [
-                'required' => 'The Email is Required',
+                'required' => 'The Email is already exists',
                 'unique' => 'The Email must be Unique',
                 'email' => 'The Email must be a valid Email'
             ],

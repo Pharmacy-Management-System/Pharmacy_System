@@ -25,7 +25,7 @@ class StorePharmacyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','size:14',Rule::unique('doctors', 'id')->ignore($this->pharmacy)],
+            'id'=> ['required','size:14', Rule::unique('pharmacies', 'id')->ignore($this->id)],
             'name' => ['required', 'min:3'],
             'email' => [Rule::unique('users', 'email')->ignore($this->user_id),'required'],
             'password' => ['required', 'min:6'],

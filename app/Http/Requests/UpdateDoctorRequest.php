@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePharmacyRequest extends FormRequest
+class UpdateDoctorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,12 @@ class StorePharmacyRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=> ['required','size:14',Rule::unique('doctors', 'id')->ignore($this->pharmacy)],
+            'id' => ['required', 'size:14', Rule::unique('pharmacies', 'id')->ignore($this->id)],
+            'pharmacy_id' => ['required', 'exists:pharmacies,id'],
             'name' => ['required', 'min:3'],
-            'email' => [Rule::unique('users', 'email')->ignore($this->user_id),'required'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
             'password' => ['required', 'min:6'],
             'avatar_image' => ['mimes:jpg,jpeg'],
-            'area_id' => ['required','exists:areas,id'],
-            'priority' => ['required','integer']
         ];
     }
 
@@ -39,9 +38,9 @@ class StorePharmacyRequest extends FormRequest
     {
         return [
             'id' => [
-                'required' => 'The Pharmacy ID is Required',
-                'unique' => 'The Pharmacy ID must be Unique',
-                'size' => 'The Pharmacy ID must Contain 14 Number'
+                'required' => 'The National ID is Required',
+                'unique' => 'The National ID must be Unique',
+                'size' => 'The National ID must Contain 14 Number'
             ],
             'name' => [
                 'required' => 'The Name is Required',
@@ -58,10 +57,6 @@ class StorePharmacyRequest extends FormRequest
             ],
             'avatar_image' => [
                 'mimes' => 'An Image must be jpg or jpeg Only'
-            ],
-            'priority' => [
-                'required' => 'The Priority is Required',
-                'integer' => 'The Priority must be Integer'
             ],
         ];
     }
