@@ -10,21 +10,26 @@
                 <div class="mb-3 flex-column justify-content-center align-items-center">
                     <img id="doctorImage" src="" alt="Doctor Image" class="animation__wobble img-circle elevation-2" height="100" width="100">
                 </div>
-                <div class="mb-3">
-                    <p><strong>Name:</strong> <span id="doctorName"></span></p>
-                </div>
-                <div class="mb-3">
-                    <p><strong>Email:</strong> <span id="doctorEmail"></span></p>
-                </div>
-                <div class="mb-3">
-                    <p><strong>National ID:</strong> <span id="national-id"></span></p>
-                </div>
-                <div class="mb-3">
-                    <p><strong>Assigned Pharmacy:</strong> <span id="pharmacy"></span></p>
-                </div>
-                <div class="mb-3">
-                    <p><strong>Is Banned:</strong> <span id="is-banned"></span></p>
-                </div>
+                <ul class="nav nav-pills nav-sidebar flex-column gap-1" data-widget="treeview" role="menu" data-accordion="false" style="font-family: nunito;">
+                    <li class="nav-item sidebar-list">
+                        <p><strong>Name: </strong> <span id="doctorName"></span></p>
+                    </li>
+
+                    <li class="nav-item sidebar-list">
+                        <p><strong>Email:</strong> <span id="doctorEmail"></span></p>
+                    </li>
+
+                    <li class="nav-item sidebar-list">
+                        <p><strong>National ID: </strong> <span id="national-id"></span></p>
+                    </li>
+
+                    <li class="nav-item sidebar-list">
+                        <p><strong>Assigned Pharmacy: </strong> <span id="pharmacy"></span></p>
+                    </li>
+
+                    <li class="nav-item sidebar-list">
+                        <p><strong>Is Banned: </strong> <span id="is-banned"></span></p>
+                    </li>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
