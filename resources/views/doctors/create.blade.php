@@ -34,10 +34,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="banned" class="form-label">Is banned?</label>
-                            <input name="is_banned" class="form-control" id="banned" value="">
+                        <div class="mb-3 form-check">
+                            <input name="is_banned" class="form-check-input" type="checkbox" id="banned" value="1">
+                            <label for="banned" class="form-check-label">Is banned?</label>
                         </div>
+
                         <div class="mb-3">
                             <label for="avatar" class="form-label">Avatar</label>
                             <input name="avatar_image" type="file" class="form-control" id="avatar">

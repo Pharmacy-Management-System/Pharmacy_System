@@ -35,9 +35,9 @@
                         </div>
 
 
-                        <div class="mb-3">
-                            <label for="bannedEdit" class="form-label">Is banned?</label>
-                            <input name="is_banned" class="form-control" id="bannedEdit" value="">
+                        <div class="mb-3 form-check">
+                            <input name="is_banned" class="form-check-input" id="bannedEdit" type="checkbox" value="">
+                            <label for="bannedEdit" class="form-check-label">Is banned?</label>
                         </div>
 
                         <div class="mb-3">
@@ -67,7 +67,7 @@
                 success: function(response) {
                     console.log(response)
                     $('#nationalIdEdit').val(response.doctor.id);
-                    $('#bannedEdit').val(response.doctor.is_banned);
+                    $('#bannedEdit').prop('checked', response.doctor.is_banned == 1);
                     $('#userid').val(response.users.find(user => user.id === response.doctor.user_id).id);
                     $('#nameEdit').val(response.users.find(user => user.id === response.doctor.user_id).name);
                     $('#emailEdit').val(response.users.find(user => user.id === response.doctor.user_id).email);
@@ -81,12 +81,9 @@
                         }
                         pharmacySelect.append(option);
                     });
-
                     pharmacySelect.val(response.doctor.pharmacy_id);
                     $('#avatarEdit').val(response.doctor.avatar_image);
                     $('#avatarEdit').trigger('change');
-
-
                 }
 
             });

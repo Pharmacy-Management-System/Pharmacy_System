@@ -25,30 +25,33 @@ class DoctorController extends Controller
     public function store(StoreDoctorRequest $request)
     {
         // Create a new user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
 
-        // Handle file upload
-        if ($request->hasFile('avatar_image')) {
-            $avatar = $request->file('avatar_image');
-            $avatar_name = $avatar->getClientOriginalName();
-            $avatar->storeAs('public/doctors_Images', $avatar_name);
-        } else {
-            $avatar_name = 'default.jpg';
+            // Handle file upload
+            if ($request->hasFile('avatar_image')) {
+                $avatar = $request->file('avatar_image');
+                $avatar_name = $avatar->getClientOriginalName();
+                $avatar->storeAs('public/doctors_Images', $avatar_name);
+            } else {
+                $avatar_name = 'default.jpg';
+            }
+
+            // Create a new doctor record
+            $doctor = Doctor::create([
+                'user_id' => $user->id,
+                'id' => $request->id,
+                'pharmacy_id' => $request->pharmacy_id,
+                'is_banned' => $request->has('is_banned') ? 1 : 0,
+                'avatar_image' => $avatar_name,
+            ]);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return redirect()->route('doctors.index')->with('error', 'Error in Creating Doctor!')->with('timeout', 5000);
         }
-
-        // Create a new doctor record
-        $doctor = Doctor::create([
-            'user_id' => $user->id,
-            'id' => $request->id,
-            'pharmacy_id' => $request->pharmacy_id,
-            'is_banned' => $request->is_banned,
-            'avatar_image' => $avatar_name,
-        ]);
-
         return redirect()->route('doctors.index')->with('success', 'Doctor has been created successfully!')->with('timeout', 5000);
     }
 
@@ -81,28 +84,34 @@ class DoctorController extends Controller
 
     public function update(UpdateDoctorRequest $request, $id)
     {
+
         if (is_numeric($id)) {
-            $doctor = Doctor::where('id', $id)->firstOrFail();
-            $user = $doctor->user;
-            $user->update([
-                'name' => $request->name,
-                'email' => $request->email,
-            ]);
-            if ($request->hasFile('avatar_image')) {
-                $avatar = $request->file('avatar_image');
-                $avatar_name = $avatar->getClientOriginalName();
-                $avatar->storeAs('public/doctors_Images', $avatar_name);
-            } else {
-                $avatar_name = $doctor->avatar_image;
+            try {
+                $doctor = Doctor::where('id', $id)->firstOrFail();
+                $user = $doctor->user;
+                $user->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ]);
+
+
+                if ($request->hasFile('avatar_image')) {
+                    $avatar = $request->file('avatar_image');
+                    $avatar_name = $avatar->getClientOriginalName();
+                    $avatar->storeAs('public/doctors_Images', $avatar_name);
+                } else {
+                    $avatar_name = $doctor->avatar_image;
+                }
+
+                $doctor->update([
+                    'id' => $request->id,
+                    'pharmacy_id' => $request->pharmacy_id,
+                    'is_banned' => $request->has('is_banned') ? 1 : 0,
+                    'avatar_image' => $avatar_name,
+                ]);
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return redirect()->route('doctors.index')->with('error', 'Error in Updating Doctor!')->with('timeout', 5000);
             }
-
-            $doctor->update([
-                'id' => $request->id,
-                'pharmacy_id' => $request->pharmacy_id,
-                'is_banned' => $request->is_banned,
-                'avatar_image' => $avatar_name,
-            ]);
-
             return redirect()->route('doctors.index')->with('success', 'Doctor has been updated successfully!')->with('timeout', 5000);
         }
     }
