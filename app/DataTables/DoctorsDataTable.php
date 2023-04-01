@@ -47,6 +47,9 @@ class DoctorsDataTable extends DataTable
             ->addColumn('pharmacy', function (Doctor $doctor) {
                 return $doctor->pharmacy->user->name;
             })
+            ->addColumn('is_banned', function (Doctor $doctor) {
+                return $doctor->is_banned ? 'yes' : 'no';
+            })
             ->setRowId('id');
     }
 
@@ -100,7 +103,7 @@ class DoctorsDataTable extends DataTable
             Column::computed('email', 'Email'),
             //Column::make('user.email')->title('Email'),
             Column::make('pharmacy','Assigned Pharmacy'),
-            Column::make('is_banned'),
+            Column::computed('is_banned','Is Banned'),
             Column::make('avatar_image'),
             Column::computed('action')
                 ->exportable(false)
