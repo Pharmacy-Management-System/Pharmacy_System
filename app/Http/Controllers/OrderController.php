@@ -7,6 +7,7 @@ use App\Models\Medicine;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 use App\DataTables\OrdersDataTable;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -38,7 +39,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        return to_route('order.index');
+
     }
 
     /**
@@ -63,26 +64,21 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-
+        if (is_numeric($id)) {
+            try {
+                Order::where('id', $id)->delete();
+            } catch (\Illuminate\Database\QueryException $exception) {
+                return to_route('orders.index')->with('error', ' you can not delete this order');
+            }
+            return to_route('orders.index');
+        }
     }
 }

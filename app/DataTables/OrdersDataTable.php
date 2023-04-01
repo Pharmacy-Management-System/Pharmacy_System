@@ -29,10 +29,10 @@ class OrdersDataTable extends DataTable
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <button type="button" class="btn btn-success rounded me-2"  id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" >
+                <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("orders.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area"  id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
                     </form>
                 </div>'
             )
