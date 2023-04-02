@@ -1,6 +1,6 @@
 <!--Edit Pharmacy Modal-->
 <div class="modal fade" id="editPharmacyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update Pharmacy Data</h5>
@@ -10,38 +10,43 @@
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label for="pharmacyId" class="form-label">ID</label>
+                <div class="modal-body row gy-2 gx-3 align-items-center">
+                    <div class="col-md-12 mb-2">
+                        <label for="PharmacyName" class="form-label">Pharmacy Name</label>
+                        <input name="pharmacy_name" type="text" class="form-control" id="PharmacyName" value="">
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="pharmacyId" class="form-label">Owner ID</label>
                         <input name="id" class="form-control" id="pharmacyId" value="">
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-2">
                         <label for="name" class="form-label">Owner Name</label>
                         <input name="name" class="form-control" id="name" value="">
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-2">
                         <label for="email" class="form-label">Owner Email</label>
-                        <input name="email" class="form-control" id="email" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-icon">@</span>
+                            <input name="email" class="form-control" id="email" aria-describedby="email-icon" value="">
+                        </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-2">
                         <label for="password" class="form-label">Password</label>
                         <input name="password" class="form-control" id="password" value="">
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-2">
                         <label for="area_id" class="form-label">Area Name</label>
                         <select name="area_id" id="areaSelect" class="form-control"></select>
                     </div>
-
-                    <div class="mb-3">
+                    <div class="col-md-6 mb-2">
                         <label for="priority" class="form-label">Priority</label>
                         <input name="priority" class="form-control" id="priority" value="">
                     </div>
-
-                    <div class="mb-3">
-                        <label for="avatar" class="form-label">Image</label>
-                        <input name="avatar" class="form-control" id="avatar" value="">
+                    <div class="col-md-12 mb-2">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input name="avatar_image" type="file" class="form-control" id="avatar" value="">
                     </div>
+                    <input name="user_id" class="form-control client-input" id="pharmacy-edit-userid" value="" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -62,10 +67,10 @@
             url: "{{ route('pharmacies.show', ':id') }}".replace(':id', pharmacyId),
             method: "GET",
             success: function(response) {
-                console.log(response)
+                $('#PharmacyName').val(response.pharmacy.pharmacy_name);
                 $('#pharmacyId').val(response.pharmacy.id);
                 $('#priority').val(response.pharmacy.priority);
-                $('#avatar').val(response.pharmacy.avatar_image);
+                $('#pharmacy-edit-userid').val(response.user.id);
                 $('#name').val(response.user.name);
                 $('#email').val(response.user.email);
                 var areaSelect = $('#areaSelect');

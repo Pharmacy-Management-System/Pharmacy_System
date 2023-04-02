@@ -30,17 +30,28 @@
     @endif
 
     <div class="container-fluid">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#createPharmacyModal">
+                Add New Pharmacy
+            </button>
+        </div>
         {{ $dataTable->table() }}
     </div>
 
-    <!-- Delete Pharmacy Moadal -->
-    @include('pharmacy.delete')
+    <!-- Create Pharmacy Moadal -->
+    @include('pharmacy.create')
 
     <!-- Show Pharmacy Moadal -->
     @include('pharmacy.show')
 
     <!-- Edit Pharmacy Moadal -->
     @include('pharmacy.edit')
+
+    <!-- Delete Pharmacy Moadal -->
+    @include('pharmacy.delete')
+
+    <!-- Restore Pharmacy Moadal -->
+    @include('pharmacy.restore')
 
 </section>
 
