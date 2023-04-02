@@ -16,12 +16,6 @@ class Client extends Model
         'date_of_birth',
         'avatar_image',
         'phone',
-        'area_id',
-        'street_name',
-        'building_no',
-        'floor_number',
-        'flat_number',
-        'is_main',
         'email_verified_at'
     ];
 
