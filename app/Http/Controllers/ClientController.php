@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\ClientsDataTable;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Models\Address;
 use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
@@ -21,8 +22,12 @@ class ClientController extends Controller
     {
         $client = Client::where('id', '=', $national_id)->first();
         $user = User::where('id', $client->user_id)->first();
-        $area = Area::where('id', $client->area_id)->first();
-        return response()->json(['client' => $client, 'user' => $user, 'area' => $area]);
+        $addresses=Address::where('client_id',$client->id)->get();
+        foreach($addresses as $address)
+        {
+            $address->area_name=$address->area->name;
+        }
+        return response()->json(['client' => $client, 'user' => $user,'addresses'=>$addresses]);
     }
 
     public function update(UpdateClientRequest $request, $national_id)
