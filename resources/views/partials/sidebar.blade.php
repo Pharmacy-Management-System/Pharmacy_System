@@ -40,7 +40,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link sidebar-list">
+            <a href="{{route('clients.index')}}" class="nav-link sidebar-list">
               <img src="dist/img/icons/Users-icon.png" class="nav-icon">
               <p>
                 Users
