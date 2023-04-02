@@ -27,7 +27,10 @@ class Client extends Model
     {
         return $this->belongsTo(Area::class);
     }
-
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
 
     // public function orders()
     // {

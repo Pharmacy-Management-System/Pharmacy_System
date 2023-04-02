@@ -17,4 +17,12 @@ class Address extends Model
         'flat_number',
         'is_main',
     ];
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
 }
