@@ -24,16 +24,16 @@ class AddressesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'addresses.action')
-            ->addColumn('client-name',function(Address $address){
+            ->addColumn('client-name', function (Address $address) {
                 return $address->client->user->name;
             })
-            ->addColumn('client-email',function(Address $address){
+            ->addColumn('client-email', function (Address $address) {
                 return $address->client->user->email;
             })
-            ->addColumn('area-id',function(Address $address){
+            ->addColumn('area-id', function (Address $address) {
                 return $address->area->id;
             })
-            ->addColumn('area-name',function(Address $address){
+            ->addColumn('area-name', function (Address $address) {
                 return $address->area->name;
             })
             ->addColumn('is_main', function (Address $address) {
@@ -61,20 +61,20 @@ class AddressesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('addresses-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('addresses-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -86,10 +86,10 @@ class AddressesDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::computed('client-name','Client Name'),
-            Column::computed('client-email','Client Email'),
-            Column::computed('area-id','Postal Code'),
-            Column::computed('area-name','Area Name'),
+            Column::computed('client-name', 'Client Name'),
+            Column::computed('client-email', 'Client Email'),
+            Column::computed('area-id', 'Postal Code'),
+            Column::computed('area-name', 'Area Name'),
             Column::make('street_name'),
             Column::make('building_number'),
             Column::make('floor_number'),

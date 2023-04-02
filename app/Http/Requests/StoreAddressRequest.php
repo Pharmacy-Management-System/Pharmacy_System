@@ -24,9 +24,9 @@ class StoreAddressRequest extends FormRequest
     public function rules()
     {
         return [
-            'area_id' => ['required', 'integer', 'exists:areas,id'], //
+            'area_id' => ['required', 'exists:areas,id'], //
             'street_name' => ['required', 'string'],
-            'building_no' => ['required', 'numeric'],
+            'building_number' => ['required', 'numeric'],
             'floor_number' => ['required', 'numeric'],
             'flat_number' => ['required', 'numeric'],
         ];
@@ -37,7 +37,6 @@ class StoreAddressRequest extends FormRequest
         return [
             'area_id' => [
                 'required' => 'The Area ID is Required',
-                'integer' => 'The Area ID must be Integer Number',
                 'exists' => 'The Area ID does not exist'
             ],
             'street_name' => [

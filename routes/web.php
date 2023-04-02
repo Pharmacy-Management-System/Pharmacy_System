@@ -42,6 +42,13 @@ Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.
 Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
 
+//address routes
+Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+Route::delete('/addresses/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+Route::get('/addresses/{id}', [AddressController::class, 'show'])->name('addresses.show');
+Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
+Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+
 //Pharmacy Routes
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
 Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
@@ -82,6 +89,3 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
-
-//address routes
-Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');

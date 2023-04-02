@@ -27,6 +27,7 @@ class ClientsDataTable extends DataTable
                 'action',
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <button type="button" class="btn btn-info rounded me-2" onclick="clientaddressshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-addresses">Addresses</button>
                 <button type="button" class="btn btn-success rounded me-2" onclick="clienteditmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#client-edit">edit</button>
                 <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-client">show</button>
                     <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$id)}}">
@@ -99,6 +100,7 @@ class ClientsDataTable extends DataTable
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
+
         ];
     }
 
