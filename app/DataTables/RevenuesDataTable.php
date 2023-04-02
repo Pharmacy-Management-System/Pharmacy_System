@@ -6,6 +6,7 @@ use App\Models\Pharmacy;
 use App\Models\Revenue;
 use Attribute;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use League\CommonMark\Extension\Attributes\Node\Attributes;
 use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\EloquentDataTable;
@@ -33,6 +34,14 @@ class RevenuesDataTable extends DataTable
         })
         ->addColumn('Avatar',function(Revenue $revenue){
             return '<img src="'. asset("storage/pharmacies_Images/".$revenue->pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+        })
+        ->addColumn('Total Orders', function (Revenue $revenue) {
+            return DB::table('orders')->where('pharmacy_id',$revenue->pharmacy_id)
+                                             ->where('status','Delivered')->count();
+        })
+        ->addColumn('Total Revenue', function (Revenue $revenue) {
+            return DB::table('orders')->where('pharmacy_id',$revenue->pharmacy_id)
+                                             ->where('status','Delivered')->sum('price');
         })
         ->rawColumns(['Avatar'])
         ->setRowId('id');
@@ -82,8 +91,8 @@ class RevenuesDataTable extends DataTable
         return [
                     Column::computed('Avatar')->addClass('text-center'),
                     Column::computed('Pharmacy Name')->addClass('text-center'),
-                    Column::make('total_order')->addClass('text-center')->title('Total Order'),
-                    Column::make('total_revenue')->addClass('text-center')->title('Total Revenue')
+                    Column::computed('Total Orders')->addClass('text-center'),
+                    Column::make('Total Revenue')->addClass('text-center')
                 ];
     }
 
