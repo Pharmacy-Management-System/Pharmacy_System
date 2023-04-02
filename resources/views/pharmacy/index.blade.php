@@ -50,6 +50,9 @@
     <!-- Delete Pharmacy Moadal -->
     @include('pharmacy.delete')
 
+    <!-- Restore Pharmacy Moadal -->
+    @include('pharmacy.restore')
+
 </section>
 
 @endsection

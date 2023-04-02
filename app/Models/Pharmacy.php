@@ -13,9 +13,10 @@ class Pharmacy extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'pharmacy_name',
         'avatar_image',
         'area_id',
-        'priority'
+        'priority',
     ];
 
     protected $hidden = [
@@ -44,12 +45,13 @@ class Pharmacy extends Model
         return $this->hasMany(Doctor::class);
     }
 
-
     public function orders()
     {
-       return $this->hasMany(Order::class,'pharmacy_id');
+       return $this->hasMany(Order::class);
     }
-    public function owner(){
+
+    public function owner()
+    {
         return $this->belongsTo(User::class,'user_id');
     }
 }

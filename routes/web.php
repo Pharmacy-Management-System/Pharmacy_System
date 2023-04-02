@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PharmacyController;
@@ -81,3 +82,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+
+//address routes
+Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
