@@ -119,10 +119,7 @@ class PharmaciesDataTable extends DataTable
      */
     public function getColumns()
     {
-        $pharmacies = Pharmacy::withTrashed()->get();
-        foreach ($pharmacies as $pharmacy) {
-            if (($pharmacy->getAttributes())['deleted_at']) {
-                return [
+        return [
                     Column::computed('avatar')->addClass('text-center')->title('Avatar'),
                     Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
                     Column::make('id')->addClass('text-center')->title('ID'),
@@ -130,30 +127,17 @@ class PharmaciesDataTable extends DataTable
                     Column::computed('Owner Email')->addClass('text-center'),
                     Column::computed('Area')->addClass('text-center'),
                     Column::make('priority')->addClass('text-center')->title('Priority'),
-                    Column::computed('restore')->title('Actions')
+                    Column::computed('restore')
                         ->exportable(false)
                         ->printable(false)
                         ->width(60)
                         ->addClass('text-center'),
-                ];
-            } else {
-                return [
-                    Column::computed('avatar')->addClass('text-center')->title('Avatar'),
-                    Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
-                    Column::make('id')->addClass('text-center')->title('ID'),
-                    Column::computed('Owner Name')->addClass('text-center'),
-                    Column::computed('Owner Email')->addClass('text-center'),
-                    Column::computed('Area')->addClass('text-center'),
-                    Column::make('priority')->addClass('text-center')->title('Priority'),
                     Column::computed('actions')
                         ->exportable(false)
                         ->printable(false)
                         ->width(60)
-                        ->addClass('text-center'),
+                        ->addClass('text-center')
                 ];
-            }
-        }
-
     }
 
     /**

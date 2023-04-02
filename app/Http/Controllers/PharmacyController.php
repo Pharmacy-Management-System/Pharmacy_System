@@ -48,11 +48,11 @@ class PharmacyController extends Controller
     }
 
 
-    public function destroy($pharmacy)
+    public function destroy($id)
     {
-        if (is_numeric($pharmacy)) {
+        if (is_numeric($id)) {
             try {
-                Pharmacy::where('id', $pharmacy)->delete();
+                Pharmacy::where('id', $id)->delete();
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->back()->with('error', 'Delete related records first');
             }
