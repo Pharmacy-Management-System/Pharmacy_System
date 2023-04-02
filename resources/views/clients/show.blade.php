@@ -40,6 +40,7 @@
                             <th scope="col">Main Street</th>
                         </tr>
                     </thead>
+                    <tbody id="client-body-addresses"></tbody>
                 </table>
             </div>
             <div class="modal-footer">
@@ -53,6 +54,7 @@
     function clientshowmodalShow(event) {
         var itemId = event.target.id;
         $('sapn').text("")
+        $('#client-body-addresses').empty();
         $.ajax({
             url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
             method: "GET",
@@ -67,7 +69,7 @@
                 $('#gender').text(response.client.gender)
                 $('#phone').text(response.client.phone)
                 $('#date-of-birth').text(response.client.date_of_birth)
-                var table_body =$("<tbody></tbody>");
+                var table_body =$('#client-body-addresses');
                 for (var address of response.addresses) {
                     var mainStreet = (address.is_main) ? "yes" : "no"
                     var record = `

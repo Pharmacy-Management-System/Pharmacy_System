@@ -90,15 +90,15 @@
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
+                        <tbody id="client-edit-addresses"></tbody>
                     </table>
                 </div>
                 <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white" onclick="editForm(event)">Edit</button>
                 </div>
             </form>
-
 
         </div>
     </div>
@@ -110,32 +110,25 @@
         event.preventDefault();
         event.stopPropagation();
         var del_btn = event.target;
-        console.log(typeof del_btn.getAttribute("data-clicked"))
-        if(del_btn.getAttribute("data-clicked")=="false")
-        {
-            //console.log("false");
-           del_btn.classList.replace("btn-danger","btn-info");
-           del_btn.setAttribute("data-clicked",true);
-           del_btn.innerHTML ="Un-delete";
+        if (del_btn.getAttribute("data-clicked") == "false") {
+            del_btn.classList.replace("btn-danger", "btn-info");
+            del_btn.setAttribute("data-clicked", true);
+            del_btn.innerHTML = "Un-delete";
+        } else {
+            del_btn.classList.replace("btn-info", "btn-danger");
+            del_btn.setAttribute("data-clicked", false);
+            del_btn.innerHTML = "delete";
         }
-        else{
-           // console.log("true");
-            del_btn.classList.replace("btn-info","btn-danger");
-            del_btn.setAttribute("data-clicked",false);
-            del_btn.innerHTML ="delete";
-        }
-        // console.log(del_btn.disabled)
-        // if (del_btn.disabled) {
-        //     del_btn.disabled = false;
-        // } else {
-        //     del_btn.disabled = true;
-        // }
-        
+    }
+    function editForm(event)
+    {
+      
     }
 
     function clienteditmodalShow(event) {
         var itemId = event.target.id;
         $('.client-input').val("")
+        $('#client-edit-addresses').empty();
         $.ajax({
             url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
             method: "GET",
@@ -155,7 +148,7 @@
                 // $('#main').val('checked', response.client.is_main);
                 $('#client-birthdate').val(response.client.date_of_birth)
                 $('#userid').val(response.user.id)
-                var table_body = $("<tbody></tbody>");
+                var table_body = $('#client-edit-addresses')
                 for (var address of response.addresses) {
                     var mainStreet = (address.is_main) ? "yes" : "no"
                     var record = `
@@ -168,8 +161,12 @@
                             <td>${address.flat_number}</td>
                             <td>${mainStreet}</td>
                             <td>
-                             <button type="button" class="btn btn-success rounded me-2">edit</button>
-                             <button  data-clicked="false" type="button" class="btn btn-danger rounded me-2"onclick="deleteAddress(event)">delete</button>
+                             <button type="button" class="btn btn-success rounded">edit</button>
+                             <form method="post" class="delete_item" id="option_a3" action="${address.id}" style="display:inline-block;">
+                               @csrf
+                               @method('DELETE')
+                              <button  data-clicked="false" type="button" class="btn btn-danger rounded"onclick="deleteAddress(event)">delete</button>
+                             </form>
                             </td>    
                         </tr>
                         `;
