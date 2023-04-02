@@ -14,4 +14,9 @@ class Revenue extends Model
         'total_revenue',
         'pharmacy_id',
     ];
+
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class);
+    }
 }

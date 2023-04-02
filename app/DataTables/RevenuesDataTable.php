@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Pharmacy;
 use App\Models\Revenue;
 use Attribute;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -27,8 +28,14 @@ class RevenuesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
 
-            // ->rawColumns(['avatar', 'actions','restore'])
-            ->setRowId('id');
+        ->addColumn('Pharmacy Name', function (Revenue $revenue) {
+            return $revenue->pharmacy->user->name;
+        })
+        ->addColumn('Avatar',function(Revenue $revenue){
+            return '<img src="'. asset("storage/pharmacies_Images/".$revenue->pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+        })
+        ->rawColumns(['Avatar'])
+        ->setRowId('id');
     }
 
     /**
@@ -73,11 +80,10 @@ class RevenuesDataTable extends DataTable
     public function getColumns()
     {
         return [
-                    // Column::computed('pharmacy_avatar')->addClass('text-center')->title('Avatar'),
-                    // Column::computed('pharmacy_name')->addClass('text-center')->title('Name'),
-                    Column::make('pharmacy_id')->addClass('text-center'),
-                    Column::make('total_order')->addClass('text-center'),
-                    Column::make('total_revenue')->addClass('text-center'),
+                    Column::computed('Avatar')->addClass('text-center'),
+                    Column::computed('Pharmacy Name')->addClass('text-center'),
+                    Column::make('total_order')->addClass('text-center')->title('Total Order'),
+                    Column::make('total_revenue')->addClass('text-center')->title('Total Revenue')
                 ];
     }
 
