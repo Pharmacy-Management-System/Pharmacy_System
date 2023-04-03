@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RevenueController;
 use  Illuminate\Support\Facades\Auth;
 
 /*
@@ -66,7 +67,7 @@ Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('docto
 Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
 Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
 
-// medicine routes
+//Medicine Routes
 Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
 Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
@@ -74,6 +75,10 @@ Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('m
 Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
+//Revenue Routes
+Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+
+//Auth Routes
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

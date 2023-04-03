@@ -26,7 +26,9 @@
         event.stopPropagation();
         let deleteBtnModal = document.querySelector("#deletePharmacy");
         deleteBtnModal.onclick = function() {
-            event.target.closest("form").submit();
+            var form = event.target.closest("form");
+            form.append('<input type="hidden" name="DELETE" value="DELETE">');
+            form.submit();
         }
     }
 </script>
