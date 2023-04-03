@@ -43,7 +43,7 @@ class PharmacyController extends Controller
             'priority' => $request->priority,
             'avatar_image' => $avatar_name
         ])->save();
-
+        $user->assignRole('pharmacy');
         return redirect()->route('pharmacies.index')->with('success', 'Pharmacy has been Created Successfully!')->with('timeout', 5000);
     }
 

@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +30,7 @@ class DoctorController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
 
             // Handle file upload
@@ -49,6 +50,7 @@ class DoctorController extends Controller
                 'is_banned' => $request->has('is_banned') ? 1 : 0,
                 'avatar_image' => $avatar_name,
             ]);
+            $user->assignRole('doctor');
         } catch (\Illuminate\Database\QueryException $exception) {
             return redirect()->route('doctors.index')->with('error', 'Error in Creating Doctor!')->with('timeout', 5000);
         }

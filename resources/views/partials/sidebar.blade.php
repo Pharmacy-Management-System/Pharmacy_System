@@ -117,6 +117,15 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
+        <li class="nav-item sidebar-list">
+            <a href="{{ route('pharmacies.index') }}" class="nav-link">
+                <img src="dist/img/icons/Pharmacies-icon.png" class="nav-icon">
+              <p>
+                Pharmacies
+              </p>
+            </a>
+          </li>
+          
           <li class="nav-item sidebar-list">
             <a href="{{route('doctors.index')}}" class="nav-link">
                 <img src="dist/img/icons/Doctors-icon.png" class="nav-icon">
@@ -126,14 +135,6 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{route('clients.index')}}" class="nav-link sidebar-list">
-              <img src="dist/img/icons/Users-icon.png" class="nav-icon">
-              <p>
-                Clients
-              </p>
-            </a>
-          </li>
 
           <li class="nav-item sidebar-list">
             <a href="{{route('medicines.index')}}" class="nav-link">
@@ -183,16 +184,6 @@
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-
-          <li class="nav-item sidebar-list">
-            <a href="{{route('medicines.index')}}" class="nav-link">
-                <img src="dist/img/icons/Medicines-icon.png" class="nav-icon">
-              <p>
-                Medicines
-              </p>
-            </a>
-          </li>
 
           <li class="nav-item sidebar-list">
             <a href="{{route('orders.index')}}" class="nav-link">
