@@ -19,7 +19,7 @@ class DoctorController extends Controller
     {
         $pharmacies = Pharmacy::all();
         $doctors = Doctor::all();
-        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
+        return $dataTable->render('doctor.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
     }
 
     public function store(StoreDoctorRequest $request)
