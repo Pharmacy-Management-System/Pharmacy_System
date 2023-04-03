@@ -32,7 +32,7 @@ class UpdateClientRequest extends FormRequest
             'gender' => ['required', 'in:Male,Female'], //
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
-            'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
+            'phone' => ['required', 'regex:/^01[0-1-2-5]\d{8}$/'], //
             'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s']
         ];
     }

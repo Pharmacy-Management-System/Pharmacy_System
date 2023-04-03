@@ -29,12 +29,16 @@
         </div>
     @endif
 
+
     <div class="container-fluid">
+    @role('admin')
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#createPharmacyModal">
                 Add New Pharmacy
             </button>
         </div>
+    @endrole
+
         {{ $dataTable->table() }}
     </div>
 

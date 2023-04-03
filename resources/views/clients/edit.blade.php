@@ -235,7 +235,6 @@
                 console.log(response.addresses)
                 var table_body = $('#client-edit-addresses')
                 for (var address of response.addresses) {
-                    var id = address.id
                     var mainStreet = (address.is_main) ? "yes" : "no"
                     var record = `
                         <tr>
@@ -257,8 +256,6 @@
                         </tr>
                         `;
                     table_body.append(record);
-                    var route = "{{ route('addresses.destroy', ':id') }}".replace(':id', id);
-                    document.getElementById('address-delete-form').action = route;
                 }
                 $("#client-editAddresses").append(table_body);
             }
@@ -294,6 +291,9 @@
         event.stopPropagation();
         let deleteBtnModal = document.querySelector("#delete-address");
         deleteBtnModal.onclick = function() {
+            var id = event.target.id;
+            var route = "{{ route('addresses.destroy', ':id') }}".replace(':id', id);
+            document.getElementById('address-delete-form').action = route;
             event.target.closest("form").submit();
         }
     }

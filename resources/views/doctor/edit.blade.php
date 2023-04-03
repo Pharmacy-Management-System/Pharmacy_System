@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="passwordEdit" class="form-label">Password</label>
-                        <input name="password" class="form-control" id="passwordEdit" value="">
+                        <input name="password" class="form-control" id="passwordEdit" value="" type="password">
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="pharmacy_id" class="form-label">Assigned Pharmacy</label>

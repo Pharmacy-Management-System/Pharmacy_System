@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -44,6 +45,9 @@ class DoctorsDataTable extends DataTable
             ->addColumn('avatar',function(Doctor $doctor){
                 return '<img src="'. asset("storage/doctors_Images/".$doctor->avatar_image) .'" width="40" class="img-circle" align="center" />';
             })
+            ->addColumn('Created At', function (Doctor $doctor) {
+                return $doctor->created_at->format('Y-m-d');
+            })
             ->addColumn(
                 'actions',
                 '<div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
@@ -78,7 +82,14 @@ class DoctorsDataTable extends DataTable
 
     public function query(Doctor $model): QueryBuilder
     {
-        return $model->newQuery();
+        $user = auth()->user();
+        if ($user->hasRole('pharmacy')) {
+            $pharmacyId = $user->pharmacy->id;
+            return $model->newQuery()->where('pharmacy_id', $pharmacyId);
+        }
+        elseif($user->hasRole('admin')){
+            return $model->newQuery();
+        }
     }
 
 
@@ -109,12 +120,13 @@ class DoctorsDataTable extends DataTable
 
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('avatar')->addClass('text-center')->addClass('align-middle'),
             Column::make('id')->title('National ID')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Created At','Created At')->width(100),
             Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')
                 ->exportable(false)
@@ -123,6 +135,11 @@ class DoctorsDataTable extends DataTable
                 ->addClass('text-center')
                 ->addClass('align-middle')
         ];
+        if (Auth::user()->hasRole('admin')) {
+            Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
+        }
+
+        return $columns;
     }
 
     /**

@@ -118,12 +118,11 @@ Route::group(
 
     //Pharmacy Routes
     Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
-    Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
     Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
     Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
     Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
     Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
-    Route::get('/pharmacies/restore/{pharmacy}', [PharmacyController::class, 'restore'])->name('pharmacies.restore');
+
 
     //Doctor Routes
     Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -145,6 +144,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/areas/{area}', [AreaController::class, 'update'])->name('areas.update');
     Route::get('/areas/{id}/edit', [AreaController::class, 'edit'])->name('areas.edit');
     Route::post('/areas', [AreaController::class, 'store'])->name('areas.store');
+
+    Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
+    Route::get('/pharmacies/restore/{pharmacy}', [PharmacyController::class, 'restore'])->name('pharmacies.restore');
 
     //Clients Routes
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');

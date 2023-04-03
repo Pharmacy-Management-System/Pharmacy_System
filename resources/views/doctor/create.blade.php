@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="pass" class="form-label visually-hidden">Password</label>
-                        <input name="password" class="form-control" id="pass" placeholder="Password" value="">
+                        <input name="password" type="password" class="form-control" id="pass" placeholder="Password" value="">
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="pharmacy_id" class="form-label visually-hidden">Assigned Pharmacy Name</label>
