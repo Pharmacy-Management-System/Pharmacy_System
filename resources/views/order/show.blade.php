@@ -31,6 +31,9 @@
                         <p><strong>Medicine-quantity: </strong> <span id="medicine"></span></p>
                     </div>
                     <div class="mb-3">
+                        <p><strong>Adress:</strong> <span id="adress"></span></p>
+                    </div>
+                    <div class="mb-3">
                         <p><strong>Created at:</strong> <span id="createdAt"></span></p>
                     </div>
                     <div class="mb-3">
@@ -59,6 +62,7 @@
                     $('#isInsured').text(response.order.is_insured ? "Yes" : "No")
                     $('#creatorType').text(response.order.creator_type)
                     $('#totalPrice').text(response.order.price)
+                    $('#adress').text(response.clientAddress)
                     let medicines = response.order.medicines
                     let medicineQunaity = response.order.medicines.map(medicine => medicine.pivot.quantity)
                     for(let i = 0; i < medicines.length; i++){

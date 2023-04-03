@@ -33,11 +33,6 @@ class StoreClientRequest extends FormRequest
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
             'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
-            'area_id' => ['required', 'integer', 'exists:areas,id'], //
-            'street_name' => ['required', 'string'], //
-            'building_no' => ['required', 'numeric'],
-            'floor_number' => ['required', 'numeric'],
-            'flat_number' => ['required', 'numeric'],
             'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s']
         ];
     }
@@ -77,27 +72,6 @@ class StoreClientRequest extends FormRequest
             'phone' => [
                 'required' => 'The Phone Number is Required',
                 'regex' => 'The Phone Number must be a valid Number'
-            ],
-            'area_id' => [
-                'required' => 'The Area ID is Required',
-                'integer' => 'The Area ID must be Integer Number',
-                'exists' => 'The Area ID does not exist'
-            ],
-            'street_name' => [
-                'required' => 'The Street Name is Required',
-                'string' => 'The Street Name must be String'
-            ],
-            'building_no' => [
-                'required' => 'The Building Number is Required',
-                'numeric' => 'The Building Number must be Number'
-            ],
-            'floor_number' => [
-                'required' => 'The Floor Number is Required',
-                'numeric' => 'The Floor Number must be Number'
-            ],
-            'flat_number' => [
-                'required' => 'The Flat Number is Required',
-                'numeric' => 'The Flat Number must be Number'
             ],
             'email_verified_at' => [
                 'date_format' => 'The Email Verification Date must be a valid Date'

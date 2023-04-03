@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Doctor;
 use App\Models\Medicine;
 use App\Models\OrderMedicine;
@@ -67,7 +68,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
-        // $orderMedicine = Order::createOrderMedicine();
+
         $doctor_name = User::find($doctor->user_id);
         return response()->json([
             'order' => $order,
@@ -75,6 +76,7 @@ class OrderController extends Controller
             'pharmacy' => $pharmacy,
             'doctor' => $doctor,
             'doctor_name'=>$doctor_name,
+
         ]);
     }
 

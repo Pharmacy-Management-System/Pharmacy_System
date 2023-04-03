@@ -3,7 +3,9 @@
 namespace App\DataTables;
 
 use App\Models\Pharmacy;
+use Attribute;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use League\CommonMark\Extension\Attributes\Node\Attributes;
 use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -33,109 +35,122 @@ class PharmaciesDataTable extends DataTable
             ->addColumn('Owner Email',function(Pharmacy $pharmacy){
                 return $pharmacy->user->email;
             })
-            // ->addColumn('avatar',function(Pharmacy $pharmacy){
-            //     return '<img src="{{ asset(\"storage/pharmacies_Images/$pharmacy->avatar_image\") }}">';
-            // })
-            ->addColumn(
-                'action',
-                '
-                <div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
-                    <div class="d-flex flex-row gap-2">
-                        <div>
-                            <button type="button" class="btn btn-success rounded" onclick="showEditModal(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#editPharmacyModal">
-                                Edit
-                            </button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-primary rounded" onclick="showPharmacyModal(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#showPharmacyModal">
-                                Show
-                            </button>
-                        </div>
-                        <div>
-                            <form method="post" class="delete_item" action="{{Route("pharmacies.destroy",$id)}}">
-                                @csrf
-                                @method("DELETE")
-                                <button type="button" class="btn btn-danger rounded delete-pharmacy" onclick="showDeleteModal(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#deletePharmacyModal">
-                                    Delete
+            ->addColumn('avatar',function(Pharmacy $pharmacy){
+                return '<img src="'. asset("storage/pharmacies_Images/".$pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+            })
+            ->addColumn('actions',function(Pharmacy $pharmacy){
+                if($pharmacy->deleted_at){
+                   return "
+                        <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                                <div class='d-flex flex-row gap-2'>
+                                    <div>
+                                        <form method='GET' class='restore_item' action='".Route('pharmacies.restore',$pharmacy->id)."'>
+                                            <button type='submit' class='btn btn-success rounded' onclick='restoreDeletedPharmacy(event)' id='".$pharmacy->id." 'data-bs-toggle='modal' data-bs-target='#restorePharmacyModal'>
+                                                Restore
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                        </div>";
+                }else{
+                    return "
+                    <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                        <div class='d-flex flex-row gap-2'>
+                            <div>
+                                <button type='button' class='btn btn-success rounded' onclick='showEditModal(event)' id='".$pharmacy->id."' data-bs-toggle='modal' data-bs-target='#editPharmacyModal'>
+                                    Edit
                                 </button>
-                            </form>
-                        </div>
-                        <div>
-                            <form method="GET" class="restore_item" action="{{Route("pharmacies.restore",$id)}}">
-                                <button type="submit" class="btn btn-success rounded" onclick="restoreDeletedPharmacy(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#restorePharmacyModal">
-                                    Restore
+                            </div>
+                            <div>
+                                <button type='button' class='btn btn-primary rounded' onclick='showPharmacyModal(event)' id='".$pharmacy->id." 'data-bs-toggle='modal' data-bs-target='#showPharmacyModal'>
+                                    Show
                                 </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>'
-            )
-            ->setRowId('pharmacy_id');
-    }
+                            </div>
+                            <div>
+                                <form method='POST' class='delete_item' action='".Route('pharmacies.destroy',$pharmacy->id)."'>
+                                <?php echo @csrf
+                                @method('DELETE')?>
+<button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='showDeleteModal(event)'
+    id='delete_".$pharmacy->id.")' data-bs-toggle='modal' data-bs-target='#deletePharmacyModal'>
+    Delete
+</button>
+</form>
+</div>
+</div>
+</div>";
+}
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Pharmacy $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(Pharmacy $model): QueryBuilder
-    {
-        return $model->newQuery()->withTrashed();
-    }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
-    public function html(): HtmlBuilder
-    {
-        return $this->builder()
-            ->setTableId('pharmacies-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
-    }
+})
 
-    /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
-    public function getColumns(): array
-    {
-        return [
-            Column::make('avatar_image')->addClass('text-center')->title('Avatar'),
-            Column::make('id')->addClass('text-center')->title('ID'),
-            Column::computed('Owner Name')->addClass('text-center'),
-            Column::computed('Owner Email')->addClass('text-center'),
-            Column::computed('Area')->addClass('text-center'),
-            Column::make('priority')->addClass('text-center')->title('Priority'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
-        ];
-    }
+->rawColumns(['avatar', 'actions'])
+->setRowId('pharmacy_id');
+}
 
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Pharmacy_' . date('YmdHis');
-    }
+/**
+* Get query source of dataTable.
+*
+* @param \App\Models\Pharmacy $model
+* @return \Illuminate\Database\Eloquent\Builder
+*/
+public function query(Pharmacy $model): QueryBuilder
+{
+return $model->newQuery()->withTrashed();
+}
+
+/**
+* Optional method if you want to use html builder.
+*
+* @return \Yajra\DataTables\Html\Builder
+*/
+public function html(): HtmlBuilder
+{
+return $this->builder()
+->setTableId('pharmacies-table')
+->columns($this->getColumns())
+->minifiedAjax()
+->orderBy(1)
+->selectStyleSingle()
+->buttons([
+Button::make('excel'),
+Button::make('csv'),
+Button::make('pdf'),
+Button::make('print'),
+Button::make('reset'),
+Button::make('reload')
+]);
+}
+
+/**
+* Get the dataTable columns definition.
+*
+* @return array
+*/
+public function getColumns()
+{
+return [
+Column::computed('avatar')->addClass('text-center')->title('Avatar'),
+Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
+Column::make('id')->addClass('text-center')->title('ID'),
+Column::computed('Owner Name')->addClass('text-center'),
+Column::computed('Owner Email')->addClass('text-center'),
+Column::computed('Area')->addClass('text-center'),
+Column::make('priority')->addClass('text-center')->title('Priority'),
+Column::computed('actions')
+->exportable(false)
+->printable(false)
+->width(60)
+->addClass('text-center')
+];
+}
+
+/**
+* Get filename for export.
+*
+* @return string
+*/
+protected function filename(): string
+{
+return 'Pharmacy_' . date('YmdHis');
+}
 }

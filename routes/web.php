@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PharmacyController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RevenueController;
 use  Illuminate\Support\Facades\Auth;
 
 /*
@@ -41,6 +43,13 @@ Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.
 Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
 
+//address routes
+Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+Route::delete('/addresses/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+Route::get('/addresses/{id}', [AddressController::class, 'show'])->name('addresses.show');
+Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
+Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+
 //Pharmacy Routes
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
 Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
@@ -58,7 +67,7 @@ Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('docto
 Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
 Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
 
-// medicine routes
+//Medicine Routes
 Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
 Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
@@ -66,6 +75,10 @@ Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('m
 Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
+//Revenue Routes
+Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+
+//Auth Routes
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -84,3 +97,4 @@ Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show'
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
