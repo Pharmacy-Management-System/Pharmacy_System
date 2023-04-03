@@ -99,7 +99,7 @@
                 var record = `
                         <tr>
                             <td>${response.address.area_id}</td>
-                            <td>${response.address.area_name}</td>
+                            <td>${response.area.name}</td>
                             <td>${response.address.street_name}</td>
                             <td>${response.address.building_number}</td>
                             <td>${response.address.floor_number}</td>

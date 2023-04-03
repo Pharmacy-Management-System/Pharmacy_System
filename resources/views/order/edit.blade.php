@@ -25,7 +25,7 @@
                                     @foreach ($client->Address as $address)
                                     @if ($client->id == $address->client_id)
                                     <option value="{{$address->id}}">
-                                        {{$address->building_number}}{{'  '}}{{$address->street_name}}{{' '}}{{$address->Area->name}}
+                                        {{ $address->id }} {{'-'}} {{$address->street_name}}{{' '}}{{$address->Area->name}}
                                     </option>
                                     @endif
                                     @endforeach
