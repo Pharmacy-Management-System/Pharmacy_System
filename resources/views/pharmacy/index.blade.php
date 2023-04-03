@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Pharmacies
+@endsection
+
 @section('content')
 
 <section class="content container">

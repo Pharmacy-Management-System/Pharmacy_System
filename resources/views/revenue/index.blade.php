@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Revenues
+@endsection
+
 @section('content')
 
 @role('admin')

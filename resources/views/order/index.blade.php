@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Orders
+@endsection
+
 @section('content')
     @if (session('error'))
         <div id="alert-message" class="alert alert-danger my-4 alert-dismissible">

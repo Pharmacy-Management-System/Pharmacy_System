@@ -25,7 +25,7 @@ use  Illuminate\Support\Facades\Auth;
 //Home Route
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 //Area Routes
 // Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
@@ -163,4 +163,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 });
-

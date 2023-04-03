@@ -63,11 +63,11 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Pharmacy System</h1>
+                            <span class="m-0 fs-3">Pharmacy System </span><span class="fs-4 fw-light">@yield('title')</span>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index')}}">Home</a></li>
                                 <li class="breadcrumb-item active">Pharmacy System</li>
                             </ol>
                         </div><!-- /.col -->
