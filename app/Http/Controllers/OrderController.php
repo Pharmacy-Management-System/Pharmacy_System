@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Area;
 use App\Models\Client;
 use App\Models\Doctor;
 use App\Models\Medicine;
@@ -22,7 +24,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all()]);
+        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all(),'clients' => Client::all(),'addresses' => Address::all()]);
     }
 
     /**
@@ -43,6 +45,7 @@ class OrderController extends Controller
         // if( $request->is_insured == null){
         //     $request->is_insured = 0;
         // }
+
         $order = Order::create([
             'user_id' => $request->user_id,
             'pharmacy_id' => $request->pharmacy_id,
@@ -50,6 +53,7 @@ class OrderController extends Controller
             'creator_type' => $request->creator_type,
             'status' => $request->status,
             'is_insured' => $request->has('is_insured') ? 1 : 0,
+            'delivering_address_id' => $request->delivering_address_id,
             'price' => 0,
         ]);
 
@@ -68,15 +72,19 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
-
         $doctor_name = User::find($doctor->user_id);
+        $address = Address::find($order->delivering_address_id);
+        $area = Area::find($address->area_id);
+
+
         return response()->json([
             'order' => $order,
             'user' => $user,
             'pharmacy' => $pharmacy,
             'doctor' => $doctor,
             'doctor_name'=>$doctor_name,
-
+            'address'=>$address,
+            'area'=> $area,
         ]);
     }
 
@@ -101,6 +109,7 @@ class OrderController extends Controller
                     'creator_type' => $request->creator_type,
                     'status' => $request->status,
                     'is_insured' => $request->has('is_insured') ? 1 : 0,
+                    'delivering_address_id' => $request->delivering_address_id ?? null,
                 ]);
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->route('orders.index')->with('error', 'Error in Updating Order!')->with('timeout', 5000);

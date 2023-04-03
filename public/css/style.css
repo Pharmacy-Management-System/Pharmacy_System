@@ -22,3 +22,16 @@ td{
     color: white !important;
 }
 
+
+  #medicine table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  #medicine th, #medicine td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+
+
+
