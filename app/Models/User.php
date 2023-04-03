@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,7 +23,8 @@ class User extends Authenticatable
         'id',
         'name',
         'email',
-        'password'
+        'password',
+        'email_verified_at'
     ];
 
     /**
@@ -33,7 +36,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
     public function owns()
     {
         return $this->hasOne(Pharmacy::class,'user_id');
@@ -58,7 +63,10 @@ class User extends Authenticatable
        return $this->hasOne(Doctor::class);
 
    }
-
+   public function getEmailForVerification()
+   {
+       return $this->email;
+   }
 
 
 
