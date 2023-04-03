@@ -84,26 +84,13 @@
                 // }
                 let medicines = response.order.medicines
                 let medicineQunaity = response.order.medicines.map(medicine => medicine.pivot.quantity)
-                let tableContent = '';
-
-                for (let i = 0; i < medicines.length; i += 2) {
-                    tableContent += '<tr>';
-
-                    // Add the first medicine and quantity to the row
-                    tableContent += `<td>${medicines[i].name} - ${medicineQuantities[i]}</td>`;
-
-                    // If there is a second medicine, add it to the row
-                    if (medicines[i + 1]) {
-                        tableContent += `<td>${medicines[i + 1].name} - ${medicineQuantities[i + 1]}</td>`;
-                    } else {
-                        // If there is no second medicine, add an empty cell to the row
-                        tableContent += '<td></td>';
-                    }
-
-                    tableContent += '</tr>';
+                let tableRows = '';
+                for (let i = 0; i < medicines.length; i++) {
+                    tableRows += `<tr><td>${medicines[i].name}</td><td>${medicineQunaity[i]}</td></tr>`;
                 }
 
-                $('#medicine').append(tableContent);
+                $('#medicine').append(
+                    `<table><thead><tr><th>Medicine</th><th>Quantity</th></tr></thead><tbody>${tableRows}</tbody></table>`);
 
                 $('#createdAt').text(response.order.created_at)
                 $('#updateddAt').text(response.order.updated_at)
@@ -128,3 +115,6 @@
         });
     }
 </script>
+
+
+
