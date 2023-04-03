@@ -17,30 +17,23 @@ class StoreOrderRequest extends FormRequest
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            'id' => ['required', 'unique:orders,id'],
-            'order_creator' => ['required', 'exists:users,national_id'],
-            'doctor_name'=>['exists:doctors,national_id'],
-            'delivering_address' => ['required'],
-            'pharmacy_name' => ['required,exists:pharmacies,pharmacy_id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'doctor_id'=>['exists:doctors,id'],
+            // 'delivering_address' => ['required'],
+            'pharmacy_name' => ['required,exists:pharmacies,id'],
             'is_insured' => ['required', 'boolean'],
             'status' => ['required', Rule::in(['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered'])],
-            'creator_type' => ['required', Rule::in(['user', 'doctor', 'pharmacy'])]
+            'creator_type' => ['required', Rule::in(['client', 'doctor', 'pharmacy'])],
         ];
 
     }
     public function messages()
     {
         return [
-            'id.required' => 'order id is required',
-            'order_creator.required' => 'userName is required',
+            'user_id.required' => 'userName is required',
             'delivering_address.required' => 'address is required',
             'pharmacy_name.required' => 'pharmacy name is required',
         'is_insured'=>[

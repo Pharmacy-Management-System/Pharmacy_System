@@ -93,4 +93,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //orders routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
