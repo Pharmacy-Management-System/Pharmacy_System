@@ -1,5 +1,5 @@
 <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create New Area</h5>
@@ -28,13 +28,15 @@
             </form>
         </div>
     </div>
-    @if ($errors->any())
-        <div class="alert alert-danger pb-0 ">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div> 
+</div>
+
+<!--script-->
+<script>
+    function createmodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#create_areaId').val("")
+            $('#create_areaName').val("")
+            $('#create_areaAddress').val("")
+        }
+</script>

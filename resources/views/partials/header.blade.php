@@ -7,9 +7,6 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="../index.blade.php" class="nav-link">Home</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-        </li>
     </ul>
 
     <!-- Right navbar links -->
@@ -57,8 +54,18 @@
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2 me-1" alt="User Image"
+                    @role('pharmacy')
+                    <img src="{{ asset('storage/pharmacies_Images/' . (Auth::user()->pharmacy->avatar_image))}}" class="img-circle elevation-2 me-1" alt="User Image"
                         width="30">
+                    @endrole
+                    @role('doctor')
+                    <img src="{{ asset('storage/doctors_Images/' . (Auth::user()->doctor->avatar_image))}}" class="img-circle elevation-2 me-1" alt="User Image"
+                        width="30">
+                    @endrole
+                    @role('admin')
+                    <img src="dist/img/admin.jpg" class="img-circle elevation-2 me-1" alt="User Image"
+                        width="30">
+                    @endrole
                     {{ Auth::user()->name }}
                 </a>
 

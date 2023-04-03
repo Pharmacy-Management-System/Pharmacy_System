@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
-<section class="content container">
-
-    @if (session('error'))
+    <section class="content container">
+        @if (session('error'))
         <div id ="alert-message" class="alert alert-danger my-4 alert-dismissible">
             {{ session('error') }}
             <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
@@ -28,46 +26,33 @@
             <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
         </div>
     @endif
-
-
-    <div class="container-fluid">
-    @role('admin')
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#createPharmacyModal">
-                Add New Pharmacy
-            </button>
+            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
+                data-bs-target="#create">Create New Area</button>
         </div>
-    @endrole
+        <div class="container">
+            {{ $dataTable->table() }}
+        </div>
 
-        {{ $dataTable->table() }}
-    </div>
+        <!-- Create Area Modal -->
+        @include('area.create')
 
-    <!-- Create Pharmacy Modal -->
-    @include('pharmacy.create')
+        <!-- Create Edit Modal -->
+        @include('area.edit')
 
-    <!-- Show Pharmacy Modal -->
-    @include('pharmacy.show')
+        <!-- Create Delete Modal -->
+        @include('area.delete')
 
-    <!-- Edit Pharmacy Modal -->
-    @include('pharmacy.edit')
 
-    <!-- Delete Pharmacy Modal -->
-    @include('pharmacy.delete')
-
-    <!-- Restore Pharmacy Modal -->
-    @include('pharmacy.restore')
-
-</section>
-
+    </section>
 @endsection
 
+<!--script-->
 @push('scripts')
-
-{{ $dataTable->scripts() }}
-
-<script>
-    setTimeout(function() {
+    {{ $dataTable->scripts() }}
+    <script>
+        setTimeout(function() {
             $('.alert-success').fadeOut();
         }, {{ session('timeout') }});
-</script>
+    </script>
 @endpush
