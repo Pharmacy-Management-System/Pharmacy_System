@@ -28,16 +28,17 @@ class OrdersDataTable extends DataTable
                 'action',
                 '
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2"  id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" >
+                <button type="button" class="btn btn-primary rounded me-2" onclick="orderShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#showOrder">show</button>
+                <button type="button" class="btn btn-success rounded me-2"  id="{{$id}}" onclick="editmodalShow(event)" data-bs-toggle="modal" data-bs-target="#modEdit">edit</button>
+                <form method="post" class="delete_item me-2" action="{{Route("orders.destroy",$id)}}">
                         @csrf
                         @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area"  id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
+                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deleteOrderModel(event)" data-bs-toggle="modal" data-bs-target="#delOrder">delete</button>
                     </form>
                 </div>'
             )
-            ->addColumn('Pharmacy Owner', function (Order $order) {
-                return $order->pharmacy->owner->name;
+            ->addColumn('Pharmacy', function (Order $order) {
+                return $order->pharmacy->pharmacy_name;
             })
             ->addColumn('name', function (Order $order) {
                 return $order->user->name;
@@ -48,29 +49,30 @@ class OrdersDataTable extends DataTable
             // ->addColumn('order_med', function (Order $order) {
             //     return $order->medicines;
             // })
-            ->addColumn('medicine', function (Order $order) {
-                foreach ($order->medicines as $medicine) {
-                    $medicines[] = $medicine->name;
-                }
-                return $medicines;
-            })
-            ->addColumn('quantity', function (Order $order) {
-                foreach ($order->medicines as $medicine) {
-                    $medicines[] = $medicine->pivot->quantity ;
-                }
-                return  $medicines;
-            })
+            // ->addColumn('medicine', function (Order $order) {
+            //     foreach ($order->medicines as $medicine) {
+            //         $medicines[] = $medicine->name;
+            //     }
+            //     return $medicines;
+            // })
+            // ->addColumn('quantity', function (Order $order) {
+            //     foreach ($order->medicines as $medicine) {
+            //         $medicines[] = $medicine->pivot->quantity ;
+            //     }
+            //     return  $medicines;
+            // })
 
-            ->addColumn('total Price', function (Order $order) {
-                $totalPrice=0;
-                foreach ($order->medicines as $medicine) {
-                    $totalPrice += ($medicine->price)*($medicine->pivot->quantity) ;
-                }
-                return  $totalPrice;
-            })
+            // ->addColumn('total Price', function (Order $order) {
+            //     $totalPrice=0;
+            //     foreach ($order->medicines as $medicine) {
+            //         $totalPrice += ($medicine->price)*($medicine->pivot->quantity) ;
+            //     }
+            //     return  $totalPrice;
+            // })
             ->addColumn('is_insured', function (Order $order) {
                 return $order->is_insured ? 'yes' : 'no';
             })
+
             ->setRowId('id');
     }
 
@@ -113,12 +115,12 @@ class OrdersDataTable extends DataTable
             Column::make('status'),
             Column::computed('is_insured')->title('insured'),
             Column::make('creator_type')->title('creator'),
-            Column::computed('Pharmacy Owner'),
+            Column::computed('Pharmacy'),
             Column::computed('doctor_id')->title('doctor'),
-            Column::make('delivering_address'),
-            Column::computed('medicine'),
-            Column::computed('quantity'),
-            Column::computed('total Price'),
+            // Column::make('delivering_address'),
+            // Column::computed('medicine'),
+            // Column::computed('quantity'),
+            Column::make('price'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
