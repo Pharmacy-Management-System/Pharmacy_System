@@ -2,8 +2,9 @@
 
 namespace App\DataTables;
 
-use App\Models\Address;
+use App\Models\Pharmacy;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AddressesDataTable extends DataTable
+class RevenuesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,32 +24,32 @@ class AddressesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'addresses.action')
-            ->addColumn('client-name', function (Address $address) {
-                return $address->client->user->name;
-            })
-            ->addColumn('client-email', function (Address $address) {
-                return $address->client->user->email;
-            })
-            ->addColumn('area-id', function (Address $address) {
-                return $address->area->id;
-            })
-            ->addColumn('area-name', function (Address $address) {
-                return $address->area->name;
-            })
-            ->addColumn('is_main', function (Address $address) {
-                return $address->is_main ? 'yes' : 'no';
-            })
-            ->setRowId('id');
+
+        ->addColumn('Pharmacy Name', function (Pharmacy $pharmacy) {
+            return $pharmacy->pharmacy_name;
+        })
+        ->addColumn('Avatar',function(Pharmacy $pharmacy){
+            return '<img src="'. asset("storage/pharmacies_Images/".$pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+        })
+        ->addColumn('Total Orders', function (Pharmacy $pharmacy) {
+            return DB::table('orders')->where('pharmacy_id',$pharmacy->id)
+                                             ->where('status','Delivered')->count();
+        })
+        ->addColumn('Total Revenue', function (Pharmacy $pharmacy) {
+            return DB::table('orders')->where('pharmacy_id',$pharmacy->id)
+                                             ->where('status','Delivered')->sum('price');
+        })
+        ->rawColumns(['Avatar'])
+        ->setRowId('id');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Address $model
+     * @param \App\Models\Pharmacy $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Address $model): QueryBuilder
+    public function query(Pharmacy $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -61,10 +62,9 @@ class AddressesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('addresses-table')
+            ->setTableId('revenues-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -82,20 +82,14 @@ class AddressesDataTable extends DataTable
      *
      * @return array
      */
-    public function getColumns(): array
+    public function getColumns()
     {
         return [
-            Column::make('id'),
-            Column::computed('client-name', 'Client Name'),
-            Column::computed('client-email', 'Client Email'),
-            Column::computed('area-id', 'Postal Code'),
-            Column::computed('area-name', 'Area Name'),
-            Column::make('street_name'),
-            Column::make('building_number'),
-            Column::make('floor_number'),
-            Column::make('flat_number'),
-            Column::computed('is_main'),
-        ];
+                    Column::computed('Avatar')->addClass('text-center'),
+                    Column::computed('Pharmacy Name')->addClass('text-center'),
+                    Column::computed('Total Orders')->addClass('text-center'),
+                    Column::computed('Total Revenue')->addClass('text-center')
+                ];
     }
 
     /**
@@ -105,6 +99,6 @@ class AddressesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Addresses_' . date('YmdHis');
+        return 'Revenue_' . date('YmdHis');
     }
 }
