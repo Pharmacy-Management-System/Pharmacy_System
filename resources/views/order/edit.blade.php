@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="address" class="form-label">Address</label>
-                        <select name="delivering_address_id" id="adress" class="form-control">
+                        <select name="delivering_address_id" id="editadress" class="form-control">
                             @foreach ($clients as $client)
                                     @foreach ($client->Address as $address)
                                     @if ($client->id == $address->client_id)
@@ -110,20 +110,19 @@
         $.ajax({
             url: "{{ route('orders.show', ':id') }}".replace(':id', itemId),
             method: "GET",
-
             success: function(response) {
                 console.log(response);
                 $('#AssignedUser').val(response.user.id);
+                $('#editadress').val(response.order.delivering_address_id);
                 $('#pharmacyEdit').val(response.pharmacy.id);
                 $('#doctorEdit').val(response.doctor.id);
                 $('#editOrderCreator').val(response.order.creator_type);
                 $('#orderStatus').val(response.order.status);
                 $('#edit_insured').prop('checked', response.order.is_insured == 1);
-                $('#adress').val(response.order.delivering_address_id);
             }
 
         });
-        var route = "{{ route('orders.update', ':id') }}".replace(':id', itemId);
+        var route = "{{route('orders.update',':id') }}".replace(':id', itemId);
         document.getElementById("edit-form").action = route;
     }
 
