@@ -87,7 +87,9 @@ class DoctorsDataTable extends DataTable
             $pharmacyId = $user->pharmacy->id;
             return $model->newQuery()->where('pharmacy_id', $pharmacyId);
         }
-        return $model->newQuery();
+        elseif($user->hasRole('admin')){
+            return $model->newQuery();
+        }
     }
 
 
@@ -133,7 +135,7 @@ class DoctorsDataTable extends DataTable
                 ->addClass('text-center')
                 ->addClass('align-middle')
         ];
-        if (auth()->user()->hasRole('admin')) {
+        if (Auth::user()->hasRole('admin')) {
             Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
         }
 

@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Area;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -79,7 +80,18 @@ class OrdersDataTable extends DataTable
 
     public function query(Order $model): QueryBuilder
     {
-        return $model->newQuery();
+        if (Auth::user()->hasRole('pharmacy')) {
+            return $model->newQuery()->where('pharmacy_id', Auth::user()->pharmacy->id);
+        }
+        elseif(Auth::user()->hasRole('admin')){
+            return $model->newQuery();
+        }
+        elseif (Auth::user()->hasRole('doctor')) {
+            return $model->newQuery()->whereHas('pharmacy', function ($query) {
+                $query->where('doctor_id', Auth::user()->doctor->id);
+            });
+        }
+
     }
 
 
@@ -108,25 +120,31 @@ class OrdersDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             // Column::computed('order_med'),
             Column::make('id'),
             Column::computed('name')->title('client name'),
             Column::make('status'),
             Column::computed('is_insured')->title('insured'),
-            Column::make('creator_type')->title('creator'),
-            Column::computed('Pharmacy'),
             Column::computed('doctor_id')->title('doctor'),
             // Column::make('delivering_address'),
             // Column::computed('medicine'),
             // Column::computed('quantity'),
             Column::make('price'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center')
         ];
+        if (Auth::user()->hasRole('admin')) {
+            $columns = array_merge($columns, [
+                Column::make('creator_type')->title('Creator'),
+                Column::computed('Pharmacy'),
+            ]);
+        }
+        $columns[] = Column::computed('action')
+        ->exportable(false)
+        ->printable(false)
+        ->width(60)
+        ->addClass('text-center');
+
+        return $columns;
     }
 
     /**
