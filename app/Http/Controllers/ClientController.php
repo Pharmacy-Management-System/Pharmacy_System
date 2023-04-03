@@ -22,12 +22,11 @@ class ClientController extends Controller
     {
         $client = Client::where('id', '=', $national_id)->first();
         $user = User::where('id', $client->user_id)->first();
-        $addresses=Address::where('client_id',$client->id)->get();
-        foreach($addresses as $address)
-        {
-            $address->area_name=$address->area->name;
+        $addresses = Address::where('client_id', $client->id)->get();
+        foreach ($addresses as $address) {
+            $address->area_name = $address->area->name;
         }
-        return response()->json(['client' => $client, 'user' => $user,'addresses'=>$addresses]);
+        return response()->json(['client' => $client, 'user' => $user, 'addresses' => $addresses]);
     }
 
     public function update(UpdateClientRequest $request, $national_id)

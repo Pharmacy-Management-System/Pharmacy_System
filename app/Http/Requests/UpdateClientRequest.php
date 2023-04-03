@@ -33,11 +33,6 @@ class UpdateClientRequest extends FormRequest
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
             'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
-            'area_id' => ['required', 'integer', 'exists:areas,id'], //
-            'street_name' => ['required', 'string'], //
-            'building_no' => ['required', 'numeric'],
-            'floor_number' => ['required', 'numeric'],
-            'flat_number' => ['required', 'numeric'],
             'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s']
         ];
     }
