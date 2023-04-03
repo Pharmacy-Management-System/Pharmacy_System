@@ -87,9 +87,7 @@ class OrdersDataTable extends DataTable
             return $model->newQuery();
         }
         elseif (Auth::user()->hasRole('doctor')) {
-            return $model->newQuery()->whereHas('pharmacy', function ($query) {
-                $query->where('doctor_id', Auth::user()->doctor->id);
-            });
+            return $model->newQuery()->where('pharmacy_id', Auth::user()->doctor->pharmacy_id);
         }
 
     }
