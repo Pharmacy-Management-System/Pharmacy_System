@@ -59,5 +59,14 @@ class User extends Authenticatable
        return $this->hasOne(Doctor::class);
 
    }
+   public function isAdmin()
+   {
+       return $this->role === 'admin';
+   }
+
+   public function isPharmacy()
+   {
+       return $this->role === 'pharmacy';
+   }
 
 }
