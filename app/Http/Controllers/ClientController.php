@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -79,7 +80,7 @@ class ClientController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
             //  handle image
             if ($request->hasFile('avatar_image')) {

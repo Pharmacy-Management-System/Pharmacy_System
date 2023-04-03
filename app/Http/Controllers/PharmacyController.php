@@ -9,6 +9,7 @@ use App\Models\Pharmacy;
 use App\Models\Area;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
@@ -33,7 +34,7 @@ class PharmacyController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' =>Hash::make($request->password),
         ]);
         Pharmacy::create([
             'user_id' => $user->id,
