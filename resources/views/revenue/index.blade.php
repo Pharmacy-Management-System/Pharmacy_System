@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="container-fluid">
-        {{ $dataTable->table() }}
-    </div>
+@role('admin')
+    @include('revenue.admin')
+@endrole
+
+
+@role('pharmacy')
+@include('revenue.pharmacy')
+@endrole
 
 @endsection
-
-@push('scripts')
-    {{ $dataTable->scripts() }}
-@endpush

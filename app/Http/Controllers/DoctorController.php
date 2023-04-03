@@ -9,6 +9,8 @@ use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
 use App\Models\Pharmacy;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,29 +21,26 @@ class DoctorController extends Controller
     {
         $pharmacies = Pharmacy::all();
         $doctors = Doctor::all();
-        return $dataTable->render('doctors.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
+        return $dataTable->render('doctor.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
     }
 
     public function store(StoreDoctorRequest $request)
     {
-        // Create a new user
         try {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
 
-            // Handle file upload
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
                 $avatar->storeAs('public/doctors_Images', $avatar_name);
             } else {
-                $avatar_name = 'default.jpg';
+                $avatar_name = 'default-avatar.jpg';
             }
 
-            // Create a new doctor record
             $doctor = Doctor::create([
                 'user_id' => $user->id,
                 'id' => $request->id,
@@ -49,6 +48,7 @@ class DoctorController extends Controller
                 'is_banned' => $request->has('is_banned') ? 1 : 0,
                 'avatar_image' => $avatar_name,
             ]);
+            $user->assignRole('doctor');
         } catch (\Illuminate\Database\QueryException $exception) {
             return redirect()->route('doctors.index')->with('error', 'Error in Creating Doctor!')->with('timeout', 5000);
         }
@@ -82,13 +82,13 @@ class DoctorController extends Controller
     }
 
 
-    public function update(UpdateDoctorRequest $request, $id)
+    public function update(UpdateDoctorRequest $request, $doctor)
     {
 
-        if (is_numeric($id)) {
+        if (is_numeric($doctor)) {
             try {
-                $doctor = Doctor::where('id', $id)->firstOrFail();
-                $user = $doctor->user;
+                $selectedDoctor = Doctor::where('id', $doctor)->firstOrFail();
+                $user = $selectedDoctor->user;
                 $user->update([
                     'name' => $request->name,
                     'email' => $request->email,
@@ -96,14 +96,17 @@ class DoctorController extends Controller
 
 
                 if ($request->hasFile('avatar_image')) {
+                    if ($selectedDoctor->avatar_image && $selectedDoctor->avatar_image != 'default-avatar.jpg') {
+                        Storage::delete('public/doctors_Images/'.$selectedDoctor->avatar_image);
+                    }
                     $avatar = $request->file('avatar_image');
                     $avatar_name = $avatar->getClientOriginalName();
                     $avatar->storeAs('public/doctors_Images', $avatar_name);
                 } else {
-                    $avatar_name = $doctor->avatar_image;
+                    $avatar_name = $selectedDoctor->avatar_image;
                 }
 
-                $doctor->update([
+                $selectedDoctor->update([
                     'id' => $request->id,
                     'pharmacy_id' => $request->pharmacy_id,
                     'is_banned' => $request->has('is_banned') ? 1 : 0,

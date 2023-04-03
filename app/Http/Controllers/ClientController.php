@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -42,7 +43,7 @@ class ClientController extends Controller
                 User::where('id', $client->user_id)->update($userData);
                 // update client data
                 $clientData = [];
-                //  handle image 
+                //  handle image
                 if ($request->hasFile('avatar_image')) {
                     $avatar = $request->file('avatar_image');
                     $clientData['avatar_image'] = $avatar->getClientOriginalName();
@@ -50,20 +51,10 @@ class ClientController extends Controller
                 } else {
                     $clientData['avatar_image'] = 'default.jpg';
                 }
-                // handle checkbox
-                $clientData['is_main'] = 0;
-                if ($request->has('is_main')) {
-                    $clientData['is_main'] = 1;
-                }
                 $clientData['id'] = $request->id;
                 $clientData['date_of_birth'] = $request->date_of_birth;
                 $clientData['gender'] = $request->gender;
-                $clientData['area_id'] = $request->area_id;
                 $clientData['phone'] = $request->phone;
-                $clientData['street_name'] = $request->street_name;
-                $clientData['building_no'] = $request->building_no;
-                $clientData['floor_number'] = $request->floor_number;
-                $clientData['flat_number'] = $request->flat_number;
                 $client->update($clientData);
             } catch (\Illuminate\Database\QueryException $exception) {
                 return to_route('clients.index')->with('error', 'Error in Updating Client Record.')->with('timeout', 3000);
@@ -79,9 +70,9 @@ class ClientController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
-            //  handle image 
+            //  handle image
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
@@ -89,12 +80,17 @@ class ClientController extends Controller
             } else {
                 $avatar_name = 'default.jpg';
             }
+
+            
             // handle checkbox
             $isChecked = 0;
             if ($request->has('is_main')) {
                 $isChecked = 1;
             }
-            // craete client 
+            // craete client
+            // create client
+
+
             Client::create([
                 'id' => $request->id,
                 'user_id' => $user->id,
@@ -102,13 +98,9 @@ class ClientController extends Controller
                 'gender' => $request->gender,
                 'date_of_birth' => $request->date_of_birth,
                 'phone' => $request->phone,
-                'area_id' => $request->area_id,
-                'street_name' => $request->street_name,
-                'building_no' => $request->building_no,
-                'floor_number'  => $request->floor_number,
-                'flat_number' => $request->flat_number,
-                'is_main' => $isChecked
             ]);
+
+            $user->assignRole('client');
         } catch (\Illuminate\Database\QueryException $exception) {
             return to_route('clients.index')->with('error', 'Error in Creating Client.')->with('timeout', 3000);
         }
@@ -124,7 +116,7 @@ class ClientController extends Controller
                 Client::destroy($national_id);
                 User::destroy($user->id);
             } catch (\Illuminate\Database\QueryException $exception) {
-                return to_route('clients.index')->with('error', 'Error in Deleting Client Record.')->with('timeout', 3000);
+                return to_route('clients.index')->with('error', 'Error in Deleting Client Record Please Delete Related Records First.')->with('timeout', 3000);
             }
             return to_route('clients.index')->with('success', 'Client Record Deleted Successfully.')->with('timeout', 3000);
         }
