@@ -79,12 +79,8 @@ class ClientController extends Controller
             } else {
                 $avatar_name = 'default.jpg';
             }
-            // handle checkbox
-            $isChecked = 0;
-            if ($request->has('is_main')) {
-                $isChecked = 1;
-            }
-            // craete client 
+
+            // create client 
             Client::create([
                 'id' => $request->id,
                 'user_id' => $user->id,
