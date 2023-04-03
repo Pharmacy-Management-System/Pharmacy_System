@@ -24,17 +24,23 @@ class AreasDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(
-                'action',
-                '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("areas.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
-                    </form>
-                </div>'
+                'actions',
+                '<div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
+                                <div class="d-flex flex-row gap-2">
+                                    <div>
+                                        <button type="button" class="btn btn-success rounded" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">Edit</button>
+                                    </div>
+                                    <div>
+                                        <form method="post" class="delete_item" action="{{Route("areas.destroy",$id)}}">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>'
             )
+            ->rawColumns(['actions'])
             ->setRowId('id');
     }
 
@@ -81,14 +87,15 @@ class AreasDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id')->title('Postal Code'),
-            Column::make('name'),
-            Column::make('address'),
-            Column::computed('action')
+            Column::make('id')->addClass('text-center')->addClass('align-middle')->title('Postal Code'),
+            Column::make('name')->addClass('text-center')->addClass('align-middle'),
+            Column::make('address')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('actions')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
+                ->addClass('align-middle'),
         ];
     }
 
