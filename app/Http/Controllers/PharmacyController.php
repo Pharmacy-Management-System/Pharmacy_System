@@ -83,25 +83,25 @@ class PharmacyController extends Controller
     {
         if (is_numeric($pharmacy)) {
             try {
-                $pharmacy = Pharmacy::where('id', $pharmacy)->firstOrFail();
-                $user = $pharmacy->user;
+                $selectedPharmacy = Pharmacy::where('id', $pharmacy)->firstOrFail();
+                $user = $selectedPharmacy->user;
                 $user->update([
                     'name' => $request->name,
                     'email' => $request->email,
                 ]);
 
                 if ($request->hasFile('avatar_image')) {
-                    if ($pharmacy->avatar_image && $pharmacy->avatar_image != 'default-avatar.jpg') {
-                        Storage::delete('public/pharmacies_Images/'.$pharmacy->avatar_image);
+                    if ($selectedPharmacy->avatar_image && $selectedPharmacy->avatar_image != 'default-avatar.jpg') {
+                        Storage::delete('public/pharmacies_Images/'.$selectedPharmacy->avatar_image);
                     }
                     $avatar = $request->file('avatar_image');
                     $avatar_name = $avatar->getClientOriginalName();
                     $avatar->storeAs('public/pharmacies_Images', $avatar_name);
                 } else {
-                    $avatar_name = $pharmacy->avatar_image;
+                    $avatar_name = $selectedPharmacy->avatar_image;
                 }
 
-                $pharmacy->update([
+                $selectedPharmacy->update([
                 'id' => $request->id,
                 'pharmacy_name'=> $request->pharmacy_name,
                 'area_id' => $request->area_id,
@@ -109,7 +109,7 @@ class PharmacyController extends Controller
                 'priority' => $request->priority,
                 ]);
             } catch (\Illuminate\Database\QueryException $exception) {
-                return redirect()->route('pharmacies.index')->with('error', 'Error in Updating Doctor!')->with('timeout', 5000);
+                return redirect()->route('pharmacies.index')->with('error', 'Error in Updating Pharmacy!')->with('timeout', 5000);
             }
             return redirect()->route('pharmacies.index')->with('success', 'Pharmacy has been Updated Successfully!')->with('timeout', 5000);
         }

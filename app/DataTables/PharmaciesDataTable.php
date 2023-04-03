@@ -129,18 +129,19 @@ Button::make('reload')
 public function getColumns()
 {
 return [
-Column::computed('avatar')->addClass('text-center')->title('Avatar'),
-Column::make('pharmacy_name')->addClass('text-center')->title('Name'),
-Column::make('id')->addClass('text-center')->title('ID'),
-Column::computed('Owner Name')->addClass('text-center'),
-Column::computed('Owner Email')->addClass('text-center'),
-Column::computed('Area')->addClass('text-center'),
-Column::make('priority')->addClass('text-center')->title('Priority'),
+Column::computed('avatar')->addClass('text-center')->addClass('align-middle')->title('Avatar'),
+Column::make('pharmacy_name')->addClass('text-center')->addClass('align-middle')->title('Name'),
+Column::make('id')->addClass('text-center')->addClass('align-middle')->title('ID'),
+Column::computed('Owner Name')->addClass('text-center')->addClass('align-middle'),
+Column::computed('Owner Email')->addClass('text-center')->addClass('align-middle'),
+Column::computed('Area')->addClass('text-center')->addClass('align-middle'),
+Column::make('priority')->addClass('text-center')->addClass('align-middle')->title('Priority'),
 Column::computed('actions')
 ->exportable(false)
 ->printable(false)
 ->width(60)
 ->addClass('text-center')
+->addClass('align-middle')
 ];
 }
 
