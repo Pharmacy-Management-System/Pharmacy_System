@@ -85,10 +85,10 @@ class RevenuesDataTable extends DataTable
     public function getColumns()
     {
         return [
-                    Column::computed('Avatar')->addClass('text-center'),
-                    Column::computed('Pharmacy Name')->addClass('text-center'),
-                    Column::computed('Total Orders')->addClass('text-center'),
-                    Column::computed('Total Revenue')->addClass('text-center')
+                    Column::computed('Avatar')->addClass('text-center')->addClass('align-middle'),
+                    Column::computed('Pharmacy Name')->addClass('text-center')->addClass('align-middle'),
+                    Column::computed('Total Orders')->addClass('text-center')->addClass('align-middle'),
+                    Column::computed('Total Revenue')->addClass('text-center')->addClass('align-middle')
                 ];
     }
 
