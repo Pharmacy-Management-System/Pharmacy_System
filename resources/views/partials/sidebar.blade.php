@@ -15,13 +15,16 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+            @role('admin')
+          <a href="{{ route('admin.index') }}" class="d-block">Admin</a>
+            @endrole
         </div>
       </div> --}}
 
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item sidebar-list">
+          @role('admin')
             <a href="{{ route('pharmacies.index') }}" class="nav-link">
                 <img src="dist/img/icons/Pharmacies-icon.png" class="nav-icon">
               <p>
@@ -29,6 +32,7 @@
               </p>
             </a>
           </li>
+          @endrole
 
           <li class="nav-item sidebar-list">
             <a href="{{route('doctors.index')}}" class="nav-link">

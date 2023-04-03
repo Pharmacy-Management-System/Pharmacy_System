@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
@@ -16,8 +17,8 @@ use  Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
@@ -42,6 +43,11 @@ Route::put('/clients/{id}', [ClientController::class, 'update'])->name('clients.
 Route::get('/clients/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
 Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
 
+//address routes
+Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+Route::delete('/addresses/{id}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+Route::get('/addresses/{id}', [AddressController::class, 'show'])->name('addresses.show');
+
 //Pharmacy Routes
 Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
 Route::delete('/pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])->name('pharmacies.destroy');
@@ -52,7 +58,7 @@ Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmaci
 Route::get('/pharmacies/restore/{pharmacy}', [PharmacyController::class, 'restore'])->name('pharmacies.restore');
 
 //Doctor Routes
-Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+Route::get('/doctors', [DoctorController::class, 'index'])->middleware(['auth', 'role:admin'])->name('doctors.index');
 Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
 Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
 Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
@@ -72,16 +78,27 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-
-
-
-
-
-
 //orders routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
-//address routes
-Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+     return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth', 'role:admin'])->name('admin.index');
+
+require __DIR__.'/auth.php';
