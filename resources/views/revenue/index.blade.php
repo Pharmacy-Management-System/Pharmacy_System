@@ -2,7 +2,13 @@
 
 @section('content')
 
+@role('admin')
     @include('revenue.admin')
-    @include('revenue.pharmacy')
+@endrole
+
+
+@role('pharmacy')
+@include('revenue.pharmacy')
+@endrole
 
 @endsection

@@ -13,11 +13,13 @@ class RevenueController extends Controller
     public function index(RevenuesDataTable $dataTable)
     {
         $user = Auth::user();
-        if ($user->isAdmin()) {
+        if ($user->hasRole('admin')) {
             return $dataTable->render('revenue.index');
-        } elseif ($user->isPharmacy()) {
-            $pharmacyData = Pharmacy::where('id', $user->pharmacy_id)->first();
-            return view('revenu.index', compact('pharmacyData'));
+        } elseif ($user->hasRole('pharmacy')) {
+            $pharmacyData = Pharmacy::where('user_id', $user->id)->first();
+            return view('revenue.index', ['pharmacy' => $pharmacyData]);
+        }else{
+            abort(403, 'Unauthorized action.');
         }
     }
 }
