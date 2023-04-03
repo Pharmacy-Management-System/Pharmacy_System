@@ -155,39 +155,18 @@
                         <label class="form-check-label" for="gridCheck">
                             Main Street
                         </label>
-<<<<<<< HEAD
-                    </div> --}}
-                    <table class="table table-striped  table-bordered" id="client-editAddresses">
-                        <thead>
-                            <tr>
-                                <th scope="col">Postal Code</th>
-                                <th scope="col">Area Name</th>
-                                <th scope="col">Street Name</th>
-                                <th scope="col">Building Number</th>
-                                <th scope="col">Floor Number</th>
-                                <th scope="col">Flat Number</th>
-                                <th scope="col">Main Street</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="client-edit-addresses"></tbody>
-                    </table>
-=======
                     </div>
->>>>>>> e39a413e107ca5900578403901e3f05aebe23bfb
                 </div>
                 <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white" onclick="editForm(event)">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white">Edit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<<<<<<< HEAD
-=======
 <div class="modal fade" id="create-address" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -239,65 +218,21 @@
                     <button type="submit" class="btn btn-primary text-white">Create</button>
                 </div>
             </form>
->>>>>>> e39a413e107ca5900578403901e3f05aebe23bfb
         </div>
     </div>
 </div>
 
 
 <script>
-<<<<<<< HEAD
-    function deleteAddress(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        var del_btn = event.target;
-        if (del_btn.getAttribute("data-clicked") == "false") {
-            del_btn.classList.replace("btn-danger", "btn-info");
-            del_btn.setAttribute("data-clicked", true);
-            del_btn.innerHTML = "Un-delete";
-        } else {
-            del_btn.classList.replace("btn-info", "btn-danger");
-            del_btn.setAttribute("data-clicked", false);
-            del_btn.innerHTML = "delete";
-        }
-    }
-    function editForm(event)
-    {
-      
-    }
-
-    function clienteditmodalShow(event) {
-        var itemId = event.target.id;
-        $('.client-input').val("")
-=======
     function clientaddressshowmodalShow(event) {
         var itemId = event.target.id;
         $('#clientId').val(itemId)
->>>>>>> e39a413e107ca5900578403901e3f05aebe23bfb
         $('#client-edit-addresses').empty();
         $.ajax({
             url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
             method: "GET",
             success: function(response) {
-<<<<<<< HEAD
-                //$('#image').text(response.client.image)
-                $('#client-name').val(response.user.name)
-                $('#client-email').val(response.user.email)
-                $('#client-id').val(response.client.id)
-                $('#client-gender').val(response.client.gender)
-                $('#client-phone').val(response.client.phone)
-                // $('#postal').val(response.client.area_id)
-                // $('#street').val(response.client.street_name)
-                // $('#building').val(response.client.building_no)
-                // $('#floor').val(response.client.floor_number)
-                // $('#flat').val(response.client.flat_number)
-                // $('#main').prop('checked', response.client.is_main);
-                // $('#main').val('checked', response.client.is_main);
-                $('#client-birthdate').val(response.client.date_of_birth)
-                $('#userid').val(response.user.id)
-=======
                 console.log(response.addresses)
->>>>>>> e39a413e107ca5900578403901e3f05aebe23bfb
                 var table_body = $('#client-edit-addresses')
                 for (var address of response.addresses) {
                     var id = address.id
@@ -312,19 +247,11 @@
                             <td>${address.flat_number}</td>
                             <td>${mainStreet}</td>
                             <td>
-<<<<<<< HEAD
-                             <button type="button" class="btn btn-success rounded">edit</button>
-                             <form method="post" class="delete_item" id="option_a3" action="${address.id}" style="display:inline-block;">
-                               @csrf
-                               @method('DELETE')
-                              <button  data-clicked="false" type="button" class="btn btn-danger rounded"onclick="deleteAddress(event)">delete</button>
-=======
                              <button type="button" class="btn btn-success rounded" onclick="clientaddresseditmodalShow(event)" id="${address.id}" data-bs-toggle="modal" data-bs-target="#address-edit">edit</button>
                              <form method="post" class="delete_item" id="address-delete-form" action="" style="display:inline-block;">
                                @csrf
                                @method('DELETE')
                                <button type="button" class="btn btn-danger rounded delete-client" onclick="deleteAddress(event)" id="${address.id}" data-bs-toggle="modal" data-bs-target="#address-del-model">delete</button>
->>>>>>> e39a413e107ca5900578403901e3f05aebe23bfb
                              </form>
                             </td>    
                         </tr>
