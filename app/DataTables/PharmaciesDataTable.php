@@ -95,7 +95,13 @@ class PharmaciesDataTable extends DataTable
 */
 public function query(Pharmacy $model): QueryBuilder
 {
-return $model->newQuery()->withTrashed();
+    $user = auth()->user();
+
+    if ($user->hasRole('admin')) {
+        return $model->newQuery()->withTrashed();
+    } else if ($user->hasRole('pharmacy')) {
+        return $model->newQuery()->where('user_id', $user->id)->withTrashed();
+    }
 }
 
 /**

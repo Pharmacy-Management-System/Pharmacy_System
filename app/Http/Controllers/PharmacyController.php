@@ -22,6 +22,7 @@ class PharmacyController extends Controller
         return $dataTable->render('pharmacy.index', ['pharmacies' => DataTables::of($pharmacies)->make(true), 'areas' => $areas]);
     }
 
+
     public function store(StorePharmacyRequest $request)
     {
         if ($request->hasFile('avatar_image')) {
@@ -89,6 +90,14 @@ class PharmacyController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                 ]);
+                if ($user->hasRole('pharmacy')) {
+                    $area = $selectedPharmacy ->area_id;
+                    $priority = $selectedPharmacy ->priority;
+                }
+                else if($user->hasRole('admin')){
+                    $area = $request->area_id;
+                    $priority = $request->priority;
+                }
 
                 if ($request->hasFile('avatar_image')) {
                     if ($selectedPharmacy->avatar_image && $selectedPharmacy->avatar_image != 'default-avatar.jpg') {
@@ -104,10 +113,12 @@ class PharmacyController extends Controller
                 $selectedPharmacy->update([
                 'id' => $request->id,
                 'pharmacy_name'=> $request->pharmacy_name,
-                'area_id' => $request->area_id,
+                'area_id' => $area,
+                'priority' => $priority,
                 'avatar_image' => $avatar_name,
-                'priority' => $request->priority,
                 ]);
+
+
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->route('pharmacies.index')->with('error', 'Error in Updating Pharmacy!')->with('timeout', 5000);
             }
