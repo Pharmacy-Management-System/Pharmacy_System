@@ -13,8 +13,7 @@ class AreaController extends Controller
 {
     public function index(AreasDataTable $dataTable)
     {
-        //dd($dataTable);
-        return $dataTable->render('areas.index');
+        return $dataTable->render('area.index');
     }
 
     public function destroy($id)

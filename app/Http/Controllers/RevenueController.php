@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\DataTables\RevenuesDataTable;
+use App\Models\Order;
 use App\Models\Pharmacy;
 use App\Models\User;
 use App\Models\Revenue;
@@ -16,8 +17,11 @@ class RevenueController extends Controller
         if ($user->hasRole('admin')) {
             return $dataTable->render('revenue.index');
         } elseif ($user->hasRole('pharmacy')) {
-            $pharmacyData = Pharmacy::where('user_id', $user->id)->first();
-            return view('revenue.index', ['pharmacy' => $pharmacyData]);
+            $pharmacy = Pharmacy::where('user_id', $user->id)->first();
+            $orders = Order::where('pharmacy_id', $pharmacy->id)->where('status','Delivered');
+            $totalOrders = $orders->count();
+            $totalRevenue = $orders->sum('price');
+            return view('revenue.index', ['pharmacy' => $pharmacy,'orders'=>$totalOrders,'revenues'=>$totalRevenue]);
         }else{
             abort(403, 'Unauthorized action.');
         }
