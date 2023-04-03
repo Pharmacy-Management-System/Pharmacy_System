@@ -139,12 +139,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
 
     //Medicine Routes
-    Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
-    Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-    Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
-    Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
-    Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
-    Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
 
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
@@ -157,4 +157,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:doctor'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+    Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 });
+

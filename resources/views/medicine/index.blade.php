@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content">
+    <section class="content container">
         @if ($errors->any())
             <div class="alert alert-danger pb-0">
                 <ul>
@@ -51,7 +51,7 @@
             $('#create_medQuntity').val("")
             $('#create_medPrice').val("")
         }
-        
+
         function editmodalShow(event) {
             event.preventDefault();
             event.stopPropagation();
