@@ -45,37 +45,7 @@
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                    <div class="col-md-6 ">
-                        <label for="postal" class="form-label">Postal Code</label>
-                        <select name="area_id" id="postal" class="form-select " aria-label="Default select example">
-                            <option selected>Select Area</option>
-                            @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6 ">
-                        <label for="street" class="form-label">Street Name</label>
-                        <input name="street_name" class="form-control" id="street" value="">
-                    </div>
-                    <div class="col-md-6 ">
-                        <label for="building" class="form-label">Building Number</label>
-                        <input name="building_no" class="form-control" id="building" value="">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="floor" class="form-label">Floor Number</label>
-                        <input name="floor_number" class="form-control" id="floor" value="">
-                    </div>
-                    <div class="col-md-6 ">
-                        <label for="flat" class="form-label">Flat Number</label>
-                        <input name="flat_number" class="form-control" id="flat" value="">
-                    </div>
-                    <div class="col-md-6  ms-4">
-                        <input class="form-check-input" name="is_main" type="checkbox" id="main" value="1">
-                        <label class="form-check-label" for="gridCheck">
-                            Main Street
-                        </label>
-                    </div>
+                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
