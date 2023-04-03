@@ -63,8 +63,7 @@
                 $('#national-id').text(response.doctor.id);
                 var checkIcon = response.doctor.is_banned ? "{{ asset('dist/img/icons/Success-Mark-icon.png') }}" : "{{ asset('dist/img/icons/Failed-Mark-icon.png') }}"
                 $('#is-banned').attr('src', checkIcon);
-                var pharmacy = response.pharmacies.find(pharmacy => pharmacy.id === response.doctor.pharmacy_id);
-                var pharmacyName = response.users.find(user => user.id === pharmacy.user_id).name;
+                var pharmacyName = response.pharmacies.find(pharmacy => pharmacy.id === response.doctor.pharmacy_id).pharmacy_name;
                 $('#pharmacy').text(pharmacyName)
                 var imagePath = "{{ asset('storage/doctors_Images/:image_name') }}".replace(':image_name', response.doctor.avatar_image);
                 $('#doctorAvatar').attr('src', imagePath);
