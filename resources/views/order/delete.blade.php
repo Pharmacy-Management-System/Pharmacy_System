@@ -1,4 +1,4 @@
-<div class="modal fade" id="del-model" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="delOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,7 +21,7 @@
 </div>
 
 <script>
-    function deletemodalShow(event) {
+    function deleteOrderModel(event) {
         event.preventDefault();
         event.stopPropagation();
         let deleteBtnModal = document.querySelector("#delete");
