@@ -37,16 +37,18 @@
     </div>
 
 
-    <!-- delete moadal -->
-    @include('doctors.delete')
+    <!-- Create Doctor Moadal -->
+    @include('doctor.create')
 
-    <!-- Create Modal -->
-    @include('doctors.create')
+    <!-- Show Doctor Moadal -->
+    @include('doctor.show')
 
-    <!-- edit moadal -->
-    @include('doctors.edit')
-    <!------Show modal----->
-    @include('doctors.show')
+    <!-- Edit Doctor Moadal -->
+    @include('doctor.edit')
+
+    <!-- Delete Doctor Moadal -->
+    @include('doctor.delete')
+
 
 </section>
 
