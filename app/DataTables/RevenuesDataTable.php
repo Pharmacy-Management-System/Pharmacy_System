@@ -26,7 +26,7 @@ class RevenuesDataTable extends DataTable
         return (new EloquentDataTable($query))
 
         ->addColumn('Pharmacy Name', function (Pharmacy $pharmacy) {
-            return $pharmacy->user->name;
+            return $pharmacy->pharmacy_name;
         })
         ->addColumn('Avatar',function(Pharmacy $pharmacy){
             return '<img src="'. asset("storage/pharmacies_Images/".$pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
