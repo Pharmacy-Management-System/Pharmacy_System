@@ -26,7 +26,7 @@
                         <input name="password" class="form-control" id="pass" placeholder="Password" value="">
                     </div>
                     <div class="col-md-12 mb-2">
-                        <label for="pharmacy_id" class="form-label visually-hidden">Pharmacy Name</label>
+                        <label for="pharmacy_id" class="form-label visually-hidden">Assigned Pharmacy Name</label>
                         <select name="pharmacy_id" id="pharmacySelect" class="form-control">
                             <option value="" disabled selected hidden>Choose Pharmacy Name...</option>
                             @foreach($pharmacies as $pharmacy)

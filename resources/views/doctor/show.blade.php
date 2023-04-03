@@ -51,6 +51,7 @@
     </div>
 </div>
 
+<!--Script-->
 <script>
     function doctorshowmodalShow(event) {
         var itemId = event.target.id;
