@@ -126,7 +126,7 @@ class DoctorsDataTable extends DataTable
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('Created At','Created At')->width(100),
+            Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100),
             Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')
                 ->exportable(false)
