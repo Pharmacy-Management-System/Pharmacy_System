@@ -27,12 +27,12 @@ class StoreClientRequest extends FormRequest
         return [
             'name' => ['required', 'min:3'], //
             'email' => ['required', 'email', 'unique:users,email'], //
-            'password' => ['required', 'min:6'], //
+            'password' => ['required', 'min:6','confirmed'], //
             'id' => ['required', Rule::unique('clients')->ignore($this->client), 'size:14'], //
             'gender' => ['required', 'in:Male,Female'], //
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
-            'phone' => ['required', 'regex:/^01[0-1]\d{8}$/'], //
+            'phone' => ['required', 'regex:/^01[0-1-2-5]\d{8}$/'], //
             'email_verified_at' => ['nullable', 'date_format:Y-m-d H:i:s']
         ];
     }
@@ -56,7 +56,8 @@ class StoreClientRequest extends FormRequest
             ],
             'password' => [
                 'required' => 'The Password is Required',
-                'min' => 'The Password must be larger than 6 Characters'
+                'min' => 'The Password must be larger than 6 Characters',
+                'confirmed'=>"The Password must be confirmed"
             ],
             'avatar_image' => [
                 'mimes' => 'The Image must be jpg or jpeg Only'
