@@ -13,7 +13,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'doctor_id',
-        // 'delivering_address',
+        'delivering_address_id',
         'pharmacy_id',
         'is_insured',
         'status',
@@ -60,6 +60,9 @@ class Order extends Model
     }
     public function client (){
         return $this->belongsTo(Client::class,'user_id');
+    }
+    public function address(){
+        return $this->hasOne(Address::class,'delivering_address_id');
     }
 
 }

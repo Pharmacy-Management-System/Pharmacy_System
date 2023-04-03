@@ -5,17 +5,30 @@
                 <h5 class="modal-title" id="exampleModalLabel">Update Order</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" id="create-pharmacy-form" enctype="multipart/form-data" action="{{ route('orders.store') }}">
+            <form method="POST" id="edit-form" enctype="multipart/form-data" >
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body row gy-2 gx-3 align-items-center">
                     <div class="col-md-12 mb-2">
                         <label for="orderUser" class="form-label">Assigned User</label>
                         <select name="user_id" id="AssignedUser" class="form-control">
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">
-                                    {{ $user->name }}{{ '/' }}{{ $user->email }}</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->user_id }}">
+                                    {{ $client->User->name }}{{ '/' }}{{$client->User->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <label for="address" class="form-label">Address</label>
+                        <select name="delivering_address_id" id="adress" class="form-control">
+                            @foreach ($clients as $client)
+                                    @foreach ($client->Address as $address)
+                                    @if ($client->id == $address->client_id)
+                                    <option value="{{$address->id}}">
+                                        {{$address->building_number}}{{'  '}}{{$address->street_name}}{{' '}}{{$address->Area->name}}
+                                    </option>
+                                    @endif
+                                    @endforeach
                             @endforeach
                         </select>
                     </div>
@@ -80,7 +93,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary text-white">Edit</button>
+                        <button type="submit"  class="btn btn-primary text-white">Edit</button>
                     </div>
                 </div>
             </form>
@@ -106,6 +119,7 @@
                 $('#editOrderCreator').val(response.order.creator_type);
                 $('#orderStatus').val(response.order.status);
                 $('#edit_insured').prop('checked', response.order.is_insured == 1);
+                $('#adress').val(response.order.delivering_address_id);
             }
 
         });

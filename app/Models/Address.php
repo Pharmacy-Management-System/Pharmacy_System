@@ -25,4 +25,7 @@ class Address extends Model
     {
         return $this->belongsTo(Area::class);
     }
+    public function address(){
+        return $this->belongsTo(Address::class,'delivering_address_id');
+    }
 }
