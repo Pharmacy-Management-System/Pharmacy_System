@@ -25,31 +25,46 @@ class DoctorsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn(
-                'action',
-                '
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <button type="button" class="btn btn-success rounded me-2" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">edit</button>
-            <button type="button" class="btn btn-primary rounded me-2" onclick="doctorshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-doctor">show</button>
-            <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("doctors.destroy",$id)}}">
-                    @csrf
-                    @method("DELETE")
-                    <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">delete</button>
-                </form>
-            </div>'
-            )
-            ->addColumn('name', function (Doctor $doctor) {
+
+            ->addColumn('Name', function (Doctor $doctor) {
                 return $doctor->user->name;
             })
-            ->addColumn('email', function (Doctor $doctor) {
+            ->addColumn('Email', function (Doctor $doctor) {
                 return $doctor->user->email;
             })
-            ->addColumn('pharmacy', function (Doctor $doctor) {
-                return $doctor->pharmacy->user->name;
+            ->addColumn('Assigned Pharmacy', function (Doctor $doctor) {
+                return $doctor->pharmacy->pharmacy_name;
             })
             ->addColumn('is_banned', function (Doctor $doctor) {
-                return $doctor->is_banned ? 'yes' : 'no';
+                return $doctor->is_banned ?
+                    '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
+                    :
+                    '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                })
+            ->addColumn('avatar',function(Doctor $doctor){
+                return '<img src="'. asset("storage/doctors_Images/".$doctor->avatar_image) .'" width="40" class="img-circle" align="center" />';
             })
+            ->addColumn(
+                'actions',
+                '<div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
+                                <div class="d-flex flex-row gap-2">
+                                    <div>
+                                        <button type="button" class="btn btn-success rounded" onclick="editmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#edit">Edit</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary rounded" onclick="doctorshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-doctor">Show</button>
+                                    </div>
+                                    <div>
+                                        <form method="post" class="delete_item" action="{{Route("doctors.destroy",$id)}}">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                          </div>'
+            )
+            ->rawColumns(['avatar', 'actions','is_banned'])
             ->setRowId('id');
     }
 
@@ -79,7 +94,6 @@ class DoctorsDataTable extends DataTable
             ->setTableId('doctors-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -96,26 +110,20 @@ class DoctorsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('id', 'National ID'),
-            //Column::make('id')->title('National ID'),
-            Column::computed('name', 'Name'),
-            //Column::make('user.name')->title('Name'),
-            Column::computed('email', 'Email'),
-            //Column::make('user.email')->title('Email'),
-            Column::make('pharmacy','Assigned Pharmacy'),
-            Column::computed('is_banned','Is Banned'),
-            Column::make('avatar_image'),
-            Column::computed('action')
+            Column::make('avatar')->addClass('text-center')->addClass('align-middle'),
+            Column::make('id')->title('National ID')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('actions')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
-                ->addClass('text-center'),
+                ->addClass('text-center')
+                ->addClass('align-middle')
         ];
     }
-
-
-
-
 
     /**
      * Get filename for export.
