@@ -3,12 +3,8 @@
 namespace App\DataTables;
 
 use App\Models\Pharmacy;
-use App\Models\Revenue;
-use Attribute;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
-use League\CommonMark\Extension\Attributes\Node\Attributes;
-use PhpParser\Node\Stmt\Return_;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -29,18 +25,18 @@ class RevenuesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
 
-        ->addColumn('Pharmacy Name', function (Revenue $revenue) {
-            return $revenue->pharmacy->user->name;
+        ->addColumn('Pharmacy Name', function (Pharmacy $pharmacy) {
+            return $pharmacy->user->name;
         })
-        ->addColumn('Avatar',function(Revenue $revenue){
-            return '<img src="'. asset("storage/pharmacies_Images/".$revenue->pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
+        ->addColumn('Avatar',function(Pharmacy $pharmacy){
+            return '<img src="'. asset("storage/pharmacies_Images/".$pharmacy->avatar_image) .'" width="40" class="img-circle" align="center" />';
         })
-        ->addColumn('Total Orders', function (Revenue $revenue) {
-            return DB::table('orders')->where('pharmacy_id',$revenue->pharmacy_id)
+        ->addColumn('Total Orders', function (Pharmacy $pharmacy) {
+            return DB::table('orders')->where('pharmacy_id',$pharmacy->id)
                                              ->where('status','Delivered')->count();
         })
-        ->addColumn('Total Revenue', function (Revenue $revenue) {
-            return DB::table('orders')->where('pharmacy_id',$revenue->pharmacy_id)
+        ->addColumn('Total Revenue', function (Pharmacy $pharmacy) {
+            return DB::table('orders')->where('pharmacy_id',$pharmacy->id)
                                              ->where('status','Delivered')->sum('price');
         })
         ->rawColumns(['Avatar'])
@@ -50,10 +46,10 @@ class RevenuesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Revenue $model
+     * @param \App\Models\Pharmacy $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Revenue $model): QueryBuilder
+    public function query(Pharmacy $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -92,7 +88,7 @@ class RevenuesDataTable extends DataTable
                     Column::computed('Avatar')->addClass('text-center'),
                     Column::computed('Pharmacy Name')->addClass('text-center'),
                     Column::computed('Total Orders')->addClass('text-center'),
-                    Column::make('Total Revenue')->addClass('text-center')
+                    Column::computed('Total Revenue')->addClass('text-center')
                 ];
     }
 
