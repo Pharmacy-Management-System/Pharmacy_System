@@ -21,7 +21,10 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="emailEdit" class="form-label">Email</label>
-                        <input name="email" class="form-control" id="emailEdit" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-icon">@</span>
+                            <input name="email" class="form-control" id="emailEdit" type="email" id="emailEdit" aria-describedby="email-icon" value="">
+                        </div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="passwordEdit" class="form-label">Password</label>

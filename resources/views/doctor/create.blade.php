@@ -19,7 +19,10 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="email" class="form-label visually-hidden">Email</label>
-                        <input name="email" class="form-control" id="email" placeholder="Email" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-icon">@</span>
+                            <input name="email"type="email" class="form-control" id="email" aria-describedby="email-icon" placeholder="Email" value="">
+                        </div>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="pass" class="form-label visually-hidden">Password</label>
