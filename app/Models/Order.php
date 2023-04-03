@@ -58,5 +58,8 @@ class Order extends Model
             $order->medicines($id)->attach($orderMedicine[$i], ['quantity' => $quantity[$i]]);
         }
     }
+    public function client (){
+        return $this->belongsTo(Client::class,'user_id');
+    }
 
 }
