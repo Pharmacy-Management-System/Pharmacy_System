@@ -45,7 +45,7 @@
                             <option value="Female">Female</option>
                         </select>
                     </div>
-                  
+                <input name="password_confirmation" class="form-control" id="client-password-confirmation" value="" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -58,6 +58,10 @@
 
 @push('scripts')
 <script>
+
+$("#client-password").on("input", function() {
+   $('#client-password-confirmation').val($(this).val())
+});
 
 </script>
 @endpush

@@ -29,11 +29,11 @@ class Client extends Model
     }
     public function address()
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(Address::class,'client_id');
     }
 
-    // public function orders()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'user_id');
+    }
 }

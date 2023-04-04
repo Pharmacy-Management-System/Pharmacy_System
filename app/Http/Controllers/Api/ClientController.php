@@ -3,48 +3,50 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\Api\UpdateClientRequest;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    public function store(StoreClientRequest $request)
+    public function index($id)
     {
-        //dd($request);
-        try {
-            // create user
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' =>Hash::make($request->password),
-            ]);
-            //  handle image 
-            if ($request->hasFile('avatar_image')) {
-                $avatar = $request->file('avatar_image');
-                $avatar_name = $avatar->getClientOriginalName();
-                $avatar->storeAs('public/clients_Images', $avatar_name);
-            } else {
-                $avatar_name = 'default.jpg';
+        dd(Client::find($id));
+    }
+    public function update(Request $request, $national_id)
+     {
+        dd($request);
+        if (is_numeric($national_id)) {
+            try {
+                //  find client
+                $client = Client::where('id', '=', $national_id)->first();
+                // find user related to client and update
+                $userData = [];
+                $userData['name'] = $request->name;
+                $userData['email'] = $request->email;
+                User::where('id', $client->user_id)->update($userData);
+                $clientData = [];
+                //  handle image
+                if ($request->hasFile('avatar_image')) {
+                    $avatar = $request->file('avatar_image');
+                    $clientData['avatar_image'] = $avatar->getClientOriginalName();
+                    $avatar->storeAs('public/clients_Images', $clientData['avatar_image']);
+                } else {
+                    $clientData['avatar_image'] = 'default.jpg';
+                }
+                // $clientData['id'] = $request->id; //national id 
+                $clientData['date_of_birth'] = $request->date_of_birth;
+                $clientData['gender'] = $request->gender;
+                $clientData['phone'] = $request->phone;
+                $client->update($clientData);
+            } catch (\Illuminate\Database\QueryException $exception) {
+                
+                return 'Error in Updating Client Record.';
             }
-
-            // create client 
-            Client::create([
-                'id' => $request->id,
-                'user_id' => $user->id,
-                'avatar_image' => $avatar_name,
-                'gender' => $request->gender,
-                'date_of_birth' => $request->date_of_birth,
-                'phone' => $request->phone,
-            ]);
-        } catch (\Illuminate\Database\QueryException $exception) {
-            //return to_route('clients.index')->with('error', 'Error in Creating Client.')->with('timeout', 3000);
-            return "Error in creating client";
+            return 'Client Record Updating Successfully.';
         }
-       // return to_route('clients.index')->with('success', 'Client has been created successfully!')->with('timeout', 3000);
-       return "Client has been created successfully!";
+    // dd("MAriam");
     }
 
 }
