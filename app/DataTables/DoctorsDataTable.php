@@ -69,10 +69,14 @@ class DoctorsDataTable extends DataTable
                           </div>'
             )
             ->addColumn('is_banned', function (Doctor $doctor) {
-                return $doctor->is_banned ?
-                    '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
-                    :
-                    '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                $doctor->is_banned = $doctor->isBanned();
+                 if($doctor->is_banned) {
+                    return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+                else{
+                    return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+
             })->addColumn('Ban/UnBan', function (Doctor $doctor) {
                 $buttonText = $doctor->isBanned() ? 'Unban' : 'Ban';
                 $buttonClass = $doctor->isBanned() ? 'btn-success' : 'btn-danger';
