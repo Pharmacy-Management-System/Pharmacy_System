@@ -56,69 +56,63 @@ class PharmaciesDataTable extends DataTable
                         </div>";
                     } else {
                         return "
-                    <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
-                        <div class='d-flex flex-row gap-2'>
-                            <div>
-                                <button type='button' class='btn btn-success rounded' onclick='showEditModal(event)' id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#editPharmacyModal'>
-                                    Edit
-                                </button>
+                        <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                            <div class='d-flex flex-row gap-2'>
+                                <div>
+                                    <button type='button' class='btn btn-success rounded' onclick='showEditModal(event)' id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#editPharmacyModal'>
+                                        Edit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-primary rounded' onclick='showPharmacyModal(event)' id='" . $pharmacy->id . " 'data-bs-toggle='modal' data-bs-target='#showPharmacyModal'>
+                                        Show
+                                    </button>
+                                </div>
+                                <div>
+                                    <form method='POST' class='delete_item' action='" . Route('pharmacies.destroy', $pharmacy->id) . "'>
+                                        <button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='showDeleteModal(event)'
+                                            id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#deletePharmacyModal'>
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                            <div>
-                                <button type='button' class='btn btn-primary rounded' onclick='showPharmacyModal(event)' id='" . $pharmacy->id . " 'data-bs-toggle='modal' data-bs-target='#showPharmacyModal'>
-                                    Show
-                                </button>
-                            </div>
-                            <div>
-                                <form method='POST' class='delete_item' action='" . Route('pharmacies.destroy', $pharmacy->id) . "'>
-                                <?php echo @csrf
-                                @method('DELETE')?>
-<button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='showDeleteModal(event)'
-    id='delete_" . $pharmacy->id . ")' data-bs-toggle='modal' data-bs-target='#deletePharmacyModal'>
-    Delete
-</button>
-</form>
-</div>
-</div>
-</div>";
+                        </div>";
                     }
                 }
                 if (Auth::user()->hasRole('pharmacy')) {
 
                     return "
-                    <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
-                        <div class='d-flex flex-row gap-2'>
-                            <div>
-                                <button type='button' class='btn btn-success rounded' onclick='showEditModal(event)' id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#editPharmacyModal'>
-                                    Edit
-                                </button>
+                        <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                            <div class='d-flex flex-row gap-2'>
+                                <div>
+                                    <button type='button' class='btn btn-success rounded' onclick='showEditModal(event)' id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#editPharmacyModal'>
+                                        Edit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-primary rounded' onclick='showPharmacyModal(event)' id='" . $pharmacy->id . " 'data-bs-toggle='modal' data-bs-target='#showPharmacyModal'>
+                                        Show
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button type='button' class='btn btn-primary rounded' onclick='showPharmacyModal(event)' id='" . $pharmacy->id . " 'data-bs-toggle='modal' data-bs-target='#showPharmacyModal'>
-                                    Show
-                                </button>
-                            </div>
-                            <div>
+                        </div>";
+                    }
 
-</div>
-</div>
-</div>";
-                }
-            })
-
+                })
             ->rawColumns(['avatar', 'actions'])
             ->setRowId('pharmacy_id');
-    }
+        }
 
     /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Pharmacy $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+    * Get query source of dataTable.
+    *
+    * @param \App\Models\Pharmacy $model
+    * @return \Illuminate\Database\Eloquent\Builder
+    */
     public function query(Pharmacy $model): QueryBuilder
     {
         $user = auth()->user();
-
         if ($user->hasRole('admin')) {
             return $model->newQuery()->withTrashed();
         } else if ($user->hasRole('pharmacy')) {
@@ -127,33 +121,33 @@ class PharmaciesDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
+    * Optional method if you want to use html builder.
+    *
+    * @return \Yajra\DataTables\Html\Builder
+    */
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('pharmacies-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->orderBy(1)
-            ->selectStyleSingle()
-            ->buttons([
-                Button::make('excel'),
-                Button::make('csv'),
-                Button::make('pdf'),
-                Button::make('print'),
-                Button::make('reset'),
-                Button::make('reload')
-            ]);
+        ->setTableId('pharmacies-table')
+        ->columns($this->getColumns())
+        ->minifiedAjax()
+        ->orderBy(1)
+        ->selectStyleSingle()
+        ->buttons([
+            Button::make('excel'),
+            Button::make('csv'),
+            Button::make('pdf'),
+            Button::make('print'),
+            Button::make('reset'),
+            Button::make('reload')
+        ]);
     }
 
     /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
+    * Get the dataTable columns definition.
+    *
+    * @return array
+    */
     public function getColumns()
     {
         return [
@@ -174,12 +168,12 @@ class PharmaciesDataTable extends DataTable
     }
 
     /**
-     * Get filename for export.
-     *
-     * @return string
-     */
+    * Get filename for export.
+    *
+    * @return string
+    */
     protected function filename(): string
     {
         return 'Pharmacy_' . date('YmdHis');
     }
-}
+    }

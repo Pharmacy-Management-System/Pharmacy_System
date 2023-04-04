@@ -13,7 +13,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="deletePharmacy" type="button" class="btn btn-danger">Delete</button>
+                <form method='POST' id="delete-pharmacy-form" class='delete_item'>
+                    @csrf
+                    @method('DELETE')
+                    <button id="deletePharmacy" type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </div>
@@ -24,11 +28,8 @@
     function showDeleteModal(event) {
         event.preventDefault();
         event.stopPropagation();
-        let deleteBtnModal = document.querySelector("#deletePharmacy");
-        deleteBtnModal.onclick = function() {
-            var form = event.target.closest("form");
-            form.append('<input type="hidden" name="DELETE" value="DELETE">');
-            form.submit();
-        }
+        var selectedPharmacyId = event.target.id;
+        var deleteRoute = "{{ route('pharmacies.destroy', ':id') }}".replace(':id', selectedPharmacyId);
+        document.getElementById("delete-pharmacy-form").action = deleteRoute;
     }
 </script>
