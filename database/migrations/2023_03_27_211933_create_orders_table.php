@@ -20,7 +20,6 @@ return new class extends Migration
             $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation','Canceled','Confirmed','Delivered']);
             $table->boolean("is_insured");
             $table->enum('creator_type',['client','doctor','pharmacy']);
-            $table->string('delivering_address');
             $table->double('price');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies'); //refers to pharmacy that has the order

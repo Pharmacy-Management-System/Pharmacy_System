@@ -1,8 +1,8 @@
 <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Area</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Area Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="edit-form" enctype="multipart/form-data">
@@ -25,10 +25,34 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white">Update</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<!--script-->
+<script>
+    function editmodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#edit_areaId').val("")
+            $('#edit_areaName').val("")
+            $('#edit_areaAddress').val("")
+            var itemId = event.target.id;
+            id = event.target.id;
+            $.ajax({
+                url: "{{ route('areas.show', ':id') }}".replace(':id', itemId),
+                method: "GET",
+                success: function(response) {
+                    $('#edit_areaId').val(response.area[0].id)
+                    $('#edit_areaName').val(response.area[0].name)
+                    $('#edit_areaAddress').val(response.area[0].address)
+                }
+            });
+            var route = "{{ route('areas.update', ':id') }}".replace(':id', itemId);
+            document.getElementById("edit-form").action = route;
+    }
+</script>
 
