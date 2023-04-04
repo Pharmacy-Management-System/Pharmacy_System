@@ -97,7 +97,7 @@ class DoctorController extends Controller
 
                 if ($request->hasFile('avatar_image')) {
                     if ($selectedDoctor->avatar_image && $selectedDoctor->avatar_image != 'default-avatar.jpg') {
-                        Storage::delete('public/doctors_Images/'.$selectedDoctor->avatar_image);
+                        Storage::delete('public/doctors_Images/' . $selectedDoctor->avatar_image);
                     }
                     $avatar = $request->file('avatar_image');
                     $avatar_name = $avatar->getClientOriginalName();
@@ -117,5 +117,17 @@ class DoctorController extends Controller
             }
             return redirect()->route('doctors.index')->with('success', 'Doctor has been updated successfully!')->with('timeout', 5000);
         }
+    }
+
+    public function ban(Doctor $doctor)
+    {
+        $doctor->ban();
+        return redirect()->back()->with('success', 'Doctor has been banned successfully!');
+    }
+
+    public function unban(Doctor $doctor)
+    {
+        $doctor->unban();
+        return redirect()->back()->with('success', 'Doctor has been unbanned successfully!');
     }
 }

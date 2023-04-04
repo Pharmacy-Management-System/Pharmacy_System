@@ -36,12 +36,12 @@ class DoctorsDataTable extends DataTable
             ->addColumn('Assigned Pharmacy', function (Doctor $doctor) {
                 return $doctor->pharmacy->pharmacy_name;
             })
-            ->addColumn('is_banned', function (Doctor $doctor) {
-                return $doctor->is_banned ?
-                    '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
-                    :
-                    '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
-                })
+            // ->addColumn('is_banned', function (Doctor $doctor) {
+            //     return $doctor->is_banned ?
+            //         '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
+            //         :
+            //         '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+            //     })
             ->addColumn('avatar',function(Doctor $doctor){
                 return '<img src="'. asset("storage/doctors_Images/".$doctor->avatar_image) .'" width="40" class="img-circle" align="center" />';
             })
@@ -68,7 +68,28 @@ class DoctorsDataTable extends DataTable
                                 </div>
                           </div>'
             )
-            ->rawColumns(['avatar', 'actions','is_banned'])
+            ->addColumn('is_banned', function (Doctor $doctor) {
+                return $doctor->is_banned ?
+                    '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
+                    :
+                    '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+            })->addColumn('Ban/UnBan', function (Doctor $doctor) {
+                $buttonText = $doctor->isBanned() ? 'Unban' : 'Ban';
+                $buttonClass = $doctor->isBanned() ? 'btn-success' : 'btn-danger';
+                $formMethod = $doctor->isBanned() ? 'unban' : 'ban';
+                $formAction = route('doctors.'.$formMethod, $doctor->id);
+
+                return '
+                    <form method="POST" action="'.$formAction.'">
+                        '.csrf_field().'
+                        <button type="submit" class="btn '.$buttonClass.'">'.$buttonText.'</button>
+                    </form>
+                ';
+            })
+
+
+
+            ->rawColumns(['avatar', 'actions','is_banned','Ban/UnBan'])
             ->setRowId('id');
     }
 
@@ -128,7 +149,8 @@ class DoctorsDataTable extends DataTable
             Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Created At','Created At')->width(100),
             Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('actions')
+            Column::computed('actions'),
+            Column::computed('Ban/UnBan')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

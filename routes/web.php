@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
 use  Illuminate\Support\Facades\Auth;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -86,6 +87,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
+
 // //orders routes
 // Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 // Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
@@ -95,7 +97,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 Route::group(
-    ["middleware" => ['role:admin|pharmacy|doctor']],
+    ["middleware" => ['role:admin|pharmacy|doctor', 'forbid-banned-user']],
     function () {
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
         Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
@@ -110,32 +112,36 @@ Route::group(
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
         Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
         Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
-            });
+    }
+);
 
 Route::group(
     ["middleware" => ['role:admin|pharmacy']],
     function () {
 
-    //Pharmacy Routes
-    Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
-    Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
-    Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
-    Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
-    Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
+        //Pharmacy Routes
+        Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+        Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
+        Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
+        Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+        Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
 
 
-    //Doctor Routes
-    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
-    Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-    Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
-    Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
-    Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
-    Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
+        //Doctor Routes
+        Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+        Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+        Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+        Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
+        Route::post('doctors/{doctor}/unban', [DoctorController::class, 'unban'])->name('doctors.unban');
+        Route::post('doctors/{doctor}/ban', [DoctorController::class, 'ban'])->name('doctors.ban');
 
-    //Revenue Routes
-    Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
 
-});
+        //Revenue Routes
+        Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+    }
+);
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
@@ -163,4 +169,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 });
-
