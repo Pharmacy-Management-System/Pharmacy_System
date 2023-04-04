@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientController;
-use App\Http\Controllers\Api\OrderController;
-
+use App\Http\Controllers\Auth\VerificationController;
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -25,11 +26,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/sanctum/token',[AuthController::class, 'getToken'])->name('auth.getToken');
+Route::post('/login', [AuthController::class, 'getToken'])->name('auth.getToken'); // /sanctum/token
+Route::get('email/resend/{id}', [AuthController::class, 'resend'])->name('verification.resend');
 
-Route::group(["middleware"=>"auth:sanctum"],function (){
-    Route::put('/client/{id}',[ClientController::class, 'update']);
-    Route::get('/client/{id}',[ClientController::class, 'index']);
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
+    Route::put('/client/{id}', [ClientController::class, 'update']);
+    Route::get('/client/{id}', [ClientController::class, 'index']);
+
+    Route::get('/address', [AddressController::class, 'index']);
+    Route::get('/address/{id}', [AddressController::class, 'show']);
+    Route::delete('/address/{id}', [AddressController::class, 'destroy']);
+    Route::post('/address', [AddressController::class, 'store']);
+    Route::put('/address/{id}', [AddressController::class, 'update']);
+
     Route::post('/orders', [OrderController::class, 'create']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);

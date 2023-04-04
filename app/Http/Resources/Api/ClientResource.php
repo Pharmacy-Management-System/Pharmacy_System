@@ -13,7 +13,7 @@ class ClientResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    { //dd($this);
+    { 
         return [
                 'id' => $this->id,
                 'name' => $this->user->name,
@@ -21,7 +21,6 @@ class ClientResource extends JsonResource
                 'data_of_birth' => $this->date_of_birth,
                 'gender' => $this->gender,
                 'phone' => $this->phone,
-              
         ];
     }
 }
