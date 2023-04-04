@@ -64,5 +64,9 @@ class Order extends Model
     public function address(){
         return $this->hasOne(Address::class,'delivering_address_id');
     }
+    public function orderPrescription()
+    {
+        return $this->hasMany(OrderPrescription::class);
+    }
 
 }

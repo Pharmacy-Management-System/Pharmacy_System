@@ -25,7 +25,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            //  handle image 
+            //  handle image
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
@@ -33,7 +33,7 @@ class AuthController extends Controller
             } else {
                 $avatar_name = 'default.jpg';
             }
-            // create client 
+            // create client
             Client::create([
                 'id' => $request->id,
                 'user_id' => $user->id,
@@ -47,7 +47,7 @@ class AuthController extends Controller
             return "Error in creating client";
         }
         $user->assignRole('client');
-        event(new Registered($user));
+        // event(new Registered($user));
         return new ClientResource($user);
     }
     public function getToken(Request $request)
@@ -63,7 +63,7 @@ class AuthController extends Controller
                  $role->where('name', 'client');
             })
             ->first();
-  
+
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],

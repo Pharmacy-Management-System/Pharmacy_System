@@ -47,6 +47,7 @@ class OrdersDataTable extends DataTable
             ->addColumn('doctor_id', function (Order $order) {
                 return $order->doctor->user->name;
             })
+
             ->addColumn('is_insured', function (Order $order) {
                 return $order->is_insured ? 'yes' : 'no';
             })
@@ -66,6 +67,7 @@ class OrdersDataTable extends DataTable
         elseif (Auth::user()->hasRole('doctor')) {
             return $model->newQuery()->where('pharmacy_id', Auth::user()->doctor->pharmacy_id);
         }
+
 
     }
 
@@ -102,9 +104,6 @@ class OrdersDataTable extends DataTable
             Column::make('status'),
             Column::computed('is_insured')->title('insured'),
             Column::computed('doctor_id')->title('doctor'),
-            // Column::make('delivering_address'),
-            // Column::computed('medicine'),
-            // Column::computed('quantity'),
             Column::make('price'),
         ];
         if (Auth::user()->hasRole('admin')) {
