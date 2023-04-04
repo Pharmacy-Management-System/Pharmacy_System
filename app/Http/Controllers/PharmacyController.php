@@ -10,6 +10,8 @@ use App\Models\Area;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Doctor;
+use App\Models\OrderMedicine;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -60,13 +62,30 @@ class PharmacyController extends Controller
                 if($orders){
                     return redirect()->route('pharmacies.index')->with('error', 'ERROR: Failed to Delete Pharmacy, There are Orders Assigned to this Pharmacy');
                 }else{
-                    $doctor = Doctor::where('pharmacy_id', $id)->first();
-                    $doctor->delete();
+                    $assignedOrders = Order::where('pharmacy_id', $id)->get();
+                    $assignedDoctors = Doctor::where('pharmacy_id', $id)->get();
+
+                    foreach($assignedOrders as $assignedOrder){
+
+                        if($assignedOrder){
+                            $orderMedicines = OrderMedicine::where('order_id',$assignedOrder->id);
+                            foreach($orderMedicines as $orderMedicine){
+                                $orderMedicine->delete();
+                            }
+                            $assignedOrder->delete();
+                        }
+                    }
+
+                    foreach($assignedDoctors as $assignedDoctor){
+                        $assignedDoctor->delete();
+                        User::where('email', $assignedDoctor->user->email)->delete();
+                    }
+
                     Pharmacy::where('id', $id)->delete();
                 }
 
             } catch (\Illuminate\Database\QueryException $exception) {
-                return redirect()->back()->with('error', 'ERROR: Failed to Delete, Please Delete The Assigned Records First');
+                return redirect()->back()->with('error', 'ERROR: Failed to Delete, Please Delete The Related Records First');
             }
             return redirect()->back()->with('success', 'Pharmacy has been Deleted Successfully!')->with('timeout', 5000);
         }
