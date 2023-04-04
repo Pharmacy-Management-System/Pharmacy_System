@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Medicines
+@endsection
+
 @section('content')
     <section class="content container">
         @if ($errors->any())

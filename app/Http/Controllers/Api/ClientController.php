@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UpdateClientRequest;
+use App\Http\Resources\Api\ClientResource;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,9 +15,9 @@ class ClientController extends Controller
     {
         dd(Client::find($id));
     }
-    public function update(Request $request, $national_id)
-     {
-        dd($request);
+    public function update(UpdateClientRequest $request, $national_id)
+    {
+        //dd($request);
         if (is_numeric($national_id)) {
             try {
                 //  find client
@@ -24,7 +25,6 @@ class ClientController extends Controller
                 // find user related to client and update
                 $userData = [];
                 $userData['name'] = $request->name;
-                $userData['email'] = $request->email;
                 User::where('id', $client->user_id)->update($userData);
                 $clientData = [];
                 //  handle image
@@ -41,12 +41,14 @@ class ClientController extends Controller
                 $clientData['phone'] = $request->phone;
                 $client->update($clientData);
             } catch (\Illuminate\Database\QueryException $exception) {
-                
-                return 'Error in Updating Client Record.';
-            }
-            return 'Client Record Updating Successfully.';
-        }
-    // dd("MAriam");
-    }
 
+                return "an error occurs, please try again later!!";
+            }
+            return response()->json([
+                "message" => "Client updated successfully",
+                "data" => new ClientResource(Client::find($national_id))
+            ]);
+        }
+        // dd("MAriam");
+    }
 }

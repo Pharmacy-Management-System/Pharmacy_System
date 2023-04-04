@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Areas
+@endsection
+
 @section('content')
     <section class="content container">
         @if (session('error'))

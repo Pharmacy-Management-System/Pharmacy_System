@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Clients
+@endsection
+
 @section('content')
     <section class="content">
         @if ($errors->any())
