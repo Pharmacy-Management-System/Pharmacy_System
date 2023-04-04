@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderPrescription extends Model
+class Prescription extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'prescription',
+        'image',
         'order_id'
     ];
     public function order()

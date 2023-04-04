@@ -39,13 +39,22 @@ class OrdersDataTable extends DataTable
                 </div>'
             )
             ->addColumn('Pharmacy', function (Order $order) {
-                return $order->pharmacy->pharmacy_name;
+                if ($order->pharmacy) {
+                    return $order->pharmacy->pharmacy_name;
+                }
+                else return " ";
             })
             ->addColumn('name', function (Order $order) {
                 return $order->user->name;
             })
             ->addColumn('doctor_id', function (Order $order) {
-                return $order->doctor->user->name;
+
+                if($order->doctor){
+                    return $order->doctor->user->name;
+                }
+                else {
+                    return " ";
+                }
             })
 
             ->addColumn('is_insured', function (Order $order) {

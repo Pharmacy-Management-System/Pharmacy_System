@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderMedicine;
-use App\Models\OrderPrescription;
+use App\Models\Prescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +35,17 @@ class OrderController extends Controller
             'pharmacy_id'=>null,
         ]);
         $order->save();
+        if ($request->hasFile('prescriptions')) {
+            foreach ($request->file('prescriptions') as $prescription) {
+                $prescription_name = time() . $prescription->getClientOriginalName();
+                $prescription->move(public_path('images/prescriptions'), $prescription_name);
+                $order_prescription = new Prescription([
+                    'order_id' => $order->id,
+                    'image' => $prescription_name,
+                ]);
+                $order_prescription->save();
+            }
+        }
 
         return response()->json([
             'message' => 'Order created successfully',
