@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\OrderController;
 
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -29,4 +30,6 @@ Route::post('/sanctum/token',[AuthController::class, 'getToken'])->name('auth.ge
 Route::group(["middleware"=>"auth:sanctum"],function (){
     Route::put('/client/{id}',[ClientController::class, 'update']);
     Route::get('/client/{id}',[ClientController::class, 'index']);
+    Route::post('/orders', [OrderController::class, 'create']);
+    Route::get('/orders', [OrderController::class, 'index']);
 });

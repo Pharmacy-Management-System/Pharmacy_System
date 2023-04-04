@@ -11,7 +11,7 @@
                 <div class="modal-body row gy-2 gx-3 align-items-center">
                     <div class="col-md-12 mb-2">
                         <label for="orderUser" class="form-label">Assigned User</label>
-                        <select name="user_id" id="AssignedUser" class="form-control">
+                        <select name="user_id" id="AssignedUser" class="form-control" @readonly(true)>
                             @foreach ($clients as $client)
                                 <option value="{{ $client->user_id }}">
                                     {{ $client->User->name }}{{ '/' }}{{$client->User->email }}</option>
@@ -37,7 +37,7 @@
                         <label>Medicine</label>
                         <select name="medicine_id[]" id="edit_medicine" class="select2 js-data-example-ajax" multiple="multiple"
                             data-placeholder="Select a State" data-dropdown-css-class="select2-purple"
-                            style="width: 100%;" disabled>
+                            style="width: 100%;" >
                             <option></option>
                             @foreach ($medicines as $medicine)
                                 <option value="{{ $medicine->id }}">{{ $medicine->name }}</option>
@@ -47,14 +47,14 @@
                     </div>
                     <div class="form-group">
                         <label>Qunatity</label>
-                        <div class="input-group" id="editQuantity" disabled>
+                        <div class="input-group" id="editQuantity">
                             <!-- input fields will be dynamically added/removed here -->
                         </div >
 
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="createPharmacyName" class="form-label">Pharmacy Name</label>
-                        <select name="pharmacy_id" id="pharmacyEdit" class="form-control">
+                        <select name="pharmacy_id" id="pharmacyEdit" class="form-control" @readonly(true)>
                             @foreach ($pharmacies as $pharmacy)
                                 <option value="{{ $pharmacy->id }}">{{ $pharmacy->pharmacy_name }}</option>
                             @endforeach
@@ -63,6 +63,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="createDoctorName" class="form-label">Doctor Name</label>
                         <select name="doctor_id" id="doctorEdit" class="form-control">
+                            <option value="" disabled selected hidden></option>
                             @foreach ($doctors as $doctor)
                                 <option value="{{ $doctor->id }}">{{ $doctor->User->name }}</option>
                             @endforeach
@@ -70,7 +71,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="createOrderCreator" class="form-label">Order Creator</label>
-                        <select name="creator_type" id="editOrderCreator" class="form-control">
+                        <select name="creator_type" id="editOrderCreator" class="form-control" @readonly(true)>
                             <option value="client">client</option>
                             <option value="doctor">doctor</option>
                             <option value="pharmacy">pharmacy</option>
@@ -89,7 +90,7 @@
                     </div>
                     <div class="col-md-6 mb-3 ml-3 ">
                         <input name="is_insured" class="form-check-input" type="checkbox" id="edit_insured" value="1">
-                        <label for="createPharmacyName" class="form-check-label">Is insured?</label>
+                        <label for="createPharmacyName" class="form-check-label" @readonly(true)>Is insured?</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -106,6 +107,7 @@
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
+        $('editQuantity').text(" ")
         var itemId = event.target.id;
         $.ajax({
             url: "{{ route('orders.show', ':id') }}".replace(':id', itemId),
@@ -119,6 +121,7 @@
                 $('#editOrderCreator').val(response.order.creator_type);
                 $('#orderStatus').val(response.order.status);
                 $('#edit_insured').prop('checked', response.order.is_insured == 1);
+                $('#edit_medicine').val(response.medicines.map(medicine => medicine.id));
             }
 
         });
