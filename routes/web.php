@@ -79,7 +79,9 @@ Route::get('/', function () {
 // Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
 
 //Auth Routes
-Auth::routes();
+Auth::routes([
+    'verify'=>true
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -93,7 +95,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-Auth::routes();
+Auth::routes(["verify"=>true]);
 Route::group(
     ["middleware" => ['role:admin|pharmacy|doctor']],
     function () {
