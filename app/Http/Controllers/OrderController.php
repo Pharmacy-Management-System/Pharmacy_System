@@ -72,7 +72,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
-        $doctor_name = User::find($doctor->user_id);
+        $doctor_name = User::find($doctor->user_id ?? 1);
         $address = Address::find($order->delivering_address_id);
         $area = Area::find($address->area_id);
 
@@ -101,6 +101,12 @@ class OrderController extends Controller
     {
         if (is_numeric($id)) {
             $order = Order::find($id);
+            if (!is_null( $request->quantity)) {
+                $editedQuantity = array_map('intval', $request->quantity);
+            } else {
+                $editedQuantity = 0;
+            }
+            $editedOrderMedicine = $request->medicine_id;
             try {
                 $order->update([
                     'user_id' => $request->user_id,
@@ -111,6 +117,9 @@ class OrderController extends Controller
                     'is_insured' => $request->has('is_insured') ? 1 : 0,
                     'delivering_address_id' => $request->delivering_address_id ?? null,
                 ]);
+                Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
+                $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
+                $order->save();
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->route('orders.index')->with('error', 'Error in Updating Order!')->with('timeout', 5000);
             }

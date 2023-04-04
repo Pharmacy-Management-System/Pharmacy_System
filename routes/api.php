@@ -30,6 +30,7 @@ Route::post('/login', [AuthController::class, 'getToken'])->name('auth.getToken'
 Route::get('email/resend/{id}', [AuthController::class, 'resend'])->name('verification.resend');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
     Route::put('/client/{id}', [ClientController::class, 'update']);
     Route::get('/client/{id}', [ClientController::class, 'index']);
 
@@ -38,4 +39,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::delete('/address/{id}', [AddressController::class, 'destroy']);
     Route::post('/address', [AddressController::class, 'store']);
     Route::put('/address/{id}', [AddressController::class, 'update']);
+
+    Route::post('/orders', [OrderController::class, 'create']);
+    Route::get('/orders', [OrderController::class, 'index']);
 });
