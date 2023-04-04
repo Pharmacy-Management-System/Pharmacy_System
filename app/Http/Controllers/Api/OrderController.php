@@ -31,7 +31,7 @@ class OrderController extends Controller
         $prescriptions = $request->input('prescriptions');
         $order = new Order([
             'delivering_address_id' => $delivering_address_id,
-            'doctor_id'=>null,
+            'doctor_id'=>00000000000000,
             'is_insured' => $is_insured,
             'status'=> "new",
             'creator_type'=>"client",

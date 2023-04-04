@@ -69,4 +69,10 @@ class Order extends Model
         return $this->hasMany(OrderPrescription::class);
     }
 
+    public static function updateOrderMedicine($order , $editedQuantity ,$editedOrderMedicine){
+        for ($i = 0; $i < count($editedOrderMedicine); $i++) {
+            $id = Medicine::where('id', $editedOrderMedicine[$i])->first()->id;
+            $order->medicines($id)->attach($editedOrderMedicine[$i], ['quantity' => $editedQuantity[$i]]);
+        }
+    }
 }

@@ -37,7 +37,7 @@
                         <label>Medicine</label>
                         <select name="medicine_id[]" id="edit_medicine" class="select2 js-data-example-ajax" multiple="multiple"
                             data-placeholder="Select a State" data-dropdown-css-class="select2-purple"
-                            style="width: 100%;" disabled>
+                            style="width: 100%;" >
                             <option></option>
                             @foreach ($medicines as $medicine)
                                 <option value="{{ $medicine->id }}">{{ $medicine->name }}</option>
@@ -106,6 +106,7 @@
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
+        $('editQuantity').text(" ")
         var itemId = event.target.id;
         $.ajax({
             url: "{{ route('orders.show', ':id') }}".replace(':id', itemId),
@@ -119,6 +120,8 @@
                 $('#editOrderCreator').val(response.order.creator_type);
                 $('#orderStatus').val(response.order.status);
                 $('#edit_insured').prop('checked', response.order.is_insured == 1);
+                $('#edit_medicine').val(response.medicines.map(medicine => medicine.id));
+                
             }
 
         });
