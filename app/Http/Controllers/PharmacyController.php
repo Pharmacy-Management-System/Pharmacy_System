@@ -8,6 +8,8 @@ use App\Http\Requests\UpdatePharmacyRequest;
 use App\Models\Pharmacy;
 use App\Models\Area;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -54,9 +56,17 @@ class PharmacyController extends Controller
     {
         if (is_numeric($id)) {
             try {
-                Pharmacy::where('id', $id)->delete();
+                $orders = Order::where('pharmacy_id', $id)->WhereIn('status', ['Processing','WaitingForUserConfirmation','Confirmed'])->count();
+                if($orders){
+                    return redirect()->route('pharmacies.index')->with('error', 'ERROR: Failed to Delete Pharmacy, There are Orders Assigned to this Pharmacy');
+                }else{
+                    $doctor = Doctor::where('pharmacy_id', $id)->first();
+                    $doctor->delete();
+                    Pharmacy::where('id', $id)->delete();
+                }
+
             } catch (\Illuminate\Database\QueryException $exception) {
-                return redirect()->back()->with('error', 'Delete related records first');
+                return redirect()->back()->with('error', 'ERROR: Failed to Delete, Please Delete The Assigned Records First');
             }
             return redirect()->back()->with('success', 'Pharmacy has been Deleted Successfully!')->with('timeout', 5000);
         }
