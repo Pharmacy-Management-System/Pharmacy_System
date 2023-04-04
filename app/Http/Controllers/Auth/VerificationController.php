@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\WelcomeEmailJob;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
 use App\Providers\RouteServiceProvider;
@@ -54,8 +55,10 @@ class VerificationController extends Controller
             throw new AuthorizationException();
         }
 
-        $client->markEmailAsVerified();
-        $client->notify((new WelcomeEmailNotification));
+        if ($client->markEmailAsVerified()) {
+            WelcomeEmailJob::dispatch($client);
+        }
+
         return response()->json([
             'message' => 'Email verified successfully'
         ]);
