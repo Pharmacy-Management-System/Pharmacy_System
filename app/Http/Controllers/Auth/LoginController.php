@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Utilities\Request;
+use Cog\Laravel\Ban\Http\Middleware\LogsOutBannedUser;
 
 class LoginController extends Controller
 {
@@ -37,4 +40,5 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
 }

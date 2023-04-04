@@ -51,8 +51,8 @@ class Doctor extends Model implements BannableInterface
     public function ban(array $attributes = []): Ban
     {
         $this->update(['banned_at' => now()]);
-
         return $this->bans()->create($attributes);
+
     }
 
     public function unban(): void

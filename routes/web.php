@@ -10,6 +10,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
 use  Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\ForbidBannedUser;
 
 
 /*
@@ -80,11 +81,6 @@ Route::get('/', function () {
 // Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
 
 //Auth Routes
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
 
 
 
@@ -93,30 +89,28 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 // Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
-
-
 Auth::routes();
-Route::group(
-    ["middleware" => ['role:admin|pharmacy|doctor', 'forbid-banned-user']],
-    function () {
-        Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
-        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-        Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
-        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
-        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
-        Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
-        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-        Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
-        Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-        Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-        Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-        Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
-    }
-);
+Route::middleware(['auth', 'logs-out-banned-user' ,'role:admin|pharmacy|doctor'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+    Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+    Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
+    Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+    Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+    Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+});
+
 
 Route::group(
-    ["middleware" => ['role:admin|pharmacy']],
+    ["middleware" => ['auth','role:admin|pharmacy']],
     function () {
 
         //Pharmacy Routes
@@ -169,3 +163,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 });
+
+

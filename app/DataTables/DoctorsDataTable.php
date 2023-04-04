@@ -7,6 +7,7 @@ use App\Models\Pharmacy;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
+use Psy\Readline\Hoa\Console;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -69,8 +70,7 @@ class DoctorsDataTable extends DataTable
                           </div>'
             )
             ->addColumn('is_banned', function (Doctor $doctor) {
-                $doctor->is_banned = $doctor->isBanned();
-                 if($doctor->is_banned) {
+                if($doctor->isBanned()) {
                     return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
                 else{
@@ -110,10 +110,10 @@ class DoctorsDataTable extends DataTable
         $user = auth()->user();
         if ($user->hasRole('pharmacy')) {
             $pharmacyId = $user->pharmacy->id;
-            return $model->newQuery()->where('pharmacy_id', $pharmacyId);
+            return $model->newQuery()->where('pharmacy_id', $pharmacyId)->withBanned();
         }
         elseif($user->hasRole('admin')){
-            return $model->newQuery();
+            return $model->newQuery()->withBanned();
         }
     }
 
