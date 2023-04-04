@@ -48,7 +48,7 @@ class OrdersDataTable extends DataTable
                 return $order->user->name;
             })
             ->addColumn('doctor_id', function (Order $order) {
-                if($order->doctor){
+                if(isset($order->doctor)){
                     return $order->doctor->user->name;
                 }
                 else {

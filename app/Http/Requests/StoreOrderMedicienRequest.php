@@ -26,7 +26,7 @@ class StoreOrderMedicienRequest extends FormRequest
         return [
             'medicine_id' => ['required','exists:medicines,id'],
             'order_id' => ['required','exists:orders,id'],
-            'quantity'=> ['required', 'integer', 'min:1'],
+            'quantity'=> ['required', 'integer'],
         ];
     }
     public function messages()
@@ -35,7 +35,6 @@ class StoreOrderMedicienRequest extends FormRequest
             'quantity'=>[
                 'required' => 'quantity is required',
                 'integer' => 'quantity must be integer',
-                'min' => 'quantity must be greater than 0',
             ],
 
         ];

@@ -72,7 +72,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
-        $doctor_name = User::find($doctor->user_id);
+        $doctor_name = User::find($doctor->user_id ?? 1);
         $address = Address::find($order->delivering_address_id);
         $area = Area::find($address->area_id);
 
@@ -101,7 +101,11 @@ class OrderController extends Controller
     {
         if (is_numeric($id)) {
             $order = Order::find($id);
-            $editedQuantity = array_map('intval', $request->quantity);
+            if (!is_null( $request->quantity)) {
+                $editedQuantity = array_map('intval', $request->quantity);
+            } else {
+                $editedQuantity = 0;
+            }
             $editedOrderMedicine = $request->medicine_id;
             try {
                 $order->update([
