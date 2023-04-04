@@ -42,13 +42,16 @@ class AuthController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'phone' => $request->phone,
             ]);
-
+      
         } catch (\Illuminate\Database\QueryException $exception) {
             return "Error in creating client";
         }
         $user->assignRole('client');
         event(new Registered($user));
-        return new ClientResource($user);
+        return response()->json([
+            "message"=>"Client added successfully",
+            "data"=>new ClientResource(Client::find($request->id))
+        ]);
     }
     public function getToken(Request $request)
     {

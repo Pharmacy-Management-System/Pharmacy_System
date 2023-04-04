@@ -25,12 +25,25 @@ class UpdateClientRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'id'=>['required','size:14'],
+            'id'=>['prohibited'],
             'name' => ['required', 'min:3'], //
+            'email'=>['prohibited'],
             'gender' => ['required', 'in:Male,Female'], //
             'date_of_birth' => ['required', 'date'], //
             'avatar_image' => ['image', 'mimes:jpeg,png', 'max:2048'], //
             'phone' => ['required', 'regex:/^01[0-1-2-5]\d{8}$/'], //
+        ];
+    }
+    
+    public function messages(): array
+    {
+        return [
+            'id' => [
+                'prohibited' => 'you are not able to change your id',
+            ],
+            'email' => [
+                'prohibited' => 'you are not able to change your email',
+            ]
         ];
     }
 }
