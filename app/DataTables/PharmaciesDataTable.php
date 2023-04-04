@@ -69,12 +69,10 @@ class PharmaciesDataTable extends DataTable
                                     </button>
                                 </div>
                                 <div>
-                                    <form method='POST' class='delete_item' action='" . Route('pharmacies.destroy', $pharmacy->id) . "'>
-                                        <button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='showDeleteModal(event)'
+                                    <button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='showDeleteModal(event)'
                                             id='" . $pharmacy->id . "' data-bs-toggle='modal' data-bs-target='#deletePharmacyModal'>
                                             Delete
-                                        </button>
-                                    </form>
+                                    </button>
                                 </div>
                             </div>
                         </div>";
