@@ -22,6 +22,11 @@ class Doctor extends Model
     protected $hidden = [
         'password'
     ];
+    
+    protected $casts = [
+        'deleted_at' => 'date:Y-m-d'
+    ];
+    
     public function pharmacy()
     {
         return $this->belongsTo(Pharmacy::class);
@@ -31,10 +36,6 @@ class Doctor extends Model
     {
         return $this->belongsTo( User::class);
     }
-
-
-
-
 
     public function order(){
         return $this->hasMany(Order::class,'doctor_id');
