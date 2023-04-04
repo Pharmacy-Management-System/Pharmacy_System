@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Resources\Api\ClientResource;
 use App\Models\Client;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Http\Request;
@@ -31,7 +33,6 @@ class AuthController extends Controller
             } else {
                 $avatar_name = 'default.jpg';
             }
-
             // create client 
             Client::create([
                 'id' => $request->id,
@@ -41,17 +42,13 @@ class AuthController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'phone' => $request->phone,
             ]);
+
         } catch (\Illuminate\Database\QueryException $exception) {
-            //return to_route('clients.index')->with('error', 'Error in Creating Client.')->with('timeout', 3000);
             return "Error in creating client";
         }
-        // return to_route('clients.index')->with('success', 'Client has been created successfully!')->with('timeout', 3000);
-        // event(new Registered($user));
-        // event(new Registered($user));
-        // auth()->login($user);
-        //$user->sendEmailVerificationNotification();
         $user->assignRole('client');
-        return "Client has been created successfully!";
+        event(new Registered($user));
+        return new ClientResource($user);
     }
     public function getToken(Request $request)
     {
@@ -63,16 +60,35 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)
             ->whereHas('roles', function ($role) {
-                return $role->where('name', 'admin');
+                 $role->where('name', 'client');
             })
             ->first();
-
+  
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        $token=$user->createToken($request->device_name)->plainTextToken;
+        // $user->update([
+        //     "remember_token" =>  $token
+        // ]);
+        return $token;
     }
+     public function verify(Request $request, $id, $hash)
+    {
+        $client = User::findOrFail($id);
+
+        if (! hash_equals((string) $hash, sha1($client->getEmailForVerification()))) {
+            throw new AuthorizationException();
+        }
+
+        $client->markEmailAsVerified();
+        $client->save();
+        // $client->notify(new ClientVerified());
+        return response()->json([
+        'message' => 'Email verified successfully'
+    ]);
+}
 }

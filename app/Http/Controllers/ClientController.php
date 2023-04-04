@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -42,7 +43,7 @@ class ClientController extends Controller
                 User::where('id', $client->user_id)->update($userData);
                 // update client data
                 $clientData = [];
-                //  handle image 
+                //  handle image
                 if ($request->hasFile('avatar_image')) {
                     $avatar = $request->file('avatar_image');
                     $clientData['avatar_image'] = $avatar->getClientOriginalName();
@@ -69,9 +70,9 @@ class ClientController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
-            //  handle image 
+            //  handle image
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
@@ -80,7 +81,16 @@ class ClientController extends Controller
                 $avatar_name = 'default.jpg';
             }
 
-            // create client 
+            
+            // handle checkbox
+            $isChecked = 0;
+            if ($request->has('is_main')) {
+                $isChecked = 1;
+            }
+            // craete client
+            // create client
+
+
             Client::create([
                 'id' => $request->id,
                 'user_id' => $user->id,
@@ -89,6 +99,8 @@ class ClientController extends Controller
                 'date_of_birth' => $request->date_of_birth,
                 'phone' => $request->phone,
             ]);
+
+            $user->assignRole('client');
         } catch (\Illuminate\Database\QueryException $exception) {
             return to_route('clients.index')->with('error', 'Error in Creating Client.')->with('timeout', 3000);
         }

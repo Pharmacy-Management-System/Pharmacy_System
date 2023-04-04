@@ -34,6 +34,7 @@
                         <label for="password" class="form-label">Password</label>
                         <input name="password" class="form-control" id="password" value="">
                     </div>
+                    @role('admin')
                     <div class="col-md-6 mb-2">
                         <label for="area_id" class="form-label">Area Name</label>
                         <select name="area_id" id="areaSelect" class="form-control"></select>
@@ -42,6 +43,17 @@
                         <label for="priority" class="form-label">Priority</label>
                         <input name="priority" class="form-control" id="priority" value="">
                     </div>
+                    @endrole
+                    @role('pharmacy')
+                    <div class="col-md-6 mb-2">
+                        <label for="area_id" class="form-label">Area Name</label>
+                        <select name="area_id" id="areaSelect" class="form-control" readonly></select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="priority" class="form-label">Priority</label>
+                        <input name="priority" class="form-control" id="priority" value="" readonly>
+                    </div>
+                    @endrole
                     <div class="col-md-12 mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
                         <input name="avatar_image" type="file" class="form-control" id="avatar" value="">
