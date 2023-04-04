@@ -26,7 +26,7 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            //  handle image 
+            //  handle image
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
@@ -34,7 +34,7 @@ class AuthController extends Controller
             } else {
                 $avatar_name = 'default.jpg';
             }
-            // create client 
+            // create client
             Client::create([
                 'id' => $request->id,
                 'user_id' => $user->id,

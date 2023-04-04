@@ -60,8 +60,6 @@
 
 <script>
     function orderShow(event) {
-        event.preventDefault();
-        event.stopPropagation();
         var itemId = event.target.id;
         $('sapn').text("")
         $('#medicine').text("")
@@ -73,15 +71,11 @@
                 console.log(response)
                 $('#Username').text(response.user.name)
                 $('#pharName').text(response.pharmacy.pharmacy_name)
-                $('#doctorName').text(response.doctor_name.name)
+                $('#doctorName').text(response.doctor_name.name ?? "Unknown")
                 $('#status').text(response.order.status)
                 $('#isInsured').text(response.order.is_insured ? "Yes" : "No")
                 $('#creatorType').text(response.order.creator_type)
-                $('#totalPrice').text(response.order.price)
-
-                // for(let i = 0; i < medicines.length; i++){
-                //     $('#medicine').append(`<span>${medicines[i].name} -  ${medicineQunaity[i]}</span> <br>`);
-                // }
+                $('#totalPrice').text(response.order.price ?? "0")
                 let medicines = response.order.medicines
                 let medicineQunaity = response.order.medicines.map(medicine => medicine.pivot.quantity)
                 let tableRows = '';

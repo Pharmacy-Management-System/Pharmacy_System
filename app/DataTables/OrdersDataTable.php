@@ -39,37 +39,23 @@ class OrdersDataTable extends DataTable
                 </div>'
             )
             ->addColumn('Pharmacy', function (Order $order) {
-                return $order->pharmacy->pharmacy_name;
+                if ($order->pharmacy) {
+                    return $order->pharmacy->pharmacy_name;
+                }
+                else return " ";
             })
             ->addColumn('name', function (Order $order) {
                 return $order->user->name;
             })
             ->addColumn('doctor_id', function (Order $order) {
-                return $order->doctor->user->name;
+                if(isset($order->doctor)){
+                    return $order->doctor->user->name;
+                }
+                else {
+                    return " ";
+                }
             })
-            // ->addColumn('order_med', function (Order $order) {
-            //     return $order->medicines;
-            // })
-            // ->addColumn('medicine', function (Order $order) {
-            //     foreach ($order->medicines as $medicine) {
-            //         $medicines[] = $medicine->name;
-            //     }
-            //     return $medicines;
-            // })
-            // ->addColumn('quantity', function (Order $order) {
-            //     foreach ($order->medicines as $medicine) {
-            //         $medicines[] = $medicine->pivot->quantity ;
-            //     }
-            //     return  $medicines;
-            // })
 
-            // ->addColumn('total Price', function (Order $order) {
-            //     $totalPrice=0;
-            //     foreach ($order->medicines as $medicine) {
-            //         $totalPrice += ($medicine->price)*($medicine->pivot->quantity) ;
-            //     }
-            //     return  $totalPrice;
-            // })
             ->addColumn('is_insured', function (Order $order) {
                 return $order->is_insured ? 'yes' : 'no';
             })
@@ -89,6 +75,7 @@ class OrdersDataTable extends DataTable
         elseif (Auth::user()->hasRole('doctor')) {
             return $model->newQuery()->where('pharmacy_id', Auth::user()->doctor->pharmacy_id);
         }
+
 
     }
 
@@ -125,9 +112,6 @@ class OrdersDataTable extends DataTable
             Column::make('status'),
             Column::computed('is_insured')->title('insured'),
             Column::computed('doctor_id')->title('doctor'),
-            // Column::make('delivering_address'),
-            // Column::computed('medicine'),
-            // Column::computed('quantity'),
             Column::make('price'),
         ];
         if (Auth::user()->hasRole('admin')) {
