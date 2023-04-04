@@ -47,29 +47,6 @@ class OrdersDataTable extends DataTable
             ->addColumn('doctor_id', function (Order $order) {
                 return $order->doctor->user->name;
             })
-            // ->addColumn('order_med', function (Order $order) {
-            //     return $order->medicines;
-            // })
-            // ->addColumn('medicine', function (Order $order) {
-            //     foreach ($order->medicines as $medicine) {
-            //         $medicines[] = $medicine->name;
-            //     }
-            //     return $medicines;
-            // })
-            // ->addColumn('quantity', function (Order $order) {
-            //     foreach ($order->medicines as $medicine) {
-            //         $medicines[] = $medicine->pivot->quantity ;
-            //     }
-            //     return  $medicines;
-            // })
-
-            // ->addColumn('total Price', function (Order $order) {
-            //     $totalPrice=0;
-            //     foreach ($order->medicines as $medicine) {
-            //         $totalPrice += ($medicine->price)*($medicine->pivot->quantity) ;
-            //     }
-            //     return  $totalPrice;
-            // })
             ->addColumn('is_insured', function (Order $order) {
                 return $order->is_insured ? 'yes' : 'no';
             })

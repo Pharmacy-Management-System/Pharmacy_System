@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClientController;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [ClientController::class, 'store'])->name('clients.store');
+
+Route::get('/orders' , [OrderController::class , 'index']);
