@@ -13,11 +13,12 @@ class ClientController extends Controller
 {
     public function index($id)
     {
-        dd(Client::find($id));
+        return response()->json([
+            "data" => new ClientResource(Client::find($id))
+        ]);
     }
     public function update(UpdateClientRequest $request, $national_id)
     {
-        //dd($request);
         if (is_numeric($national_id)) {
             try {
                 //  find client
@@ -49,6 +50,5 @@ class ClientController extends Controller
                 "data" => new ClientResource(Client::find($national_id))
             ]);
         }
-        // dd("MAriam");
     }
 }

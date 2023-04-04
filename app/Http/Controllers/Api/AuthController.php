@@ -74,10 +74,17 @@ class AuthController extends Controller
         }
 
         $token=$user->createToken($request->device_name)->plainTextToken;
-        // $user->update([
-        //     "remember_token" =>  $token
-        // ]);
+
         return $token;
+    }
+    public function resend($id)
+    {
+        $client = Client::find($id);
+        if ($client->user->email_verified_at) {
+            return response()->json('User already have verified email!', 422);
+        } 
+        $client->user->sendEmailVerificationNotification();
+        return response()->json('The email verification has been resubmitted');
     }
  
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\User;
 use App\Notifications\WelcomeEmailNotification;
 use App\Providers\RouteServiceProvider;
@@ -45,19 +46,17 @@ class VerificationController extends Controller
     }
     public function verify(Request $request, $id, $hash)
     {
-        //dd($request->all());
         $client = User::findOrFail($id);
-
         if (!hash_equals((string) $hash, sha1(
             $client->getEmailForVerification()
         ))) {
             throw new AuthorizationException();
         }
-
         $client->markEmailAsVerified();
         $client->notify((new WelcomeEmailNotification));
         return response()->json([
             'message' => 'Email verified successfully'
         ]);
     }
+
 }
