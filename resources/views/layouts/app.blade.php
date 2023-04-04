@@ -7,7 +7,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="icon" href="dist/img/PharmacyLogo.png">
-        <title>Pharmacy Managment System</title>
+        <title>Pharmacy System</title>
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet"
