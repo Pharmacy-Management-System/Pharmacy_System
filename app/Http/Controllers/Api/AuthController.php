@@ -76,19 +76,5 @@ class AuthController extends Controller
         // ]);
         return $token;
     }
-     public function verify(Request $request, $id, $hash)
-    {
-        $client = User::findOrFail($id);
-
-        if (! hash_equals((string) $hash, sha1($client->getEmailForVerification()))) {
-            throw new AuthorizationException();
-        }
-
-        $client->markEmailAsVerified();
-        $client->save();
-        // $client->notify(new ClientVerified());
-        return response()->json([
-        'message' => 'Email verified successfully'
-    ]);
-}
+ 
 }

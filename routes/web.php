@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\PharmacyController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
@@ -80,7 +81,7 @@ Route::get('/', function () {
 
 //Auth Routes
 Auth::routes([
-    'verify'=>true
+    'verify' => true
 ]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -95,7 +96,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 
-Auth::routes(["verify"=>true]);
+Auth::routes(["verify" => true]);
 Route::group(
     ["middleware" => ['role:admin|pharmacy|doctor']],
     function () {
@@ -112,32 +113,33 @@ Route::group(
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
         Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
         Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
-            });
+    }
+);
 
 Route::group(
     ["middleware" => ['role:admin|pharmacy']],
     function () {
 
-    //Pharmacy Routes
-    Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
-    Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
-    Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
-    Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
-    Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
+        //Pharmacy Routes
+        Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+        Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
+        Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
+        Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+        Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
 
 
-    //Doctor Routes
-    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
-    Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-    Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
-    Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
-    Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
-    Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
+        //Doctor Routes
+        Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+        Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+        Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+        Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
 
-    //Revenue Routes
-    Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
-
-});
+        //Revenue Routes
+        Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+    }
+);
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
@@ -166,3 +168,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
 });
 
+//email-verification
+Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
