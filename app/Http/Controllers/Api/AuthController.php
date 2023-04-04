@@ -48,7 +48,10 @@ class AuthController extends Controller
         }
         $user->assignRole('client');
         event(new Registered($user));
-        return new ClientResource($user);
+        return response()->json([
+            "message" => "Client added successfully",
+            "data" => new ClientResource(Client::find($request->id))
+        ]);
     }
     public function getToken(Request $request)
     {

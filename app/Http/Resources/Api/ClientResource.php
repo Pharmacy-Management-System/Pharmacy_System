@@ -13,10 +13,15 @@ class ClientResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    {
+    { //dd($this);
         return [
-            'name' => $this->name,
-            'email' => $this->email,
+                'id' => $this->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+                'data_of_birth' => $this->date_of_birth,
+                'gender' => $this->gender,
+                'phone' => $this->phone,
+              
         ];
     }
 }
