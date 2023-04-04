@@ -7,9 +7,12 @@ use App\Http\Resources\OrderResource;
 use App\Models\Area;
 use App\Models\Order;
 use App\Models\OrderMedicine;
+use App\Models\Pharmacy;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
+
 
 class OrderController extends Controller
 {
@@ -19,6 +22,7 @@ class OrderController extends Controller
         $orders = Order::where('user_id', $client->id)->get();
         return OrderResource::collection($orders);
     }
+
     public function create(Request $request)
     {
         $client = auth()->user();
@@ -46,6 +50,15 @@ class OrderController extends Controller
                 ]);
                 $order_prescription->save();
             }
+        }
+        $nat=$client->Client->id;
+        $addressAreaId = Address::where('id', $delivering_address_id)->first()->area_id;
+
+        $orders=Order::where('status',"New")->get();
+        foreach($orders as $order){
+            $order->pharmacy_id=Pharmacy::where('area_id',$addressAreaId)->orderby("priority","desc")->first()->id;
+            $order->status="Processing";
+            $order->save();
         }
 
         return response()->json([
