@@ -1,7 +1,7 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('index') }}" class="brand-link">
+    <a href="{{ route('index') }}" class="brand-link" style="height:10vh; ">
       <img src="dist/img/PharmacyLogo.gif" alt="Pharmacy Logo" class="brand-image img-circle elevation-3" style="opacity: 0.9;">
       <span class="brand-text font-weight-light">Pharmacy System</span>
     </a>
@@ -9,7 +9,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column gap-2" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item sidebar-list">
             <a href="{{ route('pharmacies.index') }}" class="nav-link">
                 <img src="dist/img/icons/Pharmacies-icon.png" class="nav-icon">
@@ -82,9 +82,22 @@
             </a>
           </li>
 
+          <li class="nav-item sidebar-list">
+            <a class="dropdown-item" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    <img src="dist/img/icons/Revenue-icon.png" class="nav-icon">
+                        {{ __('logOut') }}
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+          </li>
+
         </ul>
       </nav>
     </div>
+
     @endrole
 
     @role('pharmacy')
@@ -169,6 +182,8 @@
             </nav>
         </div>
     @endrole
+    
+    
     <!-- /.sidebar -->
   </aside>
 
