@@ -175,7 +175,7 @@
     <a class="nav-link mt-2" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
-                <img src="https://cdn-icons-png.flaticon.com/512/8089/8089194.png" class="nav-icon"  width="30px">
+                <img src="/dist/img/icons/Logout-icon.png" class="nav-icon"  width="30px">
                 <span class="ml-2">{{ __('LogOut') }}</span>       
     </a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
