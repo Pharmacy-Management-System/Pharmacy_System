@@ -19,7 +19,11 @@ class DoctorController extends Controller
 {
     public function index(DoctorsDataTable $dataTable)
     {
-        $pharmacies = Pharmacy::all();
+        if(auth()->user()->hasRole('admin')){
+            $pharmacies = Pharmacy::all();
+        }else{
+            $pharmacies = Pharmacy::where('user_id', auth()->user()->id)->get();
+        }
         $doctors = Doctor::all();
         return $dataTable->render('doctor.index', ['pharmacies' => $pharmacies, 'doctors' => $doctors]);
     }
@@ -71,7 +75,13 @@ class DoctorController extends Controller
     public function show($id)
     {
         $doctor = Doctor::where('id', $id)->first();
-        $pharmacies = Pharmacy::all();
+        // $pharmacies = Pharmacy::all();
+        if(auth()->user()->hasRole('admin')){
+            $pharmacies = Pharmacy::all();
+        }else{
+            $pharmacies = Pharmacy::where('user_id', auth()->user()->id)->get();
+        }
+
         $userIds = array_merge([$doctor->user_id], $pharmacies->pluck('user_id')->toArray());
         $users = User::whereIn('id', $userIds)->get();
         return response()->json([
