@@ -19,7 +19,7 @@
                     </li>
                     <li class="nav-item sidebar-list">
                         <img src="dist/img/icons/Revenue-icon.png" class="nav-icon">
-                        <strong>Total Revenue: </strong><span>{{$revenues}}</span>
+                        <strong>Total Revenue: </strong><span>{{$revenues}} $</span>
                     </li>
                 </ul>
             </div>
