@@ -81,7 +81,7 @@ class ClientController extends Controller
                 $avatar_name = 'default.jpg';
             }
 
-            
+
             // handle checkbox
             $isChecked = 0;
             if ($request->has('is_main')) {

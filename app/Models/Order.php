@@ -13,7 +13,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'doctor_id',
-        // 'delivering_address',
+        'delivering_address_id',
         'pharmacy_id',
         'is_insured',
         'status',
@@ -45,7 +45,7 @@ class Order extends Model
 
     public static function totalPrice( $quantity ,$orderMedicine){
         $totalPrice = 0;
-        for($i = 0; $i < count($orderMedicine); $i++){
+        for($i = 0; $i < count($orderMedicine ?? []); $i++){
             $price = Medicine::where('id',$orderMedicine[$i])->first()->price;
             $totalPrice += $price * $quantity[$i];
         }
@@ -58,5 +58,21 @@ class Order extends Model
             $order->medicines($id)->attach($orderMedicine[$i], ['quantity' => $quantity[$i]]);
         }
     }
+    public function client (){
+        return $this->belongsTo(Client::class,'user_id');
+    }
+    public function address(){
+        return $this->hasOne(Address::class,'delivering_address_id');
+    }
+    public function orderPrescription()
+    {
+        return $this->hasMany(OrderPrescription::class);
+    }
 
+    public static function updateOrderMedicine($order , $editedQuantity ,$editedOrderMedicine){
+        for ($i = 0; $i < count($editedOrderMedicine ??[]); $i++) {
+            $id = Medicine::where('id', $editedOrderMedicine[$i])->first()->id;
+            $order->medicines($id)->attach($editedOrderMedicine[$i], ['quantity' => $editedQuantity[$i]]);
+        }
+    }
 }

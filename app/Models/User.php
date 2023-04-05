@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Cog\Contracts\Ban\Bannable as BannableInterface;
 use Cog\Laravel\Ban\Traits\Bannable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Cog\Laravel\Ban\Models\Ban;
 
-class User extends Authenticatable implements BannableInterface
+class User extends Authenticatable implements MustVerifyEmail, BannableInterface
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, Bannable;
 
@@ -25,7 +26,9 @@ class User extends Authenticatable implements BannableInterface
         'id',
         'name',
         'email',
-        'password'
+        'password',
+        'email_verified_at',
+        'remember_token'
     ];
 
     /**
@@ -37,7 +40,9 @@ class User extends Authenticatable implements BannableInterface
         'password',
         'remember_token',
     ];
-
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
     public function owns()
     {
         return $this->hasOne(Pharmacy::class, 'user_id');
@@ -72,19 +77,8 @@ class User extends Authenticatable implements BannableInterface
         return $this->role === 'pharmacy';
     }
 
-    // public function ban(array $attributes = []): Ban
-    // {
-    //     $this->update(['banned_at' => now()]);
-    //     return $this->bans()->create($attributes);
-    // }
-
-    // public function unban(): void
-    // {
-    //     $this->update(['banned_at' => null]);
-    // }
-
-    // public function isBanned(): bool
-    // {
-    //     return $this->banned_at !== null;
-    // }
+   public function getEmailForVerification()
+   {
+       return $this->email;
+   }
 }

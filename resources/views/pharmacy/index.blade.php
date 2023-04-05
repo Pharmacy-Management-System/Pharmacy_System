@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+/ Pharmacies
+@endsection
+
 @section('content')
 
 <section class="content container">
@@ -42,19 +46,19 @@
         {{ $dataTable->table() }}
     </div>
 
-    <!-- Create Pharmacy Moadal -->
+    <!-- Create Pharmacy Modal -->
     @include('pharmacy.create')
 
-    <!-- Show Pharmacy Moadal -->
+    <!-- Show Pharmacy Modal -->
     @include('pharmacy.show')
 
-    <!-- Edit Pharmacy Moadal -->
+    <!-- Edit Pharmacy Modal -->
     @include('pharmacy.edit')
 
-    <!-- Delete Pharmacy Moadal -->
+    <!-- Delete Pharmacy Modal -->
     @include('pharmacy.delete')
 
-    <!-- Restore Pharmacy Moadal -->
+    <!-- Restore Pharmacy Modal -->
     @include('pharmacy.restore')
 
 </section>

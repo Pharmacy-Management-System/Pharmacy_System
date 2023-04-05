@@ -27,6 +27,11 @@ class Doctor extends Model implements BannableInterface
     protected $hidden = [
         'password'
     ];
+
+    protected $casts = [
+        'deleted_at' => 'date:Y-m-d'
+    ];
+
     public function pharmacy()
     {
         return $this->belongsTo(Pharmacy::class);
@@ -36,16 +41,6 @@ class Doctor extends Model implements BannableInterface
     {
         return $this->belongsTo(User::class);
     }
-
-
-
-
-
-    public function order()
-    {
-        return $this->hasMany(Order::class, 'doctor_id');
-    }
-
 
 
     public function ban(array $attributes = []): Ban
@@ -63,6 +58,9 @@ class Doctor extends Model implements BannableInterface
     public function isBanned(): bool
     {
         return $this->user->banned_at !== null;
+    }
+    public function order(){
+        return $this->hasMany(Order::class,'doctor_id');
     }
 
 }

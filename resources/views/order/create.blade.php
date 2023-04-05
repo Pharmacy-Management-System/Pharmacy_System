@@ -9,12 +9,28 @@
                 @csrf
                 <div class="modal-body row gy-2 gx-3 align-items-center">
                     <div class="col-md-12 mb-2">
-                        <label for="orderUser" class="form-label">Assigned User</label>
+                        <label for="orderUser" class="form-label">Assigned Client</label>
                         <select name="user_id" id="email" class="form-control">
                             <option value="" disabled selected hidden></option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">
-                                    {{ $user->name }}{{ '/' }}{{ $user->email }}</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->user_id }}">
+                                    {{ $client->User->name }}{{ '/' }}{{$client->User->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <label for="address" class="form-label">Address</label>
+                        <select name="delivering_address_id" id="adress" class="form-control">
+                            <option value="" disabled selected hidden></option>
+                            @foreach ($clients as $client)
+                                    @foreach ($client->Address as $address)
+                                    @if ($client->id == $address->client_id)
+                                    <option value="{{$address->id}}">
+                                         {{ $address->id }} {{'-'}} {{$address->street_name}}{{' '}}{{$address->Area->name}}
+                                    </option>
+                                    @endif
+                                    @endforeach
+
                             @endforeach
                         </select>
                     </div>
@@ -93,5 +109,5 @@
 
 <script>
 
-  
+
 </script>
