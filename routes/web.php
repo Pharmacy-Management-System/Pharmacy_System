@@ -38,58 +38,53 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes(["verify" => true]);
-Route::group(['middleware' =>['auth']], function(){
+Route::group(['middleware' => ['auth']], function () {
+    Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+        Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
+        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+        Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
+
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+        Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+        Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+        Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+        Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+    });
+
     Route::group(
+        ["middleware" => ['role:admin|pharmacy']],
+        function () {
+
+            //Pharmacy Routes
+            Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+            Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
+            Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
+            Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+            Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
 
 
-
-Route::middleware(['auth' ,'role:admin|pharmacy|doctor','logs-out-banned-user'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
-    Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
-    Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
-    Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
-    Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
-    Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
-
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
-    Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
-});
+            //Doctor Routes
+            Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+            Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+            Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+            Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+            Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+            Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
+            Route::post('doctors/{doctor}/unban', [DoctorController::class, 'unban'])->name('doctors.unban');
+            Route::post('doctors/{doctor}/ban', [DoctorController::class, 'ban'])->name('doctors.ban');
 
 
-Route::group(
-    ["middleware" => ['auth','role:admin|pharmacy']],
-    function () {
+            //Revenue Routes
+            Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
+        }
+    );
 
-        //Pharmacy Routes
-        Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
-        Route::get('/pharmacies/{pharmacy}', [PharmacyController::class, 'show'])->name('pharmacies.show');
-        Route::put('/pharmacies/{pharmacy}', [PharmacyController::class, 'update'])->name('pharmacies.update');
-        Route::get('/pharmacies/{pharmacy}/edit', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
-        Route::post('/pharmacies', [PharmacyController::class, 'store'])->name('pharmacies.store');
-
-
-        //Doctor Routes
-        Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
-        Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-        Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
-        Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
-        Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
-        Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
-        Route::post('doctors/{doctor}/unban', [DoctorController::class, 'unban'])->name('doctors.unban');
-        Route::post('doctors/{doctor}/ban', [DoctorController::class, 'ban'])->name('doctors.ban');
-
-
-        //Revenue Routes
-        Route::get('/revenue', [RevenueController::class, 'index'])->name('revenues.index');
-    }
-);
-
-    Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
         //Area Routes
         Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
         Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
