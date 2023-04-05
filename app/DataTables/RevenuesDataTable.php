@@ -37,7 +37,7 @@ class RevenuesDataTable extends DataTable
         })
         ->addColumn('Total Revenue', function (Pharmacy $pharmacy) {
             return DB::table('orders')->where('pharmacy_id',$pharmacy->id)
-                                             ->where('status','Delivered')->sum('price');
+                                             ->where('status','Delivered')->sum('price') . ' $';
         })
         ->rawColumns(['Avatar'])
         ->setRowId('id');
