@@ -43,7 +43,7 @@
                                                 <span class="input-group-text" id="email-icon">@</span>
                                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="{{ __('Email Address') }}" value="{{ old('email') }}" required autocomplete="email" autofocus style="height: 50px;">
                                             </div>
-                                            
+
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

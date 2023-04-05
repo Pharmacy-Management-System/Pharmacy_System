@@ -3,16 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Cog\Contracts\Ban\Bannable as BannableInterface;
+use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Cog\Laravel\Ban\Models\Ban;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, BannableInterface
 {
-    use HasApiTokens, HasFactory, Notifiable,HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Bannable;
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
     public function owns()
     {
-        return $this->hasOne(Pharmacy::class,'user_id');
+        return $this->hasOne(Pharmacy::class, 'user_id');
     }
 
     public function client()
@@ -52,29 +55,30 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function orders()
     {
-        return $this->hasMany(Order::class,'user_id');
+        return $this->hasMany(Order::class, 'user_id');
     }
 
-   public function pharmacy(){
-    return $this->hasOne(Pharmacy::class);
-   }
+    public function pharmacy()
+    {
+        return $this->hasOne(Pharmacy::class);
+    }
 
-   public function doctor()
-   {
-       return $this->hasOne(Doctor::class);
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 
-   }
-   public function isAdmin()
-   {
-       return $this->role === 'admin';
-   }
-   public function isPharmacy()
-   {
-       return $this->role === 'pharmacy';
-   }
+    public function isPharmacy()
+    {
+        return $this->role === 'pharmacy';
+    }
+
    public function getEmailForVerification()
    {
        return $this->email;
    }
-
 }

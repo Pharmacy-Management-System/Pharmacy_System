@@ -10,7 +10,6 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
-
 class VerificationController extends Controller
 {
     /*
@@ -46,21 +45,19 @@ class VerificationController extends Controller
     }
     public function verify(Request $request, $id, $hash)
     {
-        //dd($request->all());
-        $client = User::findOrFail($id);
-
-        if (!hash_equals((string) $hash, sha1(
-            $client->getEmailForVerification()
-        ))) {
-            throw new AuthorizationException();
-        }
-
-        if ($client->markEmailAsVerified()) {
-            WelcomeEmailJob::dispatch($client);
-        }
-
-        return response()->json([
-            'message' => 'Email verified successfully'
-        ]);
+            $client = User::findOrFail($id);
+            if (!hash_equals((string) $hash, sha1(
+                $client->getEmailForVerification()
+            ))) {
+                throw new AuthorizationException();
+            }
+            if ($client->markEmailAsVerified()) {
+                WelcomeEmailJob::dispatch($client);
+            }
+            return response()->json([
+                'message' => 'Email verified successfully'
+            ]);
+        
     }
+
 }
