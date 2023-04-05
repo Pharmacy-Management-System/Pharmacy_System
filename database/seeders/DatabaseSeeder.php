@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RoleSeeder::class);
         $this->call(AdminSeeder::class);
-
+        $this->call(CountriesSeeder::class);
+        $this->command->info('Seeded the countries!');
     }
 }
