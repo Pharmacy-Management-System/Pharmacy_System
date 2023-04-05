@@ -74,9 +74,6 @@ class OrderController extends Controller
     }
 
 
-
-
-
     public function show($id)
     {
         $order = Order::find($id);
@@ -91,7 +88,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-        if ($order->status == "Processing") {
+        if ($order->status == "Processing") { //New Order
             if ($request->hasFile('prescriptions')) {
                 $images = Prescription::where("order_id", $id)->get();
                 foreach ($images as $image) {
