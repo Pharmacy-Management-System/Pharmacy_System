@@ -42,10 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
-        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
-        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
-        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
         Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
@@ -111,6 +108,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/addresses/{id}', [AddressController::class, 'show'])->name('addresses.show');
         Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
         Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+
+        //Medicine routes
+        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
     });
 });
 //Email-verification
