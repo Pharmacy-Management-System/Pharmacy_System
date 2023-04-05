@@ -91,7 +91,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth', 'logs-out-banned-user' ,'role:admin|pharmacy|doctor'])->group(function () {
+Route::middleware(['auth' ,'role:admin|pharmacy|doctor','logs-out-banned-user'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
     Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
