@@ -62,7 +62,7 @@ class Order extends Model
         return $this->belongsTo(Client::class,'user_id');
     }
     public function address(){
-        return $this->hasOne(Address::class,'delivering_address_id');
+        return $this->belongsTo(Address::class,'delivering_address_id');
     }
     public function orderPrescription()
     {

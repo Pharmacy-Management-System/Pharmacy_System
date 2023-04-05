@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="createOrderCreator" class="form-label">Order Creator</label>
-                        <select name="creator_type" id="editOrderCreator" class="form-control" @readonly(true)>
+                        <select name="creator_type" id="editOrderCreator" class="form-control" disabled>
                             <option value="client">client</option>
                             <option value="doctor">doctor</option>
                             <option value="pharmacy">pharmacy</option>
@@ -89,8 +89,8 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-3 ml-3 ">
-                        <input name="is_insured" class="form-check-input" type="checkbox" id="edit_insured" value="1">
-                        <label for="createPharmacyName" class="form-check-label" @readonly(true)>Is insured?</label>
+                        <input name="is_insured" class="form-check-input" type="checkbox" id="edit_insured" value="1" disabled>
+                        <label for="createPharmacyName" class="form-check-label">Is insured?</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
