@@ -9,6 +9,7 @@ use App\Models\Doctor;
 use App\Models\Medicine;
 use App\Models\OrderMedicine;
 use App\Models\Pharmacy;
+use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\DataTables\OrdersDataTable;
@@ -131,9 +132,9 @@ class OrderController extends Controller
     {
         $order = Order::with('medicines')->find($id);
         $order->medicines()->detach();
+        Prescription::where("order_id", $id)->delete();
         $order->delete();
         return to_route('orders.index')->with('success', 'order deleted successfully!')->with('timeout', 5000);
-        ;
     }
 
 }
