@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use Cog\Laravel\Ban\Models\Ban;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -17,6 +17,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('send:inactive-users-notification')->dailyAt('8:00');
+        $schedule->call(function () {Ban::query()
+                ->where('created_at', '<', now()->subDays(30)) // Remove bans that are older than 30 days
+                ->delete();
+        })->daily();
     }
 
     /**

@@ -121,21 +121,18 @@ class DoctorController extends Controller
 
     public function ban(Doctor $doctor)
     {
-        $doctor->ban([
+        $doctor->user->ban([
             'comment' => 'Enjoy your ban!',
         ]);
-        $doctor->update([
-            'is_banned' => 1,
-        ]);
+
+        $doctor->user->update(['banned_at' => now()]);
         return redirect()->back();
     }
 
     public function unban(Doctor $doctor)
     {
-        $doctor->unban();
-        $doctor->update([
-            'is_banned' => 0,
-        ]);
+        $doctor->user->unban();
+        $doctor->user->update(['banned_at' => null]);
         return redirect()->back();
     }
 }
