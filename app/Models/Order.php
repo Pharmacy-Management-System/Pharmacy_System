@@ -59,7 +59,7 @@ class Order extends Model
 
     public static function createOrderMedicine($order, $quantity, $orderMedicine)
     {
-        for ($i = 0; $i < count($orderMedicine ?? []); $i++) {
+        for ($i = 0; $i < count($orderMedicine); $i++) {
             $id = Medicine::where('id', $orderMedicine[$i])->first()->id;
             $order->medicines($id)->attach($orderMedicine[$i], ['quantity' => $quantity[$i]]);
         }
