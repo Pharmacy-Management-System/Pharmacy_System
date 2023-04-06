@@ -71,7 +71,7 @@ class OrderController extends Controller
     {
         $order = Order::with('medicines')->find($id);
         $user = User::find($order->user_id);
-        $pharmacy = Pharmacy::find($order->pharmacy_id ?? 1);
+        $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
         $doctor_name = User::find($doctor->user_id ?? 1);
         $address = Address::find($order->delivering_address_id);
