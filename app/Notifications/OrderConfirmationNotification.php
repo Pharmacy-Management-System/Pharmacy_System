@@ -2,23 +2,25 @@
 
 namespace App\Notifications;
 
+use App\Mail\OrderConfirmation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Action;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeEmailNotification extends Notification implements ShouldQueue
+class OrderConfirmationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-
+    protected $order;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -40,10 +42,9 @@ class WelcomeEmailNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->subject('Welcome to our website')
-            ->greeting('Hello ' . $notifiable->name . '!');
+        return (new OrderConfirmation($this->order, $notifiable))->to($notifiable->email);
     }
+
 
     /**
      * Get the array representation of the notification.

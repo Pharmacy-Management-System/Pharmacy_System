@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderConfirmation;
 use App\Models\Address;
 use App\Models\Area;
 use App\Models\Client;
@@ -14,7 +15,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\DataTables\OrdersDataTable;
 use App\Http\Requests\StoreOrderRequest;
+use App\Jobs\OrderConfirmationJob;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -25,7 +28,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all(),'clients' => Client::all(),'addresses' => Address::all()]);
+        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all(), 'clients' => Client::all(), 'addresses' => Address::all()]);
     }
 
     /**
@@ -37,6 +40,7 @@ class OrderController extends Controller
     {
         //
     }
+
 
     public function store(StoreOrderRequest $request)
     {
@@ -63,8 +67,16 @@ class OrderController extends Controller
         $order->save();
 
 
+        if ($order->status == "WaitingForUserConfirmation") {
+            $user = User::where('id', '=', $order->user_id)->first();
+            dispatch(new OrderConfirmationJob($user, $order));
+        }
+
         return to_route('orders.index')->with('success', 'Area created successfully!')->with('timeout', 5000);
     }
+
+
+
 
 
     public function show($id)
@@ -83,9 +95,9 @@ class OrderController extends Controller
             'user' => $user,
             'pharmacy' => $pharmacy,
             'doctor' => $doctor,
-            'doctor_name'=>$doctor_name,
-            'address'=>$address,
-            'area'=> $area,
+            'doctor_name' => $doctor_name,
+            'address' => $address,
+            'area' => $area,
         ]);
     }
 
@@ -102,7 +114,7 @@ class OrderController extends Controller
     {
         if (is_numeric($id)) {
             $order = Order::find($id);
-            if (!is_null( $request->quantity)) {
+            if (!is_null($request->quantity)) {
                 $editedQuantity = array_map('intval', $request->quantity);
             } else {
                 $editedQuantity = 0;
@@ -137,4 +149,21 @@ class OrderController extends Controller
         return to_route('orders.index')->with('success', 'order deleted successfully!')->with('timeout', 5000);
     }
 
+    public function updatestatus($order_id)
+    {
+        if (is_numeric($order_id)) {
+
+            $order = Order::where('id', $order_id)->first();
+            if ($order->status == "WaitingForUserConfirmation") {
+                $order->update([
+                    "status" =>  "Canceled"
+                ]);
+                return view('actions.cancel', ['order' => $order, 'state' => "WaitingForUserConfirmation"]);
+            } elseif ($order->status == "Canceled") {
+                return view('actions.cancel', ['order' => $order, 'state' => "Canceled"]);
+            } elseif ($order->status == "Confirmed" || $order->status == "Delivered") {
+                return view('actions.cancel', ['order' => $order, 'state' => "Confirmed"]);
+            }
+        }
+    }
 }
