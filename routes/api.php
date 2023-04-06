@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +31,7 @@ Route::post('/login', [AuthController::class, 'getToken'])->name('auth.getToken'
 Route::get('email/resend/{id}', [AuthController::class, 'resend'])->name('verification.resend');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    
+
     Route::put('/client/{id}', [ClientController::class, 'update']);
     Route::get('/client/{id}', [ClientController::class, 'index']);
 

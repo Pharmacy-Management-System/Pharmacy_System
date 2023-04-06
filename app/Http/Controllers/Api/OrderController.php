@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Jobs\AssignNewOrder;
 use App\Models\Area;
 use App\Models\Prescription;
 use App\Models\Order;
@@ -25,56 +26,51 @@ class OrderController extends Controller
     }
 
     public function create(Request $request)
-    {
+    {   $orders = Order::where('status', "New")->get();
         $client = auth()->user();
         $delivering_address_id = $request->input('delivering_address_id');
         $is_insured = $request->input('is_insured');
         $prescriptions = $request->input('prescriptions');
-        if ($request->hasFile('prescriptions')) {
-            $order = new Order([
-                'delivering_address_id' => $delivering_address_id,
-                'doctor_id' => null,
-                'is_insured' => $is_insured,
-                'status' => "new",
-                'creator_type' => "client",
-                'price' => 0,
-                'user_id' => $client->id,
-                'pharmacy_id' => null,
-            ]);
-            $order->save();
-            foreach ($request->file('prescriptions') as $prescription) {
-                $prescription_name = 'image-' . $prescription->getClientOriginalName();
-                $prescription->storeAs('public/images/prescriptions', $prescription_name);
-                $order_prescription = new Prescription([
-                    'order_id' => $order->id,
-                    'image' => $prescription_name,
+        $addresses = Address::where('client_id', $client->Client->id)->get();
+        if ($addresses->find($delivering_address_id)) {
+            if ($request->hasFile('prescriptions')) {
+                $order = new Order([
+                    'delivering_address_id' => $delivering_address_id,
+                    'doctor_id' => null,
+                    'is_insured' => $is_insured,
+                    'status' => "New",
+                    'creator_type' => "client",
+                    'price' => 0,
+                    'user_id' => $client->id,
+                    'pharmacy_id' => null,
                 ]);
-                $order_prescription->save();
+                $order->save();
+                foreach ($request->file('prescriptions') as $prescription) {
+                    $prescription_name = 'image-' . $prescription->getClientOriginalName();
+                    $prescription->storeAs('public/images/prescriptions', $prescription_name);
+                    $order_prescription = new Prescription([
+                        'order_id' => $order->id,
+                        'image' => $prescription_name,
+                    ]);
+                    $order_prescription->save();
+                }
+            } else {
+                return response()->json([
+                    'message' => 'No prescriptions',
+                ], 400);
             }
         } else {
             return response()->json([
-                'message' => 'No prescriptions',
+                'message' => 'Address not found',
             ], 400);
         }
 
-        $nat = $client->Client->id;
-        $addressAreaId = Address::where('id', $delivering_address_id)->first()->area_id;
-
-        $orders = Order::where('status', "New")->get();
-        foreach ($orders as $order) {
-            $order->pharmacy_id = Pharmacy::where('area_id', $addressAreaId)->orderby("priority", "desc")->first()->id;
-            $order->status = "Processing";
-            $order->save();
-        }
 
         return response()->json([
             'message' => 'Order created successfully',
             'data' => $order
         ], 200);
     }
-
-
-
 
 
     public function show($id)
@@ -91,7 +87,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-        if ($order->status == "Processing") {
+        if ($order->status == "Processing") { //New Order
             if ($request->hasFile('prescriptions')) {
                 $images = Prescription::where("order_id", $id)->get();
                 foreach ($images as $image) {
