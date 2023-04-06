@@ -10,6 +10,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\ChartController;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\ForbidBannedUser;
 
@@ -25,8 +26,6 @@ use App\Http\Middleware\ForbidBannedUser;
 |
 */
 
-
-
 //Auth Routes
 Auth::routes([
     'verify' => true
@@ -37,19 +36,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
+        Route::get('/', function () {return view('index');})->name('index');
+        Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusData')->name('statusbarchart.data');
+        Route::get('/status/statuspiechart', 'App\Http\Controllers\ChartController@statusData')->name('statuspiechart.data');
 
-        //Home Route
-        Route::get('/', function () {
-            return view('index');
-        })->name('index');
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-        //Medicine Route
+        //Medicine Routes
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
         Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
-        //Order Route
+        //Order Routes
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
@@ -67,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(
         ["middleware" => ['role:admin|pharmacy']],
         function () {
+
 
             //Pharmacy Routes
             Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
@@ -89,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
     );
 
     Route::middleware(['role:admin'])->group(function () {
+
         //Area Routes
         Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
         Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
