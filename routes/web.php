@@ -54,6 +54,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
         Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
         Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+
+        //Order Route
+        Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+        Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
     });
 
     Route::group(
@@ -70,11 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
             //Doctor Routes
-            Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
             Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-            Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
-            Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
-            Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
             Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
             Route::post('doctors/{doctor}/unban', [DoctorController::class, 'unban'])->name('doctors.unban');
             Route::post('doctors/{doctor}/ban', [DoctorController::class, 'ban'])->name('doctors.ban');

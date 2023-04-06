@@ -37,12 +37,6 @@ class DoctorsDataTable extends DataTable
             ->addColumn('Assigned Pharmacy', function (Doctor $doctor) {
                 return $doctor->pharmacy->pharmacy_name;
             })
-            // ->addColumn('is_banned', function (Doctor $doctor) {
-            //     return $doctor->is_banned ?
-            //         '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
-            //         :
-            //         '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
-            //     })
             ->addColumn('avatar',function(Doctor $doctor){
                 return '<img src="'. asset("storage/doctors_Images/".$doctor->avatar_image) .'" width="40" class="img-circle" align="center" />';
             })
@@ -59,6 +53,7 @@ class DoctorsDataTable extends DataTable
                                     <div>
                                         <button type="button" class="btn btn-primary rounded" onclick="doctorshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-doctor">Show</button>
                                     </div>
+                                    @if(!Auth::user()->hasRole("doctor"))
                                     <div>
                                         <form method="post" class="delete_item" action="{{Route("doctors.destroy",$id)}}">
                                             @csrf
@@ -66,18 +61,17 @@ class DoctorsDataTable extends DataTable
                                             <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del-model">Delete</button>
                                         </form>
                                     </div>
+                                    @endif
                                 </div>
                           </div>'
             )
             ->addColumn('is_banned', function (Doctor $doctor) {
                 if($doctor->user->isBanned()) {
-                   
                     return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
                 else{
                     return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
-
             })->addColumn('Ban/UnBan', function (Doctor $doctor) {
                 $buttonText = $doctor->user->isBanned() ? 'Unban' : 'Ban';
                 $buttonClass = $doctor->user->isBanned() ? 'btn-success' : 'btn-danger';
@@ -91,9 +85,6 @@ class DoctorsDataTable extends DataTable
                     </form>
                 ';
             })
-
-
-
             ->rawColumns(['avatar', 'actions','is_banned','Ban/UnBan'])
             ->setRowId('id');
     }
@@ -115,6 +106,8 @@ class DoctorsDataTable extends DataTable
         }
         elseif($user->hasRole('admin')){
             return $model->newQuery()->withBanned();
+        }else{
+            return $model->newQuery()->where('user_id', $user->id);
         }
     }
 
@@ -151,20 +144,23 @@ class DoctorsDataTable extends DataTable
             Column::make('id')->title('National ID')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100),
-            Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('actions')->addClass('align-middle')->addClass('text-center'),
-            Column::computed('Ban/UnBan')
+            Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100)
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
                 ->addClass('align-middle')
         ];
-        if (Auth::user()->hasRole('admin')) {
-            Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
+        if (auth()->user()->hasRole('admin')) {
+            $columns[] = Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
+            $columns[] = Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle');
+            $columns[] = Column::computed('Ban/UnBan')->addClass('text-center')->addClass('align-middle');
         }
+        elseif (Auth::user()->hasRole('pharmacy')) {
+            $columns[] = Column::computed('Ban/UnBan')->addClass('text-center')->addClass('align-middle');
+        }
+
+        $columns[] = Column::computed('actions')->addClass('align-middle')->addClass('text-center');
 
         return $columns;
     }
