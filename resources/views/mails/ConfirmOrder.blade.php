@@ -59,9 +59,7 @@
             <li><strong>Total Price : </strong>{{$order->price}}</li>
         </ul>
         <div class="btn-container">
-            <form action="{{route('stripe.get')}}">
-                <button type="submit" class="btn btn-success" >Confirm Order</button>
-            </form>
+            <a href="{{route('stripe.get',$order->price)}}" type="submit" class="btn btn-success" disabled>Confirm Order</a>
             <a href="{{route("orders.updatestatus",$order->id)}}" type="submit" class="btn btn-danger" disabled>Cancel Order</a>
         </div>
 

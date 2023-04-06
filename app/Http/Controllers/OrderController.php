@@ -138,6 +138,10 @@ class OrderController extends Controller
                     Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
                     $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
                     $order->save();
+                    if ($order->status == "WaitingForUserConfirmation") {
+                        $user = User::where('id', '=', $order->user_id)->first();
+                        dispatch(new OrderConfirmationJob($user, $order));
+                    }
                 } catch (\ErrorException $e) {
                     return redirect()->route('orders.index')->with('error', 'Error there is no medicine with this name !')->with('timeout', 5000);
                 }
