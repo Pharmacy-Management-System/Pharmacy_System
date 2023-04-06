@@ -13,6 +13,7 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\ChartController;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\ForbidBannedUser;
+use App\Http\Controllers\StripePaymentController;
 
 
 /*
@@ -127,3 +128,9 @@ Route::group(['middleware' => ['auth']], function () {
 });
 //Email-verification
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+
+
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
