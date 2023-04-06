@@ -37,8 +37,8 @@ Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
         Route::get('/', function () {return view('index');})->name('index');
-        Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusbarchart')->name('statusbarchart.data');
-        Route::get('/status/statuspiechart', 'App\Http\Controllers\ChartController@statuspiechart')->name('statuspiechart.data');
+        Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusData')->name('statusbarchart.data');
+        Route::get('/status/statuspiechart', 'App\Http\Controllers\ChartController@statusData')->name('statuspiechart.data');
 
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
