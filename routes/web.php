@@ -10,6 +10,7 @@ use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RevenueController;
+use App\Http\Controllers\ChartController;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\ForbidBannedUser;
 
@@ -36,6 +37,8 @@ Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
         Route::get('/', function () {return view('index');})->name('index');
+        Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusbarchart')->name('statusbarchart.data');
+        Route::get('/status/statuspiechart', 'App\Http\Controllers\ChartController@statuspiechart')->name('statuspiechart.data');
 
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -58,8 +61,6 @@ Route::group(['middleware' => ['auth']], function () {
         ["middleware" => ['role:admin|pharmacy']],
         function () {
 
-            //Home Route
-            Route::get('/', function () {return view('index');})->name('index');
 
             //Pharmacy Routes
             Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
@@ -86,9 +87,6 @@ Route::group(['middleware' => ['auth']], function () {
     );
 
     Route::middleware(['role:admin'])->group(function () {
-
-        //Home Route
-        Route::get('/', function () {return view('index');})->name('index');
 
         //Area Routes
         Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
