@@ -1,14 +1,14 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('index') }}" class="brand-link pt-4 pb-3" style="height:10vh;">
+    <a href="{{ route('index') }}" class="brand-link my-1">
       <img src="dist/img/PharmacyLogo.gif" alt="Pharmacy Logo" class="brand-image img-circle elevation-3" style="opacity: 0.9;">
-      <span class="brand-text font-weight-light">Pharmacy System</span>
+      <span class="brand-text font-weight-light align-middle">Pharmacy System</span>
     </a>
     @role('admin')
     <!-- Sidebar -->
     <div class="sidebar" style="height: 84vh;border-bottom:solid thin rgb(96, 96, 96);">
-      <nav class="mt-5">
+      <nav class="mt-4">
         <ul class="nav nav-pills nav-sidebar flex-column gap-1" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item sidebar-list">
             <a href="{{ route('pharmacies.index') }}" class="nav-link">
@@ -91,7 +91,7 @@
     @role('pharmacy')
         <!-- Sidebar -->
         <div class="sidebar" style="height: 84vh;border-bottom:solid thin rgb(96, 96, 96);">
-            <nav class="mt-5">
+            <nav class="mt-4">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item sidebar-list">
@@ -146,7 +146,7 @@
     @role('doctor')
         <!-- Sidebar -->
         <div class="sidebar" style="height: 84vh;border-bottom:solid thin rgb(96, 96, 96);">
-            <nav class="mt-5">
+            <nav class="mt-4">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item sidebar-list">
