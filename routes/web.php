@@ -26,11 +26,6 @@ use App\Http\Middleware\ForbidBannedUser;
 |
 */
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 5e041e5142feedbc9bd15486b88831cb97654f14
 //Auth Routes
 Auth::routes([
     'verify' => true
