@@ -21,7 +21,9 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-            'is_insured' => ['boolean'],
+            'delivering_address_id' => ['required','exists:addresses,id'],
+            'is_insured' => ['required','boolean'],
+            'pharmacy_id' => ['required','exists:pharmacies,id'],
             'status' => ['required', Rule::in(['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered'])],
             'creator_type' => ['required', Rule::in(['client', 'doctor', 'pharmacy'])],
         ];
@@ -31,13 +33,14 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'user_id.required' => 'userName is required',
-            'delivering_address.required' => 'address is required',
+            'delivering_address_id.required' => 'check client address',
         'is_insured'=>[
             'required' => 'The "Is insured" field is required.',
             'boolean' => 'The "Is insured" field must be true or false.',
         ],
             'status.required' => 'status is required',
             'creator_type.required' => 'creator type is required',
+            'pharmacy_id.required' => 'pharmacy is required',
         ];
     }
 }
