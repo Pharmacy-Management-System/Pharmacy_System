@@ -47,11 +47,12 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+        //Medicine Routes
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
         Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
-        //Order Route
+        //Order Routes
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
