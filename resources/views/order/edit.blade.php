@@ -67,18 +67,27 @@
                     <div class="col-md-6 mb-3">
                         <label for="createDoctorName" class="form-label">Doctor Name</label>
                         <select name="doctor_id" id="doctorEdit" class="form-control">
-                            <option value="" disabled selected hidden></option>
-                            @foreach ($doctors as $doctor)
+                            @if (auth()->user()->hasRole('admin'))
+                                @foreach ($pharmacies as $pharmacy)
+                                    <optgroup label="{{ 'Pharmacy: ' . $pharmacy->pharmacy_name }}">
+                                        @foreach ($pharmacy->doctors as $doctor)
+                                            <option value="" disabled selected hidden></option>
+                                            <option value="{{ $doctor->id }}">{{ $doctor->User->name }}</option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            @endif
+
+                            {{-- @foreach ($doctors as $doctor)
                                 <option value="{{ $doctor->id }}">
                                     {{ $doctor->User->name }}{{ ' - ' }}{{ $doctor->Pharmacy->pharmacy_name }}
                                 </option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="createStatus" class="form-label">creator type</label>
-                        <input name="creator_type" id="editOrderCreator" value="pharmacy" class="form-control"
-                                readonly>
+                        <input name="creator_type" id="editOrderCreator" value="pharmacy" class="form-control" readonly>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="createStatus" class="form-label">status</label>
