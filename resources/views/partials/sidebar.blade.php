@@ -98,7 +98,7 @@
                     <a href="{{ route('pharmacies.index') }}" class="nav-link">
                         <img src="dist/img/icons/Pharmacies-icon.png" class="nav-icon">
                     <p>
-                        Pharmacies
+                        Pharmacy
                     </p>
                     </a>
                 </li>
@@ -176,12 +176,12 @@
             onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 <img src="/dist/img/icons/Logout-icon.png" class="nav-icon"  width="30px">
-                <span class="ml-2">{{ __('LogOut') }}</span>       
+                <span class="ml-2">{{ __('LogOut') }}</span>
     </a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
     </form>
-        
+
     <!-- /.sidebar -->
   </aside>
 
