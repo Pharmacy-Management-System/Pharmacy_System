@@ -34,9 +34,11 @@
     @endif
 
     <div class="container-fluid">
+    @role('admin|pharmacy')
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal" data-bs-target="#create">Add New Doctor</button>
         </div>
+    @endrole
         {{ $dataTable->table() }}
     </div>
 
