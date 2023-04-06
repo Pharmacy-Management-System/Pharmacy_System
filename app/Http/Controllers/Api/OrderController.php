@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
 use App\Jobs\AssignNewOrder;
 use App\Models\Area;
 use App\Models\Prescription;
@@ -14,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Address;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\OrderResource;
 
 
 class OrderController extends Controller
@@ -26,7 +26,8 @@ class OrderController extends Controller
     }
 
     public function create(Request $request)
-    {   $orders = Order::where('status', "New")->get();
+    {
+         $orders = Order::where('status', "New")->get();
         $client = auth()->user();
         $delivering_address_id = $request->input('delivering_address_id');
         $is_insured = $request->input('is_insured');
@@ -64,14 +65,13 @@ class OrderController extends Controller
                 'message' => 'Address not found',
             ], 400);
         }
-
+        AssignNewOrder::dispatch($order);
 
         return response()->json([
             'message' => 'Order created successfully',
-            'data' => $order
+            'data' => new OrderResource($order)
         ], 200);
     }
-
 
     public function show($id)
     {
@@ -79,7 +79,7 @@ class OrderController extends Controller
         $order_prescriptions = Prescription::where('order_id', $id)->get();
         return response()->json([
             'message' => 'Order details',
-            'data' => $order,
+            'data' => new OrderResource($order),
             'prescriptions' => $order_prescriptions
         ], 200);
     }
@@ -87,7 +87,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-        if ($order->status == "Processing") { //New Order
+        if ($order->status == "New") { //New Order
             if ($request->hasFile('prescriptions')) {
                 $images = Prescription::where("order_id", $id)->get();
                 foreach ($images as $image) {
@@ -109,7 +109,7 @@ class OrderController extends Controller
         }
         return response()->json([
             'message' => 'Order updated successfully',
-            'data' => $order
+            'data' =>new OrderResource($order)
         ], 200);
 
 

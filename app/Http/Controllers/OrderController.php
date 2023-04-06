@@ -26,7 +26,7 @@ class OrderController extends Controller
      */
     public function index(OrdersDataTable $dataTable)
     {
-        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all(),'clients' => Client::all(),'addresses' => Address::all()]);
+        return $dataTable->render('order.index', ['pharmacies' => Pharmacy::all(), 'doctors' => Doctor::all(), 'medicines' => Medicine::all(), 'users' => User::all(), 'clients' => Client::all(), 'addresses' => Address::all()]);
     }
 
     /**
@@ -44,10 +44,6 @@ class OrderController extends Controller
 
         $quantity = array_map('intval', $request->quantity);
         $orderMedicine = $request->medicine_id;
-        // if( $request->is_insured == null){
-        //     $request->is_insured = 0;
-        // }
-
         $order = Order::create([
             'user_id' => $request->user_id,
             'pharmacy_id' => $request->pharmacy_id,
@@ -58,15 +54,15 @@ class OrderController extends Controller
             'delivering_address_id' => $request->delivering_address_id,
             'price' => 0,
         ]);
-
-        Order::createOrderMedicine($order, $quantity, $orderMedicine);
-        $order->price = Order::totalPrice($quantity, $orderMedicine);
-        $order->save();
-
-
+        try {
+            Order::createOrderMedicine($order, $quantity, $orderMedicine);
+            $order->price = Order::totalPrice($quantity, $orderMedicine);
+            $order->save();
+        } catch (\ErrorException $e) {
+            return redirect()->route('orders.index')->with('error', 'Error there is no medicine with this name !')->with('timeout', 5000);
+        }
         return to_route('orders.index')->with('success', 'Area created successfully!')->with('timeout', 5000);
     }
-
 
     public function show($id)
     {
@@ -91,6 +87,7 @@ class OrderController extends Controller
             'prescriptions' => $prescriptions
         ]);
     }
+
     public function edit($id)
     {
         $order = Order::with('medicines')->find($id);
@@ -104,7 +101,7 @@ class OrderController extends Controller
     {
         if (is_numeric($id)) {
             $order = Order::find($id);
-            if (!is_null( $request->quantity)) {
+            if (!is_null($request->quantity)) {
                 $editedQuantity = array_map('intval', $request->quantity);
             } else {
                 $editedQuantity = 0;
@@ -120,9 +117,14 @@ class OrderController extends Controller
                     'is_insured' => $request->has('is_insured') ? 1 : 0,
                     'delivering_address_id' => $request->delivering_address_id ?? null,
                 ]);
-                Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
-                $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
-                $order->save();
+                try {
+                    Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
+                    $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
+                    $order->save();
+                } catch (\ErrorException $e) {
+                    return redirect()->route('orders.index')->with('error', 'Error there is no medicine with this name !')->with('timeout', 5000);
+                }
+
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->route('orders.index')->with('error', 'Error in Updating Order!')->with('timeout', 5000);
             }
