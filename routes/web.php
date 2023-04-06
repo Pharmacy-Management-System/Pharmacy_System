@@ -25,11 +25,6 @@ use App\Http\Middleware\ForbidBannedUser;
 |
 */
 
-//Home Route
-Route::get('/', function () {
-    return view('index');
-})->name('index');
-
 //Auth Routes
 Auth::routes([
     'verify' => true
@@ -40,7 +35,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
+        Route::get('/', function () {return view('index');})->name('index');
+
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
         Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
@@ -59,6 +57,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(
         ["middleware" => ['role:admin|pharmacy']],
         function () {
+
+            //Home Route
+            Route::get('/', function () {return view('index');})->name('index');
 
             //Pharmacy Routes
             Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
@@ -85,6 +86,10 @@ Route::group(['middleware' => ['auth']], function () {
     );
 
     Route::middleware(['role:admin'])->group(function () {
+
+        //Home Route
+        Route::get('/', function () {return view('index');})->name('index');
+
         //Area Routes
         Route::get('/areas', [AreaController::class, 'index'])->name('areas.index');
         Route::delete('/areas/{id}', [AreaController::class, 'destroy'])->name('areas.destroy');
