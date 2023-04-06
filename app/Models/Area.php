@@ -14,12 +14,8 @@ class Area extends Model
         'id',
         'name',
         'address',
+        'country_id'
     ];
-
-    public function clients()
-    {
-        return $this->hasMany(Client::class);
-    }
 
     protected $casts = [
         'id' => 'integer',
@@ -28,8 +24,14 @@ class Area extends Model
     public function pharmacies(){
         return $this->hasMany(Pharmacy::class ,'area_id');
     }
+    
     public function address()
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class);
     }
 }

@@ -10,15 +10,19 @@
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body">
-                    <div class="mb-3">
+                    <div class="mb-2">
+                        <label for="countrySelect" class="form-label">Country</label>
+                        <select name="country_id" id="countrySelect" class="form-control"></select>
+                    </div>
+                    <div class="mb-2">
                         <label for="areaId" class="form-label">Postal Code</label>
                         <input name="id" class="form-control" id="edit_areaId" value="">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="areaName" class="form-label">Area Name</label>
                         <input name="name" class="form-control" id="edit_areaName" value="">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="areaAddress" class="form-label">Area Address</label>
                         <input name="address" class="form-control" id="edit_areaAddress" value="">
                     </div>
@@ -49,7 +53,18 @@
                     $('#edit_areaId').val(response.area[0].id)
                     $('#edit_areaName').val(response.area[0].name)
                     $('#edit_areaAddress').val(response.area[0].address)
-                }
+                    var countrySelect = $('#countrySelect');
+                    countrySelect.empty();
+                    $.each(response.countries, function(index, country) {
+                        var option = $('<option>').val(country.id).text(country.name);
+                            console.log(response.area[0].country_id)
+                        if (country.id === response.area[0].country_id) {
+                            option.attr('selected', 'selected');
+                        }
+                        countrySelect.append(option);
+                    });
+                    countrySelect.val(response.area[0].country_id);
+                    }
             });
             var route = "{{ route('areas.update', ':id') }}".replace(':id', itemId);
             document.getElementById("edit-form").action = route;
