@@ -92,9 +92,8 @@
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="createStatus" class="form-label">status</label>
-                                <select name="status" id="orderStatus" class="form-control" disabled>
-                                    <option value="Processing">Processing</option>
-                                </select>
+                                <input name="status" id="orderStatus" value="pharmacy" class="form-control"
+                                readonly>
                                 <input type="hidden" id="orderStatus" name="status" value="Processing">
                             </div>
                             <div class="col-md-6 mb-3 ml-3 ">
