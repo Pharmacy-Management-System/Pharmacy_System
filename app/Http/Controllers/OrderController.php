@@ -118,9 +118,14 @@ class OrderController extends Controller
                     'is_insured' => $request->has('is_insured') ? 1 : 0,
                     'delivering_address_id' => $request->delivering_address_id ?? null,
                 ]);
-                Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
-                $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
-                $order->save();
+                try{
+                    Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
+                    $order->price = Order::totalPrice($editedQuantity, $editedOrderMedicine);
+                    $order->save();
+                } catch (\Illuminate\Database\QueryException $exception) {
+                    return redirect()->route('orders.index')->with('error', 'Error there is no medicine with this name !')->with('timeout', 5000);
+                }
+
             } catch (\Illuminate\Database\QueryException $exception) {
                 return redirect()->route('orders.index')->with('error', 'Error in Updating Order!')->with('timeout', 5000);
             }
