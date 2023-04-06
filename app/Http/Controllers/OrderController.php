@@ -119,13 +119,8 @@ class OrderController extends Controller
             $editedOrderMedicine = $request->medicine_id;
             try {
                 $order->update([
-                    'user_id' => $request->user_id,
-                    'pharmacy_id' => $request->pharmacy_id,
                     'doctor_id' => $request->doctor_id,
-                    'creator_type' => $request->creator_type,
-                    'status' => $request->status,
-                    'is_insured' => $request->has('is_insured') ? 1 : 0,
-                    'delivering_address_id' => $request->delivering_address_id ?? null,
+                    'status' => 'WaitingForUserConfirmation',
                 ]);
                 try {
                     Order::updateOrderMedicine($order, $editedQuantity, $editedOrderMedicine);
