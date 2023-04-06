@@ -22,9 +22,10 @@ class StoreOrderRequest extends FormRequest
         return [
             'user_id' => ['required', 'exists:users,id'],
             'delivering_address_id' => ['required','exists:addresses,id'],
-            'pharmacy_id' => ['exists:pharmacies,id'],
+            'pharmacy_id' => ['required','exists:pharmacies,id'],
             'status' => ['required', Rule::in(['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered'])],
             'creator_type' => ['required', Rule::in(['client', 'doctor', 'pharmacy'])],
+            'doctor_id' => ['required'],
         ];
 
     }
@@ -36,6 +37,7 @@ class StoreOrderRequest extends FormRequest
             'status.required' => 'status is required',
             'creator_type.required' => 'creator type is required',
             'pharmacy_id.required' => 'pharmacy is required',
+            'doctor_id.required' => 'doctor is required',
         ];
     }
 }

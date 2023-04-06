@@ -88,7 +88,7 @@
                         <input type="hidden" id="orderStatus" name="status" value="Processing">
                     </div>
                     <div class="col-md-6 mb-3 ml-3 ">
-                        <input name="is_insured" class="form-check-input" type="checkbox" id="edit_insured">
+                        <input name="is_insured" class="form-check-input" type="checkbox" id="edit_insured" disabled>
                         <label for="createPharmacyName" class="form-check-label">Is insured?</label>
                     </div>
                     <div class="modal-footer">
