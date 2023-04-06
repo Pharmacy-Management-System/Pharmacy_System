@@ -25,10 +25,7 @@ use App\Http\Middleware\ForbidBannedUser;
 |
 */
 
-//Home Route
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+
 
 //Auth Routes
 Auth::routes([
@@ -40,11 +37,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
+
+        //Home Route
+        Route::get('/', function () {
+            return view('index');
+        })->name('index');
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+        //Medicine Route
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
         Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
+        //Order Route
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');

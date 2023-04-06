@@ -16,6 +16,7 @@ use App\DataTables\OrdersDataTable;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
 
+
 class OrderController extends Controller
 {
     /**
@@ -71,11 +72,12 @@ class OrderController extends Controller
     {
         $order = Order::with('medicines')->find($id);
         $user = User::find($order->user_id);
-        $pharmacy = Pharmacy::find($order->pharmacy_id ?? 1);
+        $pharmacy = Pharmacy::find($order->pharmacy_id);
         $doctor = Doctor::find($order->doctor_id);
         $doctor_name = User::find($doctor->user_id ?? 1);
         $address = Address::find($order->delivering_address_id);
         $area = Area::find($address->area_id);
+        $prescriptions = Prescription::where('order_id', $order->id)->get();
 
 
         return response()->json([
@@ -83,12 +85,12 @@ class OrderController extends Controller
             'user' => $user,
             'pharmacy' => $pharmacy,
             'doctor' => $doctor,
-            'doctor_name'=>$doctor_name,
-            'address'=>$address,
-            'area'=> $area,
+            'doctor_name' => $doctor_name,
+            'address' => $address,
+            'area' => $area,
+            'prescriptions' => $prescriptions
         ]);
     }
-
     public function edit($id)
     {
         $order = Order::with('medicines')->find($id);
