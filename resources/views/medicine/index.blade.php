@@ -28,10 +28,12 @@
             </div>
         @endif
 
+        @role('admin')
          <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
                 data-bs-target="#create">Create New Medicine</button>
         </div>
+        @endrole
 
 
         <div class="container-fluid">

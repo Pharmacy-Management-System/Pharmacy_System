@@ -25,10 +25,7 @@ use App\Http\Middleware\ForbidBannedUser;
 |
 */
 
-//Home Route
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+
 
 //Auth Routes
 Auth::routes([
@@ -40,14 +37,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
+
+        //Home Route
+        Route::get('/', function () {
+            return view('index');
+        })->name('index');
         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+        //Medicine Route
         Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
-        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
         Route::get('/medicines/{id}', [MedicineController::class, 'show'])->name('medicines.show');
-        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
-        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
         Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
 
+        //Order Route
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
@@ -111,6 +113,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/addresses/{id}', [AddressController::class, 'show'])->name('addresses.show');
         Route::put('/addresses/{id}', [AddressController::class, 'update'])->name('addresses.update');
         Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+
+        //Medicine routes
+        Route::get('/medicines/{id}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
+        Route::put('/medicines/{medicine}', [MedicineController::class, 'update'])->name('medicines.update');
+        Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
     });
 });
 //Email-verification
