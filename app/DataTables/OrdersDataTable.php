@@ -121,7 +121,6 @@ class OrdersDataTable extends DataTable
             ]);
         }
         $columns[] = Column::computed('action')
-        ->exportable(false)
         ->printable(false)
         ->width(60)
         ->addClass('text-center');
