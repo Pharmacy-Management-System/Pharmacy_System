@@ -24,6 +24,7 @@ class MedicinesDataTable extends DataTable
             ->addColumn(
                 'action',
                 '
+                @if (auth()->user()->hasRole("admin"))
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <button type="button" class="btn btn-success rounded me-2"  onclick="editmodalShow(event)" id="{{$id}}"  data-bs-toggle="modal" data-bs-target="#edit_med">edit</button>
                     <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("medicines.destroy",$id)}}">
@@ -31,7 +32,8 @@ class MedicinesDataTable extends DataTable
                         @method("DELETE")
                         <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del_med">delete</button>
                     </form>
-                </div>'
+                </div>
+                @endif'
             )
             ->setRowId('id');
     }
@@ -72,18 +74,26 @@ class MedicinesDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
+        $columns = [
             Column::make('id'),
             Column::make('name')->title('medicine name'),
             Column::make('type'),
             Column::computed('quantity'),
-            Column::computed('price'),
-            Column::computed('action')
+            Column::computed('price')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
         ];
+        if (auth()->user()->hasRole('admin')) {
+            $columns[] = Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center');
+        }
+
+        return $columns;
     }
 
     /**

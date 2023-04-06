@@ -5,7 +5,7 @@ namespace App\Console;
 use App\Jobs\AssignNewOrder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-
+use App\Jobs\RemoveOldBans;
 class Kernel extends ConsoleKernel
 {
     /**
@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('send:inactive-users-notification')->dailyAt('8:00');
         $schedule->job(new AssignNewOrder())->everyMinute();
+        $schedule->job(new RemoveOldBans)->daily();
     }
     /**
      * Register the commands for the application.

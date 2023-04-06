@@ -43,24 +43,5 @@ class Doctor extends Model implements BannableInterface
     }
 
 
-    public function ban(array $attributes = []): Ban
-    {
-        $this->user->update(['banned_at' => now()]);
-        session()->flash('error', 'You are banned');
-        return $this->user->bans()->create($attributes);
-    }
-
-    public function unban(): void
-    {
-        $this->user->update(['banned_at' => null]);
-    }
-
-    public function isBanned(): bool
-    {
-        return $this->user->banned_at !== null;
-    }
-    public function order(){
-        return $this->hasMany(Order::class,'doctor_id');
-    }
 
 }
