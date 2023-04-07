@@ -33,7 +33,7 @@
         <button type="button" class="btn btn-success rounded me-2" data-bs-toggle="modal" data-bs-target="#createOrder">Create New Order</button>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         {{ $dataTable->table() }}
     </div>
 
