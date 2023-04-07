@@ -56,12 +56,16 @@
     </div>
 </div> 
 
+<!--scripts-->
 @push('scripts')
 <script>
-
-$("#client-password").on("input", function() {
-   $('#client-password-confirmation').val($(this).val())
-});
-
+    function createmodalShow(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                $('input').val("")
+            }
+    $("#client-password").on("input", function() {
+    $('#client-password-confirmation').val($(this).val())
+    });
 </script>
 @endpush

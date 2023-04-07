@@ -96,7 +96,6 @@ class AreasDataTable extends DataTable
             Column::make('name')->addClass('text-center')->addClass('align-middle'),
             Column::make('address')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')
-                ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')

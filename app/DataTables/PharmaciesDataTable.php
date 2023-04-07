@@ -157,7 +157,6 @@ class PharmaciesDataTable extends DataTable
             Column::computed('Area')->addClass('text-center')->addClass('align-middle'),
             Column::make('priority')->addClass('text-center')->addClass('align-middle')->title('Priority'),
             Column::computed('actions')
-                ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')

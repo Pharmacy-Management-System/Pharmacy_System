@@ -37,12 +37,6 @@ class DoctorsDataTable extends DataTable
             ->addColumn('Assigned Pharmacy', function (Doctor $doctor) {
                 return $doctor->pharmacy->pharmacy_name;
             })
-            // ->addColumn('is_banned', function (Doctor $doctor) {
-            //     return $doctor->is_banned ?
-            //         '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'
-            //         :
-            //         '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
-            //     })
             ->addColumn('avatar',function(Doctor $doctor){
                 return '<img src="'. asset("storage/doctors_Images/".$doctor->avatar_image) .'" width="40" class="img-circle" align="center" />';
             })
@@ -77,8 +71,8 @@ class DoctorsDataTable extends DataTable
                 else{
                     return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
-
-            })->addColumn('Ban/UnBan', function (Doctor $doctor) {
+            })
+            ->addColumn('Ban/UnBan', function (Doctor $doctor) {
                 $buttonText = $doctor->user->isBanned() ? 'Unban' : 'Ban';
                 $buttonClass = $doctor->user->isBanned() ? 'btn-success' : 'btn-danger';
                 $formMethod = $doctor->user->isBanned() ? 'unban' : 'ban';
@@ -91,9 +85,6 @@ class DoctorsDataTable extends DataTable
                     </form>
                 ';
             })
-
-
-
             ->rawColumns(['avatar', 'actions','is_banned','Ban/UnBan'])
             ->setRowId('id');
     }
@@ -156,7 +147,6 @@ class DoctorsDataTable extends DataTable
             Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')->addClass('align-middle')->addClass('text-center'),
             Column::computed('Ban/UnBan')
-                ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
