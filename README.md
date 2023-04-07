@@ -26,7 +26,7 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 </pre>
 
 ## CLIENT APIs:
-<div align="center" width="100%">
+<div align="center" style="width:100%">
     
 |  Method  |      Endpoint         | Description | 
 | :---:    |         :---:         | :---: |   
