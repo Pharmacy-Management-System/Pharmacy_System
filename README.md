@@ -1,15 +1,13 @@
-<p align="center" style="margin-top:2%;margin-bottom:2%;">
+# PHARMACY MANAGMENT SYSTEM
+<p align="center" style="margin-top:3%;margin-bottom:3%;">
   <img style = "width:120px; height:120px;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
-<h1 align="center" >Pharmacy Managment System</h1>
 </p>
 
 ## INTRODUCTION
 The Pharmacy Managment System is a Laravel web Application that used Most of Laravel Technologies for Pharmacies and Medical prescription purposes. 
 The pharmacy Managment System Consists of Four Main Roles Like `admin`, `pharmacy`, `doctor` and `client`.</br>
 The `admin` has a Full Access to the whole Parts of the system. The `pharmacy owner` has access on his Doctors and Orders. The `doctor` has access the orders. 
-The `client` is the end user who can make any Order.
-
-
+The `client` is the end user who can make any Order.</br>
 
 ## FEATURES
 - Authuntication
@@ -43,24 +41,24 @@ The `client` is the end user who can make any Order.
 php artisan create:admin --name="admin" --email=admin@admin.com --password=******
 </pre>
 
-## CLIENT APIs:
+## CLIENT APIs
 <div align="center" style="width:100%">
     
-|  Method  |      Endpoint            | Description | 
-| :---:    |         :---:            | :---: |   
-| POST     | `/api/register`          | `Register` |
-| POST     | `/api/login`             | `Login`  | 
-| GET      | `/api/client/{id}`       | `Get Client By ID` | 
-| PUT      | `/api/client/{id}`       | `Update Client` | 
-| POST     | `/api/address`           | `Add New Address` | 
-| GET      | `/api/address`           | `Get All Addresses` | 
-| GET      | `/api/address/{id}`      | `Get Address By ID` | 
-| PUT      | `/api/address/{id}`      | `Update Address` | 
-| DELETE   | `/api/address/{id}`      | `Delete Address` | 
-| POST     | `/api/orders`            | `Create New Order` | 
-| GET      | `/api/orders/{id}`       | `Get Order By ID` | 
-| PUT      | `/api/orders/{id}`       | `Update Order` | 
-| GET      | `/api/email/resend/{id}` | `Resend Email Verification` | 
+|  METHODS      |         URI              | ACTIONS | 
+| :---:         |         :---:            | :---: |   
+| POST          | `/api/register`          | `Register` |
+| POST          | `/api/login`             | `Login`  | 
+| GET           | `/api/client/{id}`       | `Get Client By ID` | 
+| PUT           | `/api/client/{id}`       | `Update Client` | 
+| POST          | `/api/address`           | `Add New Address` | 
+| GET           | `/api/address`           | `Get All Addresses` | 
+| GET           | `/api/address/{id}`      | `Get Address By ID` | 
+| PUT           | `/api/address/{id}`      | `Update Address` | 
+| DELETE        | `/api/address/{id}`      | `Delete Address` | 
+| POST          | `/api/orders`            | `Create New Order` | 
+| GET           | `/api/orders/{id}`       | `Get Order By ID` | 
+| PUT           | `/api/orders/{id}`       | `Update Order` | 
+| GET           | `/api/email/resend/{id}` | `Resend Email Verification` | 
     
 </div>    
    
@@ -86,6 +84,10 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 - CSS
 - SASS
 
+## Support
+If you like our work, feel free to:
+⭐ this repository. It helps.
+
 ## AUTHORS
   - [Hager Abd El Galil](https://github.com/Hager-Abd-El-Galil)
   - [Mariam Reda Mokhtar](https://github.com/Mariam-Mokhtar)
@@ -93,8 +95,5 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
   - [Rowan Tamer](https://github.com/rowantamer)
   - [Omnia Goher](https://github.com/Omnia-Goher)
   
-<!-- ## ERD
-<p align="center" >
-  <img style = "width:800px; height:500px;border-radius:50%;" src="https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png" />
-</p> -->
+
 
