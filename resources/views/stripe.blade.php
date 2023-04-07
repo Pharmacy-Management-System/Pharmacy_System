@@ -79,10 +79,10 @@
                                             Again</div>
                                     </div>
                                 </div>
-
+                                <input type="text" name="order_id" value="{{$order->id}}" hidden>
                                 <div class="col-12">
                                     <div class="col-12">
-                                        <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ${{$price}}</button>
+                                        <button type="submit" onclick="clientdeletemodalShow(event)" class="btn btn-primary btn-lg btn-block">Pay Now ${{$order->price}}</button>
                                     </div>
                                 </div>
                             </form>
@@ -90,7 +90,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </body>
 
 
@@ -98,16 +97,20 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
     <script type="text/javascript">
-        $(function() {
+        function clientdeletemodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
 
+            event.target.closest("form").submit();
+
+        }
+        $(function() {
             /*------------------------------------------
             --------------------------------------------
             Stripe Payment Code
             --------------------------------------------
             --------------------------------------------*/
-
             var $form = $(".require-validation");
-
             $('form.require-validation').bind('submit', function(e) {
                 var $form = $(".require-validation"),
                     inputSelector = ['input[type=email]', 'input[type=password]',
@@ -118,7 +121,6 @@
                     $errorMessage = $form.find('div.error'),
                     valid = true;
                 $errorMessage.addClass('hide');
-
                 $('.has-error').removeClass('has-error');
                 $inputs.each(function(i, el) {
                     var $input = $(el);
@@ -128,7 +130,6 @@
                         e.preventDefault();
                     }
                 });
-
                 if (!$form.data('cc-on-file')) {
                     e.preventDefault();
                     Stripe.setPublishableKey($form.data('stripe-publishable-key'));
@@ -139,9 +140,7 @@
                         exp_year: $('.card-expiry-year').val()
                     }, stripeResponseHandler);
                 }
-
             });
-
             /*------------------------------------------
             --------------------------------------------
             Stripe Response Handler
@@ -156,13 +155,11 @@
                 } else {
                     /* token contains id, last4, and card type */
                     var token = response['id'];
-
                     $form.find('input[type=text]').empty();
                     $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
                     $form.get(0).submit();
                 }
             }
-
         });
     </script>
 
