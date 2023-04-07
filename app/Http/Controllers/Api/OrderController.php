@@ -65,7 +65,6 @@ class OrderController extends Controller
                 'message' => 'address id does not belong to this user',
             ], 400);
         }
-        AssignNewOrder::dispatch($order);
 
         return response()->json([
             'message' => 'Order created successfully',

@@ -54,7 +54,7 @@ class Order extends Model
             $price = Medicine::where('id', $orderMedicine[$i])->first()->price;
             $totalPrice += $price * $quantity[$i];
         }
-        return $totalPrice;
+        return $totalPrice/100; //convert from cent to dollars
     }
 
     public static function createOrderMedicine($order, $quantity, $orderMedicine)

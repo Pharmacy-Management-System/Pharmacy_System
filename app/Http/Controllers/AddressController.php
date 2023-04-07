@@ -19,7 +19,6 @@ class AddressController extends Controller
         try {
             $addressData = [];
             $addressData['client_id'] = $request->client_id;
-            // handle checkbox
             $addressData['is_main'] = 0;
             if ($request->has('is_main')) {
                 $addressData['is_main'] = 1;
@@ -38,7 +37,6 @@ class AddressController extends Controller
 
     public function update(StoreAddressRequest $request, $id)
     {
-        //dd($request->all());
         if (is_numeric($id)) {
             try {
                 $address = Address::where('id', '=', $id)->first();

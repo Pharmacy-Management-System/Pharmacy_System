@@ -22,7 +22,7 @@ class MedicinesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('Price', function (Medicine $medicine) {
-                return $medicine->price . ' $';
+                return $medicine->price . ' ¢ '  ;
             })
             ->addColumn(
                 'actions',
