@@ -146,10 +146,6 @@ class DoctorsDataTable extends DataTable
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center')
-                ->addClass('align-middle')
             ];
         if (auth()->user()->hasRole('admin')) {
             $columns[] = Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');

@@ -23,6 +23,9 @@ class ClientsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('avatar',function(Client $client){
+                return '<img src="'. asset("storage/clients_Images/".$client->avatar_image) .'" width="40" class="img-circle" align="center" />';
+            })
             ->addColumn(
                 'actions',
                 '
@@ -46,7 +49,15 @@ class ClientsDataTable extends DataTable
             ->addColumn('email', function (Client $client) {
                 return $client->user->email;
             })
-            ->rawColumns(['actions'])
+            ->addColumn('Gender', function (Client $client) {
+                if($client->gender === 'Female') {
+                    return '<img src="'. asset("dist/img/icons/Female-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+                else{
+                    return '<img src="'. asset("dist/img/icons/Male-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+            })
+            ->rawColumns(['actions','Gender','avatar'])
             ->setRowId('id');
     }
 
@@ -92,11 +103,12 @@ class ClientsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::computed('avatar')->addClass('text-center')->addClass('align-middle'),
             Column::computed('id', 'National ID')->addClass('text-center')->addClass('align-middle'),
             Column::computed('name', 'Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('email', 'Email')->addClass('text-center')->addClass('align-middle'),
-            Column::make('gender')->addClass('text-center')->addClass('align-middle'),
             Column::make('phone')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Gender')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')
                 ->printable(false)
                 ->width(50)

@@ -1,19 +1,14 @@
 <div class="modal fade" id="client-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Client</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Client Data</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="POST" id="edit-form" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="modal-body row g-3">
-                    <div class="col-md-12 ">
-                        <label for="avatar" class="form-label">Upload Image </label>
-                        <input name="avatar_image" class="form-control client-input" type="file" id="avatar"
-                            accept=".jpg,.png">
-                    </div>
                     <div class="col-md-6 ">
                         <label for="client-name" class="form-label">Name</label>
                         <input name="name" class="form-control client-input" id="client-name" value="">
@@ -44,11 +39,16 @@
                         <label for="client-phone" class="form-label">Phone Number</label>
                         <input name="phone" class="form-control client-input" id="client-phone" value="">
                     </div>
+                    <div class="col-md-12 ">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input name="avatar_image" class="form-control client-input" type="file" id="avatar"
+                            accept=".jpg,.png">
+                    </div>
                 </div>
                 <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white">Update</button>
                 </div>
             </form>
         </div>
@@ -160,7 +160,7 @@
                 <input name="user_id" class="form-control client-input" id="userid" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white">Update</button>
                 </div>
             </form>
         </div>
@@ -215,7 +215,7 @@
                 <input name="client_id" class="form-control client-input" id="clientId" value="" hidden>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Create</button>
+                    <button type="submit" class="btn btn-success text-white">Create</button>
                 </div>
             </form>
         </div>
