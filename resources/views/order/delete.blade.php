@@ -1,4 +1,5 @@
-<div class="modal fade" id="delOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="delOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +14,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="delete" type="button" class="btn btn-danger">Delete</button>
+                <form method="post" class="delete_item me-2" id="delete_order" >
+                    @csrf
+                    @method('DELETE')
+                    <button id="delete" type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
             </div>
 
         </div>
@@ -24,9 +30,10 @@
     function deleteOrderModel(event) {
         event.preventDefault();
         event.stopPropagation();
-        let deleteBtnModal = document.querySelector("#delete");
-        deleteBtnModal.onclick = function() {
-            event.target.closest("form").submit();
-        }
+        var selectedorderId = event.target.id;
+        console.log(selectedorderId);
+       var deleteRoute = "{{ Route('orders.destroy', ':id') }}".replace(':id', selectedorderId);
+
+        document.getElementById("delete_order").action =  deleteRoute ;
     }
 </script>
