@@ -5,6 +5,16 @@
 
 ## INTRODUCTION
 ## FEATURES
+- Authuntication
+- Email Verification
+- Roles and Perimissions
+- Auto Assign Order to the Closest Pharmacy Area
+- Ban and UnBan Doctor
+- Email Notification
+- Chart Statistics
+- Stripe Payment
+- Display Orders as Excel Sheet
+
 ## INSTALLATION
 <pre>
 - git clone 
@@ -60,10 +70,12 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 
 ## TECHNOLOGIES
 - Laravel Framework
+- MYSQL
+- jQuery
+- JavaSript
 - Bootstrap
 - HTML
 - CSS
-- JavaScript
 - SASS
 
 ## AUTHORS
