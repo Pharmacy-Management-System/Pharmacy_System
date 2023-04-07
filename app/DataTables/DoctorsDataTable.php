@@ -145,16 +145,12 @@ class DoctorsDataTable extends DataTable
             Column::make('id')->title('National ID')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100),
-            Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle'),
-            Column::computed('actions')->addClass('align-middle')->addClass('text-center'),
-            Column::computed('Ban/UnBan')
+            Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
                 ->addClass('align-middle')
-        ];
+            ];
         if (auth()->user()->hasRole('admin')) {
             $columns[] = Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
             $columns[] = Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle');
