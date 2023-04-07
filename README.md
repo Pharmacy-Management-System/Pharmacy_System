@@ -26,6 +26,7 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 </pre>
 
 ## CLIENT APIs:
+<center>
 |  Method  |      Endpoint         | Description | 
 | :---:    |         :---:         | :---: |   
 | POST     | `/api/register`       | `Register` |
@@ -41,6 +42,7 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 | GET      | `/api/orders/{id}`    | `Get Order By ID` | 
 | PUT      | `/api/orders/{id}`    | `Update Order` | 
 | GET      | `/api/email/resend/{id}` | `Resend Email Verification` | 
+</center>    
 
 ## PACKAGES
 <pre>
