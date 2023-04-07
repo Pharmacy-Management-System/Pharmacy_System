@@ -38,20 +38,20 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 ## CLIENT APIs:
 <div align="center" style="width:100%">
     
-|  Method  |      Endpoint         | Description | 
-| :---:    |         :---:         | :---: |   
-| POST     | `/api/register`       | `Register` |
-| POST     | `/api/login`          | `Login`  | 
-| GET      | `/api/client/{id}`    | `Get Client By ID` | 
-| PUT      | `/api/client/{id}`    | `Update Client` | 
-| POST     | `/api/address`        | `Add New Address` | 
-| GET      | `/api/address`        | `Get All Addresses` | 
-| GET      | `/api/address/{id}`   | `Get Address By ID` | 
-| PUT      | `/api/address/{id}`   | `Update Address` | 
-| DELETE   | `/api/address/{id}`   | `Delete Address` | 
-| POST     | `/api/orders`         | `Create New Order` | 
-| GET      | `/api/orders/{id}`    | `Get Order By ID` | 
-| PUT      | `/api/orders/{id}`    | `Update Order` | 
+|  Method  |      Endpoint            | Description | 
+| :---:    |         :---:            | :---: |   
+| POST     | `/api/register`          | `Register` |
+| POST     | `/api/login`             | `Login`  | 
+| GET      | `/api/client/{id}`       | `Get Client By ID` | 
+| PUT      | `/api/client/{id}`       | `Update Client` | 
+| POST     | `/api/address`           | `Add New Address` | 
+| GET      | `/api/address`           | `Get All Addresses` | 
+| GET      | `/api/address/{id}`      | `Get Address By ID` | 
+| PUT      | `/api/address/{id}`      | `Update Address` | 
+| DELETE   | `/api/address/{id}`      | `Delete Address` | 
+| POST     | `/api/orders`            | `Create New Order` | 
+| GET      | `/api/orders/{id}`       | `Get Order By ID` | 
+| PUT      | `/api/orders/{id}`       | `Update Order` | 
 | GET      | `/api/email/resend/{id}` | `Resend Email Verification` | 
     
 </div>    
@@ -85,8 +85,8 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
   - [Rowan Tamer](https://github.com/rowantamer)
   - [Omnia Goher](https://github.com/Omnia-Goher)
   
-## ERD
+<!-- ## ERD
 <p align="center" >
   <img style = "width:800px; height:500px;border-radius:50%;" src="https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png" />
-</p>
+</p> -->
 
