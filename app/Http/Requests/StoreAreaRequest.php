@@ -24,10 +24,10 @@ class StoreAreaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
             'id' => ['required', 'integer'],
             'name' => ['required', 'string'],
             'address' => ['required', 'string'],
+            'country_id' => ['required','exists:countries,id']
         ];
     }
 

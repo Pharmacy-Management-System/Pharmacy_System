@@ -1,5 +1,5 @@
 <div class="modal fade" id="edit_med" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Medicine</h5>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary text-white">Edit</button>
+                    <button type="submit" class="btn btn-primary text-white">Update</button>
                 </div>
             </form>
         </div>
