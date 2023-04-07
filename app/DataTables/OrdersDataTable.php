@@ -25,19 +25,6 @@ class OrdersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn(
-                'actions',
-                '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2"  id="{{$id}}" onclick="editmodalShow(event)" data-bs-toggle="modal" data-bs-target="#modEdit">Edit</button>
-                <button type="button" class="btn btn-primary rounded me-2" onclick="orderShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#showOrder">Show</button>
-                <form method="post" class="delete_item me-2" action="{{Route("orders.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deleteOrderModel(event)" data-bs-toggle="modal" data-bs-target="#delOrder">Delete</button>
-                    </form>
-                </div>'
-            )
             ->addColumn('Pharmacy', function (Order $order) {
                 if ($order->pharmacy) {
                     return $order->pharmacy->pharmacy_name;
@@ -57,17 +44,65 @@ class OrdersDataTable extends DataTable
             })
             ->addColumn('is_insured', function (Order $order) {
                 if($order->is_insured ) {
-                   
+
                     return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
                 else{
                     return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
             })
-            ->rawColumns(['actions','is_insured'])
-            ->setRowId('id');
+            ->addColumn('actions', function (Order $order) {
+                if($order->status == "New" || $order->status == "Processing"){
+                    return "
+                    <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                            <div class='d-flex flex-row gap-2'>
+                                <div>
+                                    <button type='button' class='btn btn-success rounded' onclick='editmodalShow(event)' id='" . $order->id . "' data-bs-toggle='modal' data-bs-target='#modEdit'>
+                                        Edit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-primary rounded' onclick='orderShow(event)' id='" . $order->id . " 'data-bs-toggle='modal' data-bs-target='#showOrder'>
+                                        Show
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='deleteOrderModel(event)'
+                                            id='" . $order->id . "' data-bs-toggle='modal' data-bs-target='#delOrder'>
+                                            Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ";
+                }else{
+                    return "
+                    <div class='d-flex flex-row justify-content-center btn-group btn-group-toggle' data-toggle='buttons'>
+                            <div class='d-flex flex-row gap-2'>
+                                <div>
+                                    <button type='button' class='btn btn-success rounded' onclick='editmodalShow(event)' id='" . $order->id . "' data-bs-toggle='modal' data-bs-target='#modEdit' disabled>
+                                        Edit
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-primary rounded' onclick='orderShow(event)' id='" . $order->id . " 'data-bs-toggle='modal' data-bs-target='#showOrder'>
+                                        Show
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type='button' class='btn btn-danger rounded delete-pharmacy' onclick='deleteOrderModel(event)'
+                                            id='" . $order->id . "' data-bs-toggle='modal' data-bs-target='#delOrder' disabled>
+                                            Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ";
+                }
+    })
+    ->rawColumns(['actions','is_insured'])
+->setRowId('id');
     }
-
 
     public function query(Order $model): QueryBuilder
     {

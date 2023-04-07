@@ -20,7 +20,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" id="AssignedUser" name="user_id" value="{{ $client->user_id }}">
+
                             </div>
                             <div class="col-md-12 mb-2">
                                 <label for="address" class="form-label">Address</label>
@@ -36,8 +36,7 @@
                                         @endforeach
                                     @endforeach
                                 </select>
-                                <input type="hidden" id="editadress" name="delivering_address_id"
-                                    value="{{ $address->id }}">
+
                             </div>
 
                             <div class="form-group">
@@ -67,7 +66,6 @@
                                         <option value="{{ $pharmacy->id }}">{{ $pharmacy->pharmacy_name }}</option>
                                     @endforeach
                                 </select>
-                                <input type="hidden" id="pharmacyEdit" name="pharmacy_id" value="{{ $pharmacy->id }}">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="createDoctorName" class="form-label">Doctor Name</label>
@@ -135,7 +133,8 @@
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
-        $('editQuantity').text(" ")
+        $('editQuantity').text(" ");
+        $('#prescription').text(" ");
         var itemId = event.target.id;
         $.ajax({
             url: "{{ route('orders.show', ':id') }}".replace(':id', itemId),
