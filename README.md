@@ -4,6 +4,10 @@
 </p>
 
 ## INTRODUCTION
+Pharmacy System Laravel web Application is 
+uses most of Laravel Technologies to built that Pharmacy System.This System is used for Pharmacies and Medical prescription purposes.</br>
+The Pharmacy System Depends on Multiple Roles like `admin`, `pharmacy` and `doctor`.
+
 
 ## FEATURES
 - Authuntication
