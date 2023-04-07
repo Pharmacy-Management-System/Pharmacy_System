@@ -68,7 +68,7 @@ php artisan create:admin --email=name@example.com --password=******
   - [Radwa Hassan](https://github.com/RadwaHassan99)
   - [Rowan Tamer](https://github.com/rowantamer)
   - [Omnia Goher](https://github.com/Omnia-Goher)
-  - 
+  
 ## ERD
 <p align="center" >
   <img style = "width:800px; height:500px;border-radius:50%;" src="https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png" />
