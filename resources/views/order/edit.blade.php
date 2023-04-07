@@ -135,7 +135,8 @@
     function editmodalShow(event) {
         event.preventDefault();
         event.stopPropagation();
-        $('editQuantity').text(" ")
+        $('editQuantity').text(" ");
+        $('#prescription').text(" ");
         var itemId = event.target.id;
         $.ajax({
             url: "{{ route('orders.show', ':id') }}".replace(':id', itemId),
