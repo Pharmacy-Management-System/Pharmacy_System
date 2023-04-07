@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel - Stripe Payment Gateway Integration Example - ItSolutionStuff.com</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" href="../dist/img/PharmacyLogo.png">
+        <title>Pharmacy System | Payment Details</title>
+
+        {{--  style--}}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{asset("dist/css/adminlte.min.css")}}">
+
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default credit-card-box">
-                <div class="panel-heading display-table" >
-                        <h3 class="panel-title" >Payment Details</h3>
-                </div>
-                <div class="panel-body">
-
-                    @if (Session::has('success'))
-                        <div class="alert alert-success text-center">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                            <p>{{ Session::get('success') }}</p>
-                        </div>
-                    @endif
-
-                    <form
+    <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+        <div class="wrapper">
+            <div class="container">
+                <div class="row justify-content-center align-items-center" style="height: 100vh;">
+                    <div class="col-8 col-md-6">
+                        <div class="card p-5" style="border-radius:10px;">
+                            <div class="text-center fw-bold fs-2 mb-5">{{ __('PAYMENT DETAILS') }}</div>
+                            @if (Session::has('success'))
+                                <div class="alert alert-success text-center">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                    <p>{{ Session::get('success') }}</p>
+                                </div>
+                            @endif
+                            <form
                             role="form"
                             action="{{ route('stripe.post') }}"
                             method="post"
@@ -34,61 +44,54 @@
                             id="payment-form">
                         @csrf
 
-                        <div class='form-row row'>
-                            <div class='col-xs-12 form-group required'>
-                                <label class='control-label'>Name on Card</label> <input
-                                    class='form-control' size='4' type='text'>
+                        <div class="col-12 mb-4">
+                            <span>
+                                <input class='form-control' type='text' placeholder="{{ __('Card Placeholder') }}" required style="height: 50px;">
+                            </span>
+                        </div>
+
+                        <div class="col-12 mb-4">
+                            <span>
+                                <input class='form-control' type='text' placeholder="{{ __('Card Number') }}" required style="height: 50px;">
+                            </span>
+                        </div>
+
+                        <div class='col-12'>
+                            <div class='col-md-4 form-group cvc required'>
+                                <label class='control-label'>CVC</label> 
+                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' type='text' style="height: 45px;">
+                            </div>
+                            <div class='col-md-4 form-group expiration required'>
+                                <label class='control-label'>Expiration Month</label> 
+                                <input class='form-control card-expiry-month' placeholder='MM' type='text' style="height: 45px;">
+                            </div>
+                            <div class='col-md-4 form-group expiration required'>
+                                <label class='control-label'>Expiration Year</label> 
+                                <input class='form-control card-expiry-year' placeholder='YYYY' type='text' style="height: 45px;">
                             </div>
                         </div>
 
-                        <div class='form-row row'>
-                            <div class='col-xs-12 form-group card required'>
-                                <label class='control-label'>Card Number</label> <input
-                                    autocomplete='off' class='form-control card-number' size='20'
-                                    type='text'>
-                            </div>
-                        </div>
-
-                        <div class='form-row row'>
-                            <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                <label class='control-label'>CVC</label> <input autocomplete='off'
-                                    class='form-control card-cvc' placeholder='ex. 311' size='4'
-                                    type='text'>
-                            </div>
-                            <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                <label class='control-label'>Expiration Month</label> <input
-                                    class='form-control card-expiry-month' placeholder='MM' size='2'
-                                    type='text'>
-                            </div>
-                            <div class='col-xs-12 col-md-4 form-group expiration required'>
-                                <label class='control-label'>Expiration Year</label> <input
-                                    class='form-control card-expiry-year' placeholder='YYYY' size='4'
-                                    type='text'>
-                            </div>
-                        </div>
-
-                        <div class='form-row row'>
+                        <div class='col-12'>
                             <div class='col-md-12 error form-group hide'>
-                                <div class='alert-danger alert'>Please correct the errors and try
-                                    again.</div>
+                                <div class='alert-danger alert'>Please Correct the Errors and Try
+                                    Again</div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-xs-12">
+                        <div class="col-12">
+                            <div class="col-12">
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ${{$price}}</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-
 </body>
+
+
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
@@ -161,3 +164,4 @@ $(function() {
 });
 </script>
 </html>
+

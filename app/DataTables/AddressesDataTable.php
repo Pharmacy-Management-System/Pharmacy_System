@@ -38,7 +38,6 @@ class AddressesDataTable extends DataTable
             })
             ->addColumn('is_main', function (Address $address) {
                  if($address->is_main) {
-                   
                     return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
                 else{

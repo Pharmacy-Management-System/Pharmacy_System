@@ -49,7 +49,7 @@ class ClientController extends Controller
                     $clientData['avatar_image'] = $avatar->getClientOriginalName();
                     $avatar->storeAs('public/clients_Images', $clientData['avatar_image']);
                 } else {
-                    $clientData['avatar_image'] = 'default.jpg';
+                    $clientData['avatar_image'] = 'default-avatar.jpg';
                 }
                 $clientData['id'] = $request->id;
                 $clientData['date_of_birth'] = $request->date_of_birth;
@@ -66,30 +66,25 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request)
     {
         try {
-            // create user
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            //  handle image
+
             if ($request->hasFile('avatar_image')) {
                 $avatar = $request->file('avatar_image');
                 $avatar_name = $avatar->getClientOriginalName();
                 $avatar->storeAs('public/clients_Images', $avatar_name);
             } else {
-                $avatar_name = 'default.jpg';
+                $avatar_name = 'default-avatar.jpg';
             }
 
-
-            // handle checkbox
             $isChecked = 0;
             if ($request->has('is_main')) {
                 $isChecked = 1;
             }
-            // craete client
-            // create client
-
 
             Client::create([
                 'id' => $request->id,
