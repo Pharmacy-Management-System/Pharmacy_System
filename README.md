@@ -36,7 +36,7 @@ The `client` is the end user who can make any Order.</br>
 - php artisan schedule:work
 </pre>
  
- ## CREATE ABMIN 
+ ## CREATE ADMIN 
 <pre>
 php artisan create:admin --name="admin" --email=admin@admin.com --password=******
 </pre>
