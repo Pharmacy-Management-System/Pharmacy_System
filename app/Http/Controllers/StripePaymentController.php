@@ -13,9 +13,9 @@ class StripePaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function stripe()
+    public function stripe($price)
     {
-        return view('stripe');
+        return view('stripe',["price"=>$price]);
     }
 
     /**

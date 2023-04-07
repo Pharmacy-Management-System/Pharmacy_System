@@ -23,18 +23,23 @@ class ClientsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('avatar',function(Client $client){
+                return '<img src="'. asset("storage/clients_Images/".$client->avatar_image) .'" width="40" class="img-circle" align="center" />';
+            })
             ->addColumn(
-                'action',
+                'actions',
                 '
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-info rounded me-2" onclick="clientaddressshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-addresses">Addresses</button>
-                <button type="button" class="btn btn-success rounded me-2" onclick="clienteditmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#client-edit">edit</button>
-                <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-client">show</button>
-                    <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-client" onclick="clientdeletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#client-del-model">delete</button>
-                    </form>
+                <div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
+                    <div class="d-flex flex-row gap-1">
+                        <button type="button" class="btn btn-info rounded me-2" onclick="clientaddressshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-addresses">Addresses</button>
+                        <button type="button" class="btn btn-success rounded me-2" onclick="clienteditmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#client-edit">Edit</button>
+                        <button type="button" class="btn btn-primary rounded me-2" onclick="clientshowmodalShow(event)" id="{{$id}}" data-bs-toggle="modal" data-bs-target="#show-client">Show</button>
+                        <form method="post" class="delete_item me-2"  action="{{Route("clients.destroy",$id)}}">
+                            @csrf
+                            @method("DELETE")
+                            <button type="button" class="btn btn-danger rounded delete-client" onclick="clientdeletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#client-del-model">Delete</button>
+                        </form>
+                    </div>
                 </div>
                 '
             )
@@ -44,6 +49,15 @@ class ClientsDataTable extends DataTable
             ->addColumn('email', function (Client $client) {
                 return $client->user->email;
             })
+            ->addColumn('Gender', function (Client $client) {
+                if($client->gender === 'Female') {
+                    return '<img src="'. asset("dist/img/icons/Female-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+                else{
+                    return '<img src="'. asset("dist/img/icons/Male-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+            })
+            ->rawColumns(['actions','Gender','avatar'])
             ->setRowId('id');
     }
 
@@ -69,7 +83,6 @@ class ClientsDataTable extends DataTable
             ->setTableId('clients-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -90,16 +103,17 @@ class ClientsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('id', 'National ID'),
-            Column::computed('name', 'Name'),
-            Column::computed('email', 'Email'),
-            Column::make('gender'),
-            Column::make('phone'),
-            Column::computed('action')
-                ->exportable(false)
+            Column::computed('avatar')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('id', 'National ID')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('name', 'Name')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('email', 'Email')->addClass('text-center')->addClass('align-middle'),
+            Column::make('phone')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Gender')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('actions')
                 ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
+                ->width(50)
+                ->addClass('text-center')
+                ->addClass('align-middle')
 
         ];
     }

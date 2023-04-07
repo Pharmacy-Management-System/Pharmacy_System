@@ -72,7 +72,8 @@ class DoctorsDataTable extends DataTable
                 else{
                     return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
                 }
-            })->addColumn('Ban/UnBan', function (Doctor $doctor) {
+            })
+            ->addColumn('Ban/UnBan', function (Doctor $doctor) {
                 $buttonText = $doctor->user->isBanned() ? 'Unban' : 'Ban';
                 $buttonClass = $doctor->user->isBanned() ? 'btn-success' : 'btn-danger';
                 $formMethod = $doctor->user->isBanned() ? 'unban' : 'ban';
@@ -145,12 +146,7 @@ class DoctorsDataTable extends DataTable
             Column::computed('Name')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Email')->addClass('text-center')->addClass('align-middle'),
             Column::computed('Created At','Created At')->addClass('text-center')->addClass('align-middle')->width(100)
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center')
-                ->addClass('align-middle')
-        ];
+            ];
         if (auth()->user()->hasRole('admin')) {
             $columns[] = Column::computed('Assigned Pharmacy')->addClass('text-center')->addClass('align-middle');
             $columns[] = Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle');

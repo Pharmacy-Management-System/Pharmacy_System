@@ -25,7 +25,6 @@ class StoreOrderRequest extends FormRequest
             'pharmacy_id' => ['required','exists:pharmacies,id'],
             'status' => ['required', Rule::in(['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered'])],
             'creator_type' => ['required', Rule::in(['client', 'doctor', 'pharmacy'])],
-            'doctor_id' => ['required'],
         ];
 
     }
