@@ -7,10 +7,10 @@
 ## FEATURES
 ## INSTALLATION
 <pre>
-- git clone ``
+- git clone 
 - Composer install
 - npm install
-- cp `.env-example` `.env`
+- cp .env-example .env
 - php artisan migrate
 - php artisan db:seed
 - php artisan storage:link
