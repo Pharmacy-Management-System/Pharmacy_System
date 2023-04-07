@@ -98,6 +98,12 @@ If you like our work, feel free to </br>
   - [Radwa Hassan](https://github.com/RadwaHassan99)
   - [Rowan Tamer](https://github.com/rowantamer)
   - [Omnia Goher](https://github.com/Omnia-Goher)
+
+<div align="center">
+    <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"/>
+    <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white"/>
+</div>
   
 
 
