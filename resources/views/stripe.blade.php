@@ -59,15 +59,15 @@
                         <div class='col-12'>
                             <div class='col-md-4 form-group cvc required'>
                                 <label class='control-label'>CVC</label> 
-                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' type='text' style="height: 45px;">
+                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' type='text' style="height: 45px;" value="333">
                             </div>
                             <div class='col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Month</label> 
-                                <input class='form-control card-expiry-month' placeholder='MM' type='text' style="height: 45px;">
+                                <input class='form-control card-expiry-month' placeholder='MM' type='text' style="height: 45px;" value="5">
                             </div>
                             <div class='col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Year</label> 
-                                <input class='form-control card-expiry-year' placeholder='YYYY' type='text' style="height: 45px;">
+                                <input type="text" class='form-control card-expiry-year' placeholder='YYYY' style="height: 45px;" value="2023">
                             </div>
                         </div>
 
@@ -77,10 +77,10 @@
                                     Again</div>
                             </div>
                         </div>
-
+                        <input type="text" name="order_id" value="{{$order->id}}" hidden>
                         <div class="col-12">
                             <div class="col-12">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ${{$price}}</button>
+                                <button type="submit" onclick="clientdeletemodalShow(event)" class="btn btn-primary btn-lg btn-block">Pay Now ${{$order->price}}</button>
                             </div>
                         </div>
                     </form>
@@ -96,6 +96,13 @@
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 <script type="text/javascript">
+function clientdeletemodalShow(event) {
+            event.preventDefault();
+            event.stopPropagation();
+           
+                event.target.closest("form").submit();
+        
+        }
 
 $(function() {
 

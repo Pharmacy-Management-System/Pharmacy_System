@@ -38,13 +38,15 @@ Auth::routes(["verify" => true]);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor|client', 'logs-out-banned-user'])->group(function () {
-        Route::controller(StripePaymentController::class)->group(function(){
-            Route::get('stripe/{price}', 'stripe')->name('stripe.get');
-            Route::post('stripe', 'stripePost')->name('stripe.post');
+        Route::controller(StripePaymentController::class)->group(function () {
+            Route::get('stripe/{id}', 'stripe')->name('stripe.get');
+            Route::post('/stripe', 'stripePost')->name('stripe.post');
         });
     });
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
-        Route::get('/', function () {return view('index');})->name('index');
+        Route::get('/', function () {
+            return view('index');
+        })->name('index');
         Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusData')->name('statusbarchart.data');
         Route::get('/status/statuspiechart', 'App\Http\Controllers\ChartController@statusData')->name('statuspiechart.data');
 
@@ -61,6 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
         Route::get('/orders/stauts/{id}', [OrderController::class, 'updatestatus'])->name('orders.updatestatus');
+        Route::get('/orders/confirm/{id}', [OrderController::class, 'confirm'])->name('orders.confirm');
 
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
         Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
@@ -135,6 +138,3 @@ Route::group(['middleware' => ['auth']], function () {
 });
 //Email-verification
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-
-
-
