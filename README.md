@@ -4,9 +4,11 @@
 </p>
 
 ## INTRODUCTION
-Pharmacy System Laravel web Application is 
-uses most of Laravel Technologies to built that Pharmacy System.This System is used for Pharmacies and Medical prescription purposes.</br>
-The Pharmacy System Depends on Multiple Roles like `admin`, `pharmacy` and `doctor`.
+The Pharmacy Managment System is a Laravel web Application that used Most of Laravel Technologies for Pharmacies and Medical prescription purposes. 
+The pharmacy Managment System Consists of Four Main Roles Like `admin`, `pharmacy`, `doctor` and `client`.</br>
+The `admin` has a Full Access to the whole Parts of the system. The `pharmacy owner` has access on his Doctors and Orders. The `doctor` has access the orders. 
+The `client` is the end user who can make any Order.
+
 
 
 ## FEATURES
