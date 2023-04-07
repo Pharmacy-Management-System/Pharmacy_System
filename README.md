@@ -1,12 +1,10 @@
-
+# Pharmacy Managment System
 <p align="center" >
   <img style = "width:150px; height:110px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
-  <h1 align="center"> Pharmacy Managment System </h1>
 </p>
 
-
-
-## Packages:
+## Introduction
+## Packages
 
 laravel/sanctum                         v3.2.1                Laravel Sanctum provides a featherweight authentication...</br>
 laravel/ui                              v4.2.1                Laravel UI utilities and presets.</br>
