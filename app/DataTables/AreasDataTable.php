@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Area;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,6 +24,9 @@ class AreasDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+        ->addColumn('Country',function(Area $area){
+            return  DB::table('countries')->where('id',$area->country_id)->first()->name;
+        })
             ->addColumn(
                 'actions',
                 '<div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
@@ -40,7 +44,8 @@ class AreasDataTable extends DataTable
                                 </div>
                             </div>'
             )
-            ->rawColumns(['actions'])
+
+            ->rawColumns(['actions','Country'])
             ->setRowId('id');
     }
 
@@ -66,7 +71,6 @@ class AreasDataTable extends DataTable
             ->setTableId('areas-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -88,10 +92,10 @@ class AreasDataTable extends DataTable
     {
         return [
             Column::make('id')->addClass('text-center')->addClass('align-middle')->title('Postal Code'),
+            Column::computed('Country')->addClass('text-center')->addClass('align-middle'),
             Column::make('name')->addClass('text-center')->addClass('align-middle'),
             Column::make('address')->addClass('text-center')->addClass('align-middle'),
             Column::computed('actions')
-                ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')

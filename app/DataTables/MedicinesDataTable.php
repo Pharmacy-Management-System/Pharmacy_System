@@ -21,20 +21,26 @@ class MedicinesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('Price', function (Medicine $medicine) {
+                return $medicine->price . ' $';
+            })
             ->addColumn(
-                'action',
+                'actions',
                 '
                 @if (auth()->user()->hasRole("admin"))
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <button type="button" class="btn btn-success rounded me-2"  onclick="editmodalShow(event)" id="{{$id}}"  data-bs-toggle="modal" data-bs-target="#edit_med">edit</button>
-                    <form method="post" class="delete_item me-2"  id="option_a3" action="{{Route("medicines.destroy",$id)}}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del_med">delete</button>
-                    </form>
-                </div>
+                    <div class="d-flex flex-row justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
+                        <div class="d-flex flex-row gap-1">
+                            <button type="button" class="btn btn-success rounded me-2"  onclick="editmodalShow(event)" id="{{$id}}"  data-bs-toggle="modal" data-bs-target="#edit_med">Edit</button>
+                            <form method="post" class="delete_item" action="{{Route("medicines.destroy",$id)}}">
+                                @csrf
+                                @method("DELETE")
+                                <button type="button" class="btn btn-danger rounded delete-area" onclick="deletemodalShow(event)" id="delete_{{$id}}" data-bs-toggle="modal" data-bs-target="#del_med">Delete</button>
+                            </form>
+                        </div>
+                    </div>
                 @endif'
             )
+            ->rawColumns(['actions'])
             ->setRowId('id');
     }
 
@@ -75,22 +81,19 @@ class MedicinesDataTable extends DataTable
     public function getColumns(): array
     {
         $columns = [
-            Column::make('id'),
-            Column::make('name')->title('medicine name'),
-            Column::make('type'),
-            Column::computed('quantity'),
-            Column::computed('price')
+            Column::computed('id','ID')->addClass('text-center')->addClass('align-middle'),
+            Column::make('name')->title('Medicine Name')->addClass('text-center')->addClass('align-middle'),
+            Column::make('type')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('quantity')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('Price')->addClass('text-center')->addClass('align-middle')
+        ];
+        if (auth()->user()->hasRole('admin')) {
+            $columns[] = Column::computed('actions')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center')
-        ];
-        if (auth()->user()->hasRole('admin')) {
-            $columns[] = Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center');
+                ->addClass('align-middle');
         }
 
         return $columns;
