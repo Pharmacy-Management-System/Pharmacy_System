@@ -1,8 +1,10 @@
-# Pharmacy Managment System
+
+<p align="center" >
+  <img style = "width:150px; height:110px;" src="https://user-images.githubusercontent.com/81237428/230607057-d782c740-d69f-41f7-888e-40e4ac5779a4.png" />
+  <h1 align="center"> Pharmacy Managment System </h1>
+</p>
 
 
-## ERD:
-![pharmacyERD](https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png)
 
 ## Packages:
 
@@ -14,7 +16,6 @@ webpatser/laravel-countries             dev-master 9d0cd97    Laravel Countries 
 egulias/email-validator                 4.0.1                 A library for validating emails against several RFCs</br>
 cybercog/laravel-ban                    4.8.0                 Laravel Ban simplify blocking and banning Eloquent models.</br>  
 stripe/stripe-php                       v10.12.1              Stripe PHP Library</br>
-
 
 ## Client API:
 
@@ -35,3 +36,7 @@ Get All Orders--->GET--->http://127.0.0.1:8000/api/orders
 Get Order By Id --->GET--->http://127.0.0.1:8000/api/orders/{id}
 Update Order--->PUT--->http://127.0.0.1:8000/api/orders/{id}
 Resend Email Verification --->GET-->http://127.0.0.1:8000/api/email/resend/{id}
+
+## ERD
+![pharmacyERD](https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png)
+
