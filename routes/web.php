@@ -39,7 +39,7 @@ Auth::routes(["verify" => true]);
 Route::group(['middleware' => ['auth']], function () {
     Route::middleware(['role:admin|pharmacy|doctor|client', 'logs-out-banned-user'])->group(function () {
         Route::controller(StripePaymentController::class)->group(function(){
-            Route::get('stripe', 'stripe')->name('stripe.get');
+            Route::get('stripe/{price}', 'stripe')->name('stripe.get');
             Route::post('stripe', 'stripePost')->name('stripe.post');
         });
     });
