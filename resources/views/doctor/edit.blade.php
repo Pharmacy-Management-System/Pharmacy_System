@@ -11,24 +11,29 @@
                 @method('PUT')
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="modal-body row gy-2 gx-3 align-items-center">
+
                     <div class="col-md-6 mb-2">
                         <label for="nationalIdEdit" class="form-label">National ID</label>
                         <input name="id" class="form-control" id="nationalIdEdit" value="" readonly>
                     </div>
+
                     <div class="col-md-6 mb-2">
                         <label for="nameEdit" class="form-label">Name</label>
                         <input name="name" class="form-control" id="nameEdit" value="">
                     </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label for="passwordEdit" class="form-label">Password</label>
+                        <input name="password" class="form-control" id="passwordEdit" value="" type="password">
+                    </div>
+
+                    @role('admin|pharmacy')
                     <div class="col-md-6 mb-2">
                         <label for="emailEdit" class="form-label">Email</label>
                         <div class="input-group">
                             <span class="input-group-text" id="email-icon">@</span>
                             <input name="email" class="form-control" id="emailEdit" type="email" id="emailEdit" aria-describedby="email-icon" value="">
                         </div>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="passwordEdit" class="form-label">Password</label>
-                        <input name="password" class="form-control" id="passwordEdit" value="" type="password">
                     </div>
                     <div class="col-md-12 mb-2">
                         <label for="pharmacy_id" class="form-label">Assigned Pharmacy</label>
@@ -38,6 +43,26 @@
                         <input name="is_banned" class="form-check-input" id="bannedEdit" type="checkbox" value="">
                         <label for="bannedEdit" class="form-check-label">Is banned?</label>
                     </div>
+                    @endrole
+
+                    @role('doctor')
+                    <div class="col-md-6 mb-2">
+                        <label for="emailEdit" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="email-icon">@</span>
+                            <input name="email" class="form-control" id="emailEdit" type="email" id="emailEdit" aria-describedby="email-icon" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <label for="pharmacy_id" class="form-label">Assigned Pharmacy</label>
+                        <select name="pharmacy_id" id="pharmacyEdit" class="form-control" readonly></select>
+                    </div>
+                    <div class="col-md-12 mb-2 mx-3 form-check" hidden>
+                        <input name="is_banned" class="form-check-input" id="bannedEdit" type="checkbox" value="">
+                        <label for="bannedEdit" class="form-check-label">Is banned?</label>
+                    </div>
+                    @endrole
+
                     <div class="col-md-12 mb-2">
                         <label for="avatarEdit" class="form-label">Avatar</label>
                         <input type="file" name="avatar_image" class="form-control" id="avatarEdit" value="">

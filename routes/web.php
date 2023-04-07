@@ -13,6 +13,7 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\ChartController;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\ForbidBannedUser;
+use App\Http\Controllers\StripePaymentController;
 
 
 /*
@@ -34,7 +35,14 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes(["verify" => true]);
+
 Route::group(['middleware' => ['auth']], function () {
+    Route::middleware(['role:admin|pharmacy|doctor|client', 'logs-out-banned-user'])->group(function () {
+        Route::controller(StripePaymentController::class)->group(function(){
+            Route::get('stripe/{price}', 'stripe')->name('stripe.get');
+            Route::post('stripe', 'stripePost')->name('stripe.post');
+        });
+    });
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
         Route::get('/', function () {return view('index');})->name('index');
         Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusData')->name('statusbarchart.data');
@@ -51,9 +59,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
         Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+        Route::get('/orders/stauts/{id}', [OrderController::class, 'updatestatus'])->name('orders.updatestatus');
+
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
         Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
         Route::put('/orders/{orders}', [OrderController::class, 'update'])->name('orders.update');
+
+        //Order Route
+        Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+        Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
     });
 
     Route::group(
@@ -70,11 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
             //Doctor Routes
-            Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
             Route::delete('/doctors/{id}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
-            Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
-            Route::get('/doctors/{id}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
-            Route::put('/doctors/{id}', [DoctorController::class, 'update'])->name('doctors.update');
             Route::post('/doctors', [DoctorController::class, 'store'])->name('doctors.store');
             Route::post('doctors/{doctor}/unban', [DoctorController::class, 'unban'])->name('doctors.unban');
             Route::post('doctors/{doctor}/ban', [DoctorController::class, 'ban'])->name('doctors.ban');
@@ -122,3 +135,6 @@ Route::group(['middleware' => ['auth']], function () {
 });
 //Email-verification
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+
+
+

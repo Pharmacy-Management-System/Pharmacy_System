@@ -123,9 +123,11 @@
                 table_body.append(record);
                 $("#order-addresses").append(table_body);
                 for (let i = 0; i < response.prescriptions.length; i++) {
+                    var imagePath = "{{ asset('storage/images/prescriptions/:image_name') }}".replace(':image_name', response.prescriptions[i].image);
+                    console.log(imagePath);
                     $('#prescription').append(`
                     <div class="carousel-item active">
-                                    <img src="dist/img/prescriptions/${response.prescriptions[i].image}" class="d-block w-100" alt="...">
+                                    <img src="${imagePath}" class="d-block w-100" alt="...">
                      </div>`);
                 }
             }

@@ -13,9 +13,10 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "spatie/laravel-permission": "^5.10",
+        "stripe/stripe-php": "^10.12",
+        "webpatser/laravel-countries": "dev-master",
         "yajra/laravel-datatables": "^9.0",
-        "yajra/laravel-datatables-oracle": "^10.4",
-        "webpatser/laravel-countries": "dev-master"
+        "yajra/laravel-datatables-oracle": "^10.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

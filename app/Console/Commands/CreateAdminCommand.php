@@ -3,31 +3,37 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Admin;
+use App\Models\User;
 
 class CreateAdminCommand extends Command
 {
-    protected $signature = 'create:admin {--email= : The email address of the new admin.} {--password= : The password for the new admin.}';
 
-    protected $description = 'Create a new admin user.';
-
+    protected $signature = 'create:admin
+                            {--name= : The name of the new admin user (required)}
+                            {--email= : The email of the new admin user (required)}
+                            {--password= : The password of the new admin user (required)}';
+    protected $description = 'Create a new admin user';
     public function handle()
     {
+        $name = $this->option('name');
         $email = $this->option('email');
         $password = $this->option('password');
 
-        $admin = Admin::findByEmail($email);
-
-        if ($admin) {
-            $this->error('An admin user with that email address already exists!');
-            return;
+        // Check if a user with the given email already exists
+        $existingUser = User::where('email', $email)->first();
+        if ($existingUser) {
+            $this->error('A user with this email already exists.');
+            return 1;
         }
 
-        $admin = new Admin;
-        $admin->email = $email;
-        $admin->password = bcrypt($password);
-        $admin->save();
+        $user = User::create([
+            'name' => 'Admin',
+            'email' => $email,
+            'password' => bcrypt($password),
+        ]);
 
-        $this->info('Admin user created successfully!');
+        $user->assignRole('admin');
+        $this->info('Admin user created successfully.');
+        return 0;
     }
 }
