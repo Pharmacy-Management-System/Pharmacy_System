@@ -27,7 +27,7 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-         $orders = Order::where('status', "New")->get();
+        $orders = Order::where('status', "New")->get();
         $client = auth()->user();
         $delivering_address_id = $request->input('delivering_address_id');
         $is_insured = $request->input('is_insured');
@@ -62,7 +62,7 @@ class OrderController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'Address not found',
+                'message' => 'address id does not belong to this user',
             ], 400);
         }
         AssignNewOrder::dispatch($order);
