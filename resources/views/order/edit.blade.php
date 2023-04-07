@@ -81,6 +81,22 @@
                                             </optgroup>
                                         @endforeach
                                     @endif
+                                    @if (auth()->user()->hasRole('pharmacy'))
+                                        @foreach ($pharmacies as $pharmacy)
+                                            @if ($pharmacy->id == auth()->user()->pharmacy->id)
+                                                <option value="" disabled selected hidden></option>
+                                                <optgroup label="{{ 'Pharmacy: ' . $pharmacy->pharmacy_name }}">
+                                                    @foreach ($pharmacy->doctors as $doctor)
+                                                        <option value="{{ $doctor->id }}">{{ $doctor->User->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </optgroup>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    @if(auth()->user()->hasRole('doctor'))
+                                        <option value="{{ auth()->user()->doctor->id }}">{{ auth()->user()->name }}</option>
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-6 mb-2">
