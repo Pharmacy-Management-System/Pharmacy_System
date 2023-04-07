@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('send:inactive-users-notification')->dailyAt('8:00');
-        $schedule->job(new AssignNewOrder())->everyMinute();
+        $schedule->job(new AssignNewOrder)->everyMinute();
         $schedule->job(new RemoveOldBans)->daily();
         $schedule->job(new ChangeOrderStatusJob())->everyMinute();
     }

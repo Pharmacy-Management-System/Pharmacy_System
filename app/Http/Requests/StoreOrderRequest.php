@@ -20,9 +20,9 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => ['required', 'exists:users,id'],
-            'delivering_address_id' => ['required','exists:addresses,id'],
-            'pharmacy_id' => ['required','exists:pharmacies,id'],
+            'user_id' => ['exists:users,id'],
+            'delivering_address_id' => ['exists:addresses,id'],
+            'pharmacy_id' => ['exists:pharmacies,id'],
             'status' => ['required', Rule::in(['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered'])],
             'creator_type' => ['required', Rule::in(['client', 'doctor', 'pharmacy'])],
         ];

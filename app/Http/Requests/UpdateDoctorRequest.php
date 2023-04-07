@@ -25,7 +25,7 @@ class UpdateDoctorRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'size:14', Rule::unique('pharmacies', 'id')->ignore($this->id)],
+            'id' => ['required', 'size:14', Rule::unique('doctors', 'id')->ignore($this->id)],
             'pharmacy_id' => ['required', 'exists:pharmacies,id'],
             'name' => ['required', 'min:3'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user_id)],
