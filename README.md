@@ -4,12 +4,14 @@
 </p>
 
 ## INTRODUCTION
+
 ## FEATURES
 - Authuntication
 - Email Verification
 - Roles and Perimissions
 - Auto Assign Order to the Closest Pharmacy Area
 - Ban and UnBan Doctor
+- Total Revenue of each Pharmacy 
 - Email Notification
 - Chart Statistics
 - Stripe Payment
