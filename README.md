@@ -22,7 +22,7 @@
  
  ## CREATE ABMIN 
 <pre>
-php artisan create:admin --email=name@example.com --password=******
+php artisan create:admin --name="admin" --email=admin@admin.com --password=******
 </pre>
 
 ## CLIENT APIs:
