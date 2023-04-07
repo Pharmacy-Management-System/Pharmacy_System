@@ -11,24 +11,24 @@
                 <div class="modal-body row g-3">
                     <div class="col-md-6 ">
                         <label for="client-name" class="form-label">Name</label>
-                        <input name="name" class="form-control client-input" id="client-name" value="">
+                        <input name="name" class="form-control client-input" id="client-edit-name" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-email" class="form-label">Email</label>
-                        <input name="email" class="form-control client-input" id="client-email" value="">
+                        <input name="email" class="form-control client-input" id="client-edit-email" value="">
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-id" class="form-label">Natioanl ID</label>
-                        <input name="id" class="form-control client-input" id="client-id" value="" readonly>
+                        <input name="id" class="form-control client-input" id="client-edit-id" value="" readonly>
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-birthdate" class="form-label">Date of Birth</label>
                         <input type="date" class="form-control client-input" name="date_of_birth"
-                            id="client-birthdate" min="1860-01-01" max="2023-01-01" value="" />
+                            id="client-edit-birthdate" min="1860-01-01" max="2023-01-01" value="" />
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-gender" class="form-label">Gender</label>
-                        <select name="gender" id="client-gender" class="form-select "
+                        <select name="gender" id="client-edit-gender" class="form-select "
                             aria-label="Default select example">
                             <option selected>Select Gender</option>
                             <option value="Male">Male</option>
@@ -37,11 +37,11 @@
                     </div>
                     <div class="col-md-6 ">
                         <label for="client-phone" class="form-label">Phone Number</label>
-                        <input name="phone" class="form-control client-input" id="client-phone" value="">
+                        <input name="phone" class="form-control client-input" id="client-edit-phone" value="">
                     </div>
                     <div class="col-md-12 ">
                         <label for="avatar" class="form-label">Avatar</label>
-                        <input name="avatar_image" class="form-control client-input" type="file" id="avatar"
+                        <input name="avatar_image" class="form-control client-input" type="file" id="edit-avatar"
                             accept=".jpg,.png">
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                                @method('DELETE')
                                <button type="button" class="btn btn-danger rounded delete-client" onclick="deleteAddress(event)" id="${address.id}" data-bs-toggle="modal" data-bs-target="#address-del-model">delete</button>
                              </form>
-                            </td>    
+                            </td>
                         </tr>
                         `;
                     table_body.append(record);
@@ -310,14 +310,15 @@
             url: "{{ route('clients.show', ':id') }}".replace(':id', itemId),
             method: "GET",
             success: function(response) {
+
                 //$('#image').text(response.client.image)
-                $('#client-name').val(response.user.name)
-                $('#client-email').val(response.user.email)
-                $('#client-id').val(response.client.id)
-                $('#client-gender').val(response.client.gender)
-                $('#client-phone').val(response.client.phone)
-                $('#client-birthdate').val(response.client.date_of_birth)
-                $('#userid').val(response.user.id)
+                $('#client-edit-name').val(response.user.name)
+                $('#client-edit-email').val(response.user.email)
+                $('#client-edit-id').val(response.client.id)
+                $('#client-edit-gender').val(response.client.gender)
+                $('#client-edit-phone').val(response.client.phone)
+                $('#client-edit-birthdate').val(response.client.date_of_birth)
+                $('#edit-userid').val(response.user.id)
             }
         });
 

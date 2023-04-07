@@ -90,9 +90,9 @@
                 $('#date-of-birth').text(response.client.date_of_birth)
                 var table_body =$('#client-body-addresses');
                 for (var address of response.addresses) {
-                    var mainStreet = (address.is_main) ? 
-                    return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />'; 
-                    : return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                    var mainStreet = (address.is_main) ?
+                    '<img src="/dist/img/icons/Success-Mark-icon.png" width="30" class="img-circle" align="center" />'
+                    : '<img src="/dist/img/icons/Failed-Mark-icon.png" width="30" class="img-circle" align="center" />'
                     var record = `
                         <tr>
                             <td>${address.area_id}</td>
@@ -101,7 +101,7 @@
                             <td>${address.building_number}</td>
                             <td>${address.floor_number}</td>
                             <td>${address.flat_number}</td>
-                            <td>${mainStreet}</td>    
+                            <td>${mainStreet}</td>
                         </tr>
                         `;
                         table_body.append(record);
