@@ -22,10 +22,12 @@
  
  ## CREATE ABMIN 
 <pre>
-php artisan create:admin --email=name@example.com --password=******
+php artisan create:admin --name="admin" --email=admin@admin.com --password=******
 </pre>
 
 ## CLIENT APIs:
+<div align="center" style="width:100%">
+    
 |  Method  |      Endpoint         | Description | 
 | :---:    |         :---:         | :---: |   
 | POST     | `/api/register`       | `Register` |
@@ -41,7 +43,9 @@ php artisan create:admin --email=name@example.com --password=******
 | GET      | `/api/orders/{id}`    | `Get Order By ID` | 
 | PUT      | `/api/orders/{id}`    | `Update Order` | 
 | GET      | `/api/email/resend/{id}` | `Resend Email Verification` | 
-
+    
+</div>    
+   
 ## PACKAGES
 <pre>
 - laravel/sanctum                         v3.2.1                Laravel Sanctum provides a featherweight authentication
