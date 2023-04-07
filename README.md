@@ -1,6 +1,6 @@
 # Pharmacy Managment System
 <p align="center" >
-  <img style = "width:150px; height:110px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
+  <img style = "width:100px; height:100px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
 </p>
 
 ## INTRODUCTION
@@ -35,5 +35,7 @@
 
 
 ## ERD
-![pharmacyERD](https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png)
+<p align="center" >
+  <img style = "width:800px; height:500px;border-radius:50%;" src="https://user-images.githubusercontent.com/63107268/230602218-ddbb990e-1048-45cc-970f-bb6b5567c610.png" />
+</p>
 
