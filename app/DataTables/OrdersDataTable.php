@@ -159,7 +159,7 @@ class OrdersDataTable extends DataTable
                 Column::computed('Pharmacy')->addClass('text-center')->addClass('align-middle'),
             ]);
         }
-        $columns[] = Column::computed('action')
+        $columns[] = Column::computed('actions')
         ->printable(false)
         ->width(60)
         ->addClass('text-center')
