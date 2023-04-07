@@ -1,6 +1,6 @@
 # PHARMACY MANAGMENT SYSTEM
-<p align="center" style="margin-top:3%;margin-bottom:3%;">
-  <img style = "width:120px; height:120px;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
+<p align="center" style="margin-top:5%;margin-bottom:5%;">
+  <img style = "width:150px; height:150px;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
 </p>
 
 ## INTRODUCTION
@@ -84,8 +84,12 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 - CSS
 - SASS
 
-## Support
-If you like our work, feel free to:
+## DEMO
+🎬
+We Hope That You are enjoying Watching Our Demo Video.
+
+## SUPPORT
+If you like our work, feel free to </br>
 ⭐ this repository. It helps.
 
 ## AUTHORS
