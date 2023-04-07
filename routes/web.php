@@ -13,6 +13,7 @@ use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\ChartController;
 use  Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\ForbidBannedUser;
+use App\Http\Controllers\StripePaymentController;
 
 
 /*
@@ -34,7 +35,14 @@ Auth::routes([
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes(["verify" => true]);
+
 Route::group(['middleware' => ['auth']], function () {
+    Route::middleware(['role:admin|pharmacy|doctor|client', 'logs-out-banned-user'])->group(function () {
+        Route::controller(StripePaymentController::class)->group(function(){
+            Route::get('stripe/{price}', 'stripe')->name('stripe.get');
+            Route::post('stripe', 'stripePost')->name('stripe.post');
+        });
+    });
     Route::middleware(['role:admin|pharmacy|doctor', 'logs-out-banned-user'])->group(function () {
         Route::get('/', function () {return view('index');})->name('index');
         Route::get('/status/statusbarchart', 'App\Http\Controllers\ChartController@statusData')->name('statusbarchart.data');
@@ -127,3 +135,6 @@ Route::group(['middleware' => ['auth']], function () {
 });
 //Email-verification
 Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+
+
+

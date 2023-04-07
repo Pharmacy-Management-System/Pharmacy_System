@@ -37,8 +37,15 @@ class AddressesDataTable extends DataTable
                 return $address->area->name;
             })
             ->addColumn('is_main', function (Address $address) {
-                return $address->is_main ? 'yes' : 'no';
+                 if($address->is_main) {
+                   
+                    return '<img src="'. asset("dist/img/icons/Success-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
+                else{
+                    return '<img src="'. asset("dist/img/icons/Failed-Mark-icon.png") .'" width="30" class="img-circle" align="center" />';
+                }
             })
+            ->rawColumns(['is_main'])
             ->setRowId('id');
     }
 
@@ -64,7 +71,6 @@ class AddressesDataTable extends DataTable
             ->setTableId('addresses-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
             ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
@@ -85,16 +91,16 @@ class AddressesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::computed('client-name', 'Client Name'),
-            Column::computed('client-email', 'Client Email'),
-            Column::computed('area-id', 'Postal Code'),
-            Column::computed('area-name', 'Area Name'),
-            Column::make('street_name'),
-            Column::make('building_number'),
-            Column::make('floor_number'),
-            Column::make('flat_number'),
-            Column::computed('is_main'),
+            Column::computed('id','ID')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('client-name', 'Client Name')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('client-email', 'Client Email')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('area-id', 'Postal Code')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('area-name', 'Area Name')->addClass('text-center')->addClass('align-middle'),
+            Column::make('street_name')->addClass('text-center')->addClass('align-middle'),
+            Column::make('building_number')->addClass('text-center')->addClass('align-middle'),
+            Column::make('floor_number')->addClass('text-center')->addClass('align-middle'),
+            Column::make('flat_number')->addClass('text-center')->addClass('align-middle'),
+            Column::computed('is_main')->addClass('text-center')->addClass('align-middle'),
         ];
     }
 

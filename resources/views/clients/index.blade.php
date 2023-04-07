@@ -5,51 +5,59 @@
 @endsection
 
 @section('content')
-    <section class="content">
-        @if ($errors->any())
-            <div class="alert alert-danger pb-0 ">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        {{-- when delete area related to other records --}}
-        @if (session('error'))
-            <div class="alert alert-danger p-2 mt-3 ">
-                {{ session('error') }}
-            </div>
-        @endif
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
+<section class="content container">
+    @if (session('error'))
+        <div id ="alert-message" class="alert alert-danger my-4 alert-dismissible">
+            {{ session('error') }}
+            <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="alert alert-danger pb-0 alert-dismissible">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+    </div>
+    @endif
+
+    @if(session('success'))
+        <div id ="alert-message" class="alert alert-success mb-4 mb-0 alert-dismissible">
+            {{ session('success') }}
+            <button type="button" class="close text-white" data-dismiss="alert">&times;</button>
+        </div>
+    @endif
+
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success rounded me-2" onclick="createmodalShow(event)" data-bs-toggle="modal"
                 data-bs-target="#create-client">Create New Client</button>
-        </div>
-        <div class="container-fluid">
-            {{-- {{@dd( $dataTable->table())}} --}}
-            {{ $dataTable->table() }}
-        </div>
-        @include('clients.delete')
-        @include('clients.show')
-        @include('clients.edit')
-        @include('clients.create')
-    </section>
+    </div>
+
+        {{ $dataTable->table() }}
+    </div>
+
+    <!-- Create Client Modal -->
+    @include('clients.create')
+
+    <!-- Show Client Modal -->
+    @include('clients.show')
+
+    <!-- Edit Client Modal -->
+    @include('clients.edit')
+
+    <!-- Delete Client Modal -->
+    @include('clients.delete')
+
+</section>
 
 @endsection
 
 @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
-        function createmodalShow(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            $('input').val("")
-        }
         setTimeout(function() {
             $('.alert-success').fadeOut();
         }, {{ session('timeout') }});
