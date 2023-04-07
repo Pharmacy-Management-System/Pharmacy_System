@@ -1,6 +1,6 @@
-<p align="center" >
-  <img style = "width:100px; height:100px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
-<h1 align="center" >Pharmacy Managment System</h1>
+<p align="center" style="margin-top:2%;margin-bottom:2%;">
+  <img style = "width:100px; height:100px;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
+<marque align="center" >Pharmacy Managment System</marque>
 </p>
 
 ## INTRODUCTION
