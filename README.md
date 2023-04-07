@@ -1,6 +1,6 @@
 
 <p align="center" >
-  <img style = "width:150px; height:110px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607329-17acbd55-4505-4280-a21e-af89bdb84791.gif" />
+  <img style = "width:150px; height:110px;border-radius:50%;" src="https://user-images.githubusercontent.com/81237428/230607665-ef41d0f9-52e6-4e21-b87d-6322b338e57c.gif" />
   <h1 align="center"> Pharmacy Managment System </h1>
 </p>
 
