@@ -6,14 +6,14 @@
 
 ## Packages:
 
-laravel/sanctum                         v3.2.1                Laravel Sanctum provides a featherweight authentication...   
-laravel/ui                              v4.2.1                Laravel UI utilities and presets.
-yajra/laravel-datatables                v9.0.0                Laravel DataTables Complete Package.
-spatie/laravel-permission               5.10.0                Permission handling for Laravel 6.0 and up
-webpatser/laravel-countries             dev-master 9d0cd97    Laravel Countries is a bundle for Laravel, providing Al...   
-egulias/email-validator                 4.0.1                 A library for validating emails against several RFCs
-cybercog/laravel-ban                    4.8.0                 Laravel Ban simplify blocking and banning Eloquent models.   
-stripe/stripe-php                       v10.12.1              Stripe PHP Library
+laravel/sanctum                         v3.2.1                Laravel Sanctum provides a featherweight authentication...</br>
+laravel/ui                              v4.2.1                Laravel UI utilities and presets.</br>
+yajra/laravel-datatables                v9.0.0                Laravel DataTables Complete Package.</br>
+spatie/laravel-permission               5.10.0                Permission handling for Laravel 6.0 and up</br>
+webpatser/laravel-countries             dev-master 9d0cd97    Laravel Countries is a bundle for Laravel, providing Al...</br>   
+egulias/email-validator                 4.0.1                 A library for validating emails against several RFCs</br>
+cybercog/laravel-ban                    4.8.0                 Laravel Ban simplify blocking and banning Eloquent models.</br>  
+stripe/stripe-php                       v10.12.1              Stripe PHP Library</br>
 
 
 ## Client API:
