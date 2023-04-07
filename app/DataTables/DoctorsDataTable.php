@@ -153,6 +153,7 @@ class DoctorsDataTable extends DataTable
             $columns[] = Column::computed('Ban/UnBan')->addClass('text-center')->addClass('align-middle');
         }
         elseif (Auth::user()->hasRole('pharmacy')) {
+            $columns[] = Column::computed('is_banned','Is Banned')->addClass('text-center')->addClass('align-middle');
             $columns[] = Column::computed('Ban/UnBan')->addClass('text-center')->addClass('align-middle');
         }
 
