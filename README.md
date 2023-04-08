@@ -86,7 +86,8 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 
 ## DEMO
 🎬
-We Hope That You are enjoying Watching Our Demo Video.
+We Hope That You are enjoying Watching Our Demo Video 
+[Click Here](https://www.youtube.com/watch?v=6k82NfqhROo) 
 
 ## SUPPORT
 If you like our work, feel free to </br>
