@@ -21,6 +21,11 @@ The `client` is the end user who can make any Order.</br>
 - Stripe Payment
 - Display Orders as Excel Sheet
 
+## DEMO
+🎬
+We Hope That You are enjoying Watching Our Demo Video 
+[Click Here](https://www.youtube.com/watch?v=6k82NfqhROo) 
+
 ## INSTALLATION
 <pre>
 - git clone 
@@ -83,11 +88,6 @@ php artisan create:admin --name="admin" --email=admin@admin.com --password=*****
 - HTML
 - CSS
 - SASS
-
-## DEMO
-🎬
-We Hope That You are enjoying Watching Our Demo Video 
-[Click Here](https://www.youtube.com/watch?v=6k82NfqhROo) 
 
 ## SUPPORT
 If you like our work, feel free to </br>
